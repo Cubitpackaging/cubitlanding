@@ -13,6 +13,13 @@ const Hero = () => {
     }
   }
 
+  const scrollToWork = () => {
+    const element = document.querySelector('#packaging')
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   // Auto-rotate showcase
   useEffect(() => {
     const interval = setInterval(() => {
@@ -111,36 +118,6 @@ const Hero = () => {
               that turn customers into brand advocates.
             </p>
 
-            {/* Packaging Showcase - Now in Left Content */}
-            <div className="mb-10">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto lg:mx-0">
-                {packageShowcase.map((pkg, index) => (
-                  <div
-                    key={index}
-                    className={`relative bg-gradient-to-br ${pkg.bgColor} rounded-2xl p-6 shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl cursor-pointer ${
-                      index === activePackage ? 'ring-2 ring-purple-500 scale-105' : ''
-                    }`}
-                    onClick={() => setActivePackage(index)}
-                  >
-                    {/* Package Visual */}
-                    <div className={`h-32 mb-4 text-transparent bg-gradient-to-br ${pkg.color} bg-clip-text`}>
-                      {pkg.icon}
-                    </div>
-                    
-                    {/* Package Info */}
-                    <h3 className="text-lg font-bold text-gray-900 mb-3">{pkg.type}</h3>
-                    <div className="flex flex-wrap gap-1">
-                      {pkg.features.map((feature, idx) => (
-                        <span key={idx} className="px-2 py-1 bg-white/80 text-gray-700 rounded-full text-xs">
-                          {feature}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
             {/* Feature Pills */}
             <div className="flex flex-wrap gap-3 mb-10 justify-center lg:justify-start">
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 shadow-sm">
@@ -163,8 +140,8 @@ const Hero = () => {
               </span>
             </div>
 
-            {/* CTA Button - Only Request Quote */}
-            <div className="flex justify-center lg:justify-start mb-10">
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button
                 onClick={scrollToQuote}
                 className="group relative px-8 py-4 bg-gradient-to-r from-gray-900 to-gray-700 text-white font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl"
@@ -172,10 +149,16 @@ const Hero = () => {
                 <span className="relative z-10">Request a Quote</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
+              <button
+                onClick={scrollToWork}
+                className="px-8 py-4 bg-white border-2 border-gray-300 text-gray-900 font-semibold rounded-xl hover:border-gray-900 hover:shadow-lg transition-all duration-300"
+              >
+                See Our Work
+              </button>
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center gap-8 justify-center lg:justify-start">
+            <div className="mt-10 flex flex-wrap items-center gap-8 justify-center lg:justify-start">
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
                   {[...Array(4)].map((_, i) => (
@@ -193,29 +176,41 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Visual - Simplified */}
+          {/* Right Visual - Premium Packaging Showcase */}
           <div className="relative h-[600px] lg:h-[700px]">
-            {/* Main Visual Container */}
+            {/* Main Showcase Container */}
             <div className="absolute inset-0 flex items-center justify-center">
+              {/* Rotating Package Display */}
               <div className="relative w-full max-w-lg">
-                <div className="relative bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 shadow-2xl border border-gray-100">
-                  {/* Large Package Visual */}
-                  <div className="h-96 mb-6 text-transparent bg-gradient-to-br from-purple-600 via-blue-600 to-green-600 bg-clip-text flex items-center justify-center">
-                    <svg className="w-full h-full max-w-xs" viewBox="0 0 200 200" fill="none">
-                      <rect x="20" y="60" width="160" height="120" rx="12" fill="currentColor" opacity="0.1" stroke="currentColor" strokeWidth="3"/>
-                      <path d="M20 60L100 30L180 60" stroke="currentColor" strokeWidth="3" fill="none"/>
-                      <path d="M100 30V60" stroke="currentColor" strokeWidth="3"/>
-                      <rect x="140" y="140" width="25" height="25" rx="4" fill="currentColor" opacity="0.3"/>
-                      <circle cx="152.5" cy="152.5" r="8" fill="currentColor"/>
-                    </svg>
+                {packageShowcase.map((pkg, index) => (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 transition-all duration-700 ${
+                      index === activePackage 
+                        ? 'opacity-100 scale-100 z-20' 
+                        : index === (activePackage + 1) % 3
+                        ? 'opacity-40 scale-90 translate-x-20 z-10'
+                        : 'opacity-40 scale-90 -translate-x-20 z-10'
+                    }`}
+                  >
+                    <div className={`relative bg-gradient-to-br ${pkg.bgColor} rounded-3xl p-8 shadow-2xl border border-gray-100`}>
+                      {/* Package Visual */}
+                      <div className={`h-64 mb-6 text-transparent bg-gradient-to-br ${pkg.color} bg-clip-text`}>
+                        {pkg.icon}
+                      </div>
+                      
+                      {/* Package Info */}
+                      <h3 className="text-2xl font-bold text-gray-900 mb-3">{pkg.type}</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {pkg.features.map((feature, idx) => (
+                          <span key={idx} className="px-3 py-1 bg-white/80 text-gray-700 rounded-full text-sm">
+                            {feature}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  
-                  {/* Package Info */}
-                  <div className="text-center">
-                    <h3 className="text-3xl font-bold text-gray-900 mb-3">Smart Packaging</h3>
-                    <p className="text-gray-600 text-lg">Eco-friendly • Tech-enabled • Brand-focused</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -246,6 +241,21 @@ const Hero = () => {
                   <div className="text-xs text-gray-600">5-7 Business Days</div>
                 </div>
               </div>
+            </div>
+
+            {/* Package Type Indicators */}
+            <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex gap-2">
+              {packageShowcase.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActivePackage(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === activePackage 
+                      ? 'w-8 bg-gradient-to-r from-purple-600 to-blue-600' 
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                />
+              ))}
             </div>
           </div>
         </div>
