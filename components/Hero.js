@@ -13,6 +13,13 @@ const Hero = () => {
     }
   }
 
+  const scrollToWork = () => {
+    const element = document.querySelector('#packaging')
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   // Auto-rotate showcase
   useEffect(() => {
     const interval = setInterval(() => {
@@ -133,8 +140,35 @@ const Hero = () => {
               </span>
             </div>
 
-            {/* Single CTA Button */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
+            {/* Packaging Options */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+              {packageShowcase.map((pkg, index) => (
+                <div
+                  key={index}
+                  onClick={() => setActivePackage(index)}
+                  className={`cursor-pointer p-6 rounded-2xl border-2 transition-all duration-300 ${
+                    index === activePackage 
+                      ? `border-transparent bg-gradient-to-br ${pkg.bgColor} shadow-lg` 
+                      : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-md'
+                  }`}
+                >
+                  <div className={`w-12 h-12 mb-4 text-transparent bg-gradient-to-br ${pkg.color} bg-clip-text`}>
+                    {pkg.icon}
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{pkg.type}</h3>
+                  <div className="flex flex-wrap gap-1">
+                    {pkg.features.map((feature, idx) => (
+                      <span key={idx} className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button
                 onClick={scrollToQuote}
                 className="group relative px-8 py-4 bg-gradient-to-r from-gray-900 to-gray-700 text-white font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl"
@@ -145,7 +179,7 @@ const Hero = () => {
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center gap-8 justify-center lg:justify-start">
+            <div className="mt-10 flex flex-wrap items-center gap-8 justify-center lg:justify-start">
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
                   {[...Array(4)].map((_, i) => (
@@ -163,51 +197,83 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Side - Package Showcase */}
-          <div className="relative">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Choose Your <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Packaging Type</span>
-              </h2>
-              <p className="text-lg text-gray-600">
-                From custom boxes to smart mylar bags
-              </p>
-            </div>
-
-            {/* Package Showcase Grid */}
-            <div className="grid grid-cols-1 gap-6">
-              {packageShowcase.map((pkg, index) => (
-                <div
-                  key={index}
-                  className={`relative bg-gradient-to-br ${pkg.bgColor} rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 cursor-pointer ${
-                    index === activePackage ? 'ring-2 ring-purple-500 scale-105' : 'hover:scale-102'
-                  }`}
-                  onClick={() => setActivePackage(index)}
-                >
-                  <div className="flex items-center gap-4">
-                    {/* Package Visual */}
-                    <div className={`w-16 h-16 text-transparent bg-gradient-to-br ${pkg.color} bg-clip-text flex-shrink-0`}>
-                      {pkg.icon}
-                    </div>
-                    
-                    {/* Package Info */}
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{pkg.type}</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {pkg.features.map((feature, idx) => (
-                          <span key={idx} className="px-2 py-1 bg-white/80 text-gray-700 rounded-full text-xs">
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+          {/* Right Visual - Simplified */}
+          <div className="relative h-[600px] lg:h-[700px]">
+            {/* Main Visual Container */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative w-full max-w-lg">
+                <div className={`relative bg-gradient-to-br ${packageShowcase[activePackage].bgColor} rounded-3xl p-8 shadow-2xl border border-gray-100`}>
+                  {/* Package Visual */}
+                  <div className={`h-64 mb-6 text-transparent bg-gradient-to-br ${packageShowcase[activePackage].color} bg-clip-text`}>
+                    {packageShowcase[activePackage].icon}
+                  </div>
+                  
+                  {/* Package Info */}
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">{packageShowcase[activePackage].type}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {packageShowcase[activePackage].features.map((feature, idx) => (
+                      <span key={idx} className="px-3 py-1 bg-white/80 text-gray-700 rounded-full text-sm">
+                        {feature}
+                      </span>
+                    ))}
                   </div>
                 </div>
-              ))}
+              </div>
+            </div>
+
+            {/* Floating Elements */}
+            <div className="absolute top-10 right-10 bg-white rounded-2xl shadow-xl p-4 animate-float">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                  <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-gray-900">Eco Certified</div>
+                  <div className="text-xs text-gray-600">Carbon Neutral</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-10 left-10 bg-white rounded-2xl shadow-xl p-4 animate-float-delayed">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                  <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-sm font-semibold text-gray-900">Fast Delivery</div>
+                  <div className="text-xs text-gray-600">5-7 Business Days</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Add CSS for animations */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes float-delayed {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+        
+        .animate-float-delayed {
+          animation: float-delayed 3s ease-in-out infinite;
+          animation-delay: 1.5s;
+        }
+      `}</style>
     </section>
   )
 }
