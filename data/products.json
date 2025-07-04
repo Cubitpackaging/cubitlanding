@@ -4,7 +4,7 @@
       "name": "Mailer Boxes",
       "description": "Custom printed shipping boxes that protect your products while showcasing your brand.",
       "fullDescription": "Our premium mailer boxes are designed to make a lasting impression from the moment your customers receive their package. Made from high-quality corrugated cardboard, these boxes offer excellent protection while providing a canvas for your brand story. Perfect for e-commerce businesses looking to enhance their unboxing experience.",
-      "price": "Starting at $0.85",
+
       "minOrder": "",
       "category": "Shipping & E-commerce",
       "features": [
@@ -31,7 +31,7 @@
     {
       "id": "2",
       "name": "Pouches & Bags",
-      "price": "Starting at $0.65",
+
       "category": "Food & Beverage",
       "moq": "MOQ: 100 units",
       "description": "Flexible packaging solutions perfect for food, supplements, and retail products.",
@@ -59,7 +59,7 @@
     {
       "id": "3",
       "name": "Folding Cartons",
-      "price": "Starting at $1.25",
+
       "category": "Retail & Luxury",
       "moq": "MOQ: 75 units",
       "description": "Premium retail packaging that enhances product presentation and brand experience.",
@@ -87,7 +87,7 @@
     {
       "id": "4",
       "name": "Shipping Boxes",
-      "price": "Starting at $1.15",
+
       "category": "Shipping & E-commerce",
       "moq": "MOQ: 50 units",
       "description": "Durable corrugated boxes designed for safe product transport and delivery.",
@@ -115,7 +115,7 @@
     {
       "id": "5",
       "name": "Labels & Stickers",
-      "price": "Starting at $0.15",
+
       "category": "Branding & Marketing",
       "moq": "MOQ: 250 units",
       "description": "Custom labels and stickers for branding, product information, and promotional use.",
@@ -145,7 +145,7 @@
     {
       "id": "6",
       "name": "Coffee Packaging",
-      "price": "From $0.75",
+
       "category": "Food & Beverage",
       "moq": "MOQ: 100 units",
       "description": "Premium coffee bags with degassing valves and resealable closures for freshness.",
@@ -173,7 +173,7 @@
     {
       "id": "7",
       "name": "Food Containers",
-      "price": "From $0.45",
+
       "category": "Food & Beverage",
       "moq": "MOQ: 200 units",
       "description": "Sustainable takeout containers, meal prep boxes, and food storage solutions.",
@@ -201,7 +201,7 @@
     {
       "id": "8",
       "name": "Cosmetic Boxes",
-      "price": "From $1.85",
+
       "category": "Beauty & Personal Care",
       "moq": "MOQ: 50 units",
       "description": "Luxury packaging for skincare, makeup, and beauty products with premium finishes.",
@@ -229,7 +229,7 @@
     {
       "id": "9",
       "name": "Supplement Pouches",
-      "price": "From $0.95",
+
       "category": "Health & Wellness",
       "moq": "MOQ: 100 units",
       "description": "Child-resistant pouches and bottles for vitamins, supplements, and health products.",
@@ -257,7 +257,7 @@
     {
       "id": "10",
       "name": "Apparel Mailers",
-      "price": "From $0.55",
+
       "category": "Fashion & Apparel",
       "moq": "MOQ: 150 units",
       "description": "Branded mailers and poly bags for clothing, accessories, and fashion items.",
@@ -285,7 +285,7 @@
     {
       "id": "11",
       "name": "Electronics Packaging",
-      "price": "From $1.25",
+
       "category": "Electronics",
       "moq": "MOQ: 75 units",
       "description": "Anti-static boxes and protective packaging for phones, gadgets, and tech products.",
@@ -313,7 +313,7 @@
     {
       "id": "12",
       "name": "Jewelry Boxes",
-      "price": "From $2.45",
+
       "category": "Luxury Goods",
       "moq": "MOQ: 25 units",
       "description": "Elegant presentation boxes for rings, necklaces, and luxury jewelry items.",
@@ -341,7 +341,7 @@
     {
       "id": "13",
       "name": "Book Mailers",
-      "price": "From $0.85",
+
       "category": "Publishing & Media",
       "moq": "MOQ: 100 units",
       "description": "Protective mailers and rigid boxes for books, magazines, and printed materials.",
@@ -369,7 +369,7 @@
     {
       "id": "14",
       "name": "Gift Boxes",
-      "price": "From $1.35",
+
       "category": "Gifts & Occasions",
       "moq": "MOQ: 50 units",
       "description": "Festive packaging for holidays, corporate gifts, and special occasions.",

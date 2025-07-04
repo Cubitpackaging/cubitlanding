@@ -9,7 +9,7 @@ const WhyChoose = () => {
         </svg>
       ),
       title: "We Get Founders, Not Just Files",
-      description: "You're not just placing an order — you're building a brand. We walk with you from your first sketch to scale, helping you avoid overwhelm, misprints, and wasted spend."
+      description: "You're not just placing an order, you're building a brand. We walk with you from your first sketch to scale, helping you avoid overwhelm, misprints, and wasted spend."
     },
     {
       icon: (
@@ -18,7 +18,7 @@ const WhyChoose = () => {
         </svg>
       ),
       title: "Packaging That Converts, Not Just Protects",
-      description: "We combine stunning design with interactive tech — like QR and NFC — so your packaging doesn't just arrive… it performs. Drive reorders, tell your story, and capture attention from the moment of unboxing."
+      description: "We combine stunning design with interactive tech like QR and NFC so your packaging doesn't just arrive, it performs. Drive reorders, tell your story, and capture attention from the moment of unboxing."
     },
     {
       icon: (
@@ -36,7 +36,7 @@ const WhyChoose = () => {
         </svg>
       ),
       title: "Design Help That Doesn't Cost You More",
-      description: "You'll never feel stuck in a design tool or PDF again. Our in-house creatives refine your layout, guide your print prep, and even help position QR codes — free of charge."
+      description: "You'll never feel stuck in a design tool or PDF again. Our in-house creatives refine your layout, guide your print prep, and even help position QR codes free of charge."
     },
     {
       icon: (
@@ -45,7 +45,7 @@ const WhyChoose = () => {
         </svg>
       ),
       title: "Sustainability That Speaks for Itself",
-      description: "Eco-friendly packaging is no longer optional — it's expected. We offer sustainable materials and help you tell that story with transparency through scan-to-learn features built into your box."
+      description: "Eco-friendly packaging is no longer optional, it's expected. We offer sustainable materials and help you tell that story with transparency through scan-to-learn features built into your box."
     },
     {
       icon: (
@@ -54,7 +54,7 @@ const WhyChoose = () => {
         </svg>
       ),
       title: "Your Brand. Your Box. Your Control.",
-      description: "Cubit is your silent backstage partner — giving you everything you need to ship faster, look better, and grow smarter. All with no guesswork, hidden fees, or long lead times."
+      description: "Cubit is your silent backstage partner, giving you everything you need to ship faster, look better, and grow smarter. All with no guesswork, hidden fees, or long lead times."
     }
   ]
 
@@ -68,7 +68,7 @@ const WhyChoose = () => {
           </h2>
           <div className="max-w-4xl mx-auto">
             <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-4">
-              Your packaging isn't just a box — it's your customer's first impression, your silent salesperson, and your most powerful retention tool.
+              Your packaging isn't just a box, it's your customer's first impression, your silent salesperson, and your most powerful retention tool.
             </p>
             <p className="text-xl md:text-2xl font-semibold text-gray-900">
               That's why the smartest brands choose Cubit.
@@ -93,7 +93,7 @@ const WhyChoose = () => {
         <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg text-center mb-12">
           <div className="max-w-3xl mx-auto">
             <blockquote className="text-2xl md:text-3xl font-medium text-gray-900 mb-4">
-              "Our customers don't just comment on the product — they post about the packaging."
+              "Our customers don't just comment on the product, they post about the packaging."
             </blockquote>
             <p className="text-xl text-gray-700 mb-6">
               That's what you get with Cubit. Let's build yours.
