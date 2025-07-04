@@ -1,0 +1,398 @@
+{
+  "products": [
+    {
+      "name": "Mailer Boxes",
+      "description": "Custom printed shipping boxes that protect your products while showcasing your brand.",
+      "fullDescription": "Our premium mailer boxes are designed to make a lasting impression from the moment your customers receive their package. Made from high-quality corrugated cardboard, these boxes offer excellent protection while providing a canvas for your brand story. Perfect for e-commerce businesses looking to enhance their unboxing experience.",
+      "price": "Starting at $0.85",
+      "minOrder": "",
+      "category": "Shipping & E-commerce",
+      "features": [
+        "Custom sizes available",
+        "Full-color printing",
+        "Tear-strip opening",
+        "Eco-friendly materials",
+        "Fast 4-7 day turnaround"
+      ],
+      "specifications": {
+        "Material": "Corrugated cardboard",
+        "Thickness": "3mm, 5mm options",
+        "Print": "Full CMYK + spot colors",
+        "Finish": "Matte, gloss, or soft-touch",
+        "Sizes": "Custom dimensions up to 24x18x12 inches"
+      },
+      "popular": true,
+      "bestseller": false,
+      "imageId": "1751588371734",
+      "type": "products",
+      "id": "1",
+      "updatedAt": "2025-07-04T00:19:46.818Z"
+    },
+    {
+      "id": "2",
+      "name": "Pouches & Bags",
+      "price": "Starting at $0.65",
+      "category": "Food & Beverage",
+      "moq": "MOQ: 100 units",
+      "description": "Flexible packaging solutions perfect for food, supplements, and retail products.",
+      "fullDescription": "Versatile stand-up pouches and flat bags that combine functionality with eye-catching design. Our pouches feature advanced barrier properties to keep contents fresh while offering excellent printability for brand messaging. Ideal for food products, supplements, cosmetics, and retail items.",
+      "features": [
+        "Stand-up pouches",
+        "Resealable zippers",
+        "Barrier protection",
+        "Clear windows available",
+        "Multiple sizes"
+      ],
+      "specifications": {
+        "Material": "Laminated films (PET/PE/BOPP)",
+        "Barrier": "Oxygen, moisture, light protection",
+        "Print": "Up to 10 colors gravure printing",
+        "Features": "Resealable, tear notch, hang hole",
+        "Sizes": "From 3x5 inches to 12x18 inches"
+      },
+      "popular": false,
+      "bestseller": false,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "3",
+      "name": "Folding Cartons",
+      "price": "Starting at $1.25",
+      "category": "Retail & Luxury",
+      "moq": "MOQ: 75 units",
+      "description": "Premium retail packaging that enhances product presentation and brand experience.",
+      "fullDescription": "Sophisticated folding cartons that elevate your product presentation on retail shelves. These boxes combine structural integrity with premium finishing options to create packaging that customers want to keep. Perfect for cosmetics, electronics, food products, and luxury items.",
+      "features": [
+        "Luxury finishes",
+        "Window cutouts",
+        "Magnetic closures",
+        "Embossing/debossing",
+        "Foil stamping"
+      ],
+      "specifications": {
+        "Material": "SBS, kraft, or recycled paperboard",
+        "Thickness": "12pt to 24pt options",
+        "Print": "Offset printing with spot colors",
+        "Finish": "UV coating, lamination, soft-touch",
+        "Features": "Die-cut windows, magnetic closure, ribbon pulls"
+      },
+      "popular": false,
+      "bestseller": true,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Shipping Boxes",
+      "price": "Starting at $1.15",
+      "category": "Shipping & E-commerce",
+      "moq": "MOQ: 50 units",
+      "description": "Durable corrugated boxes designed for safe product transport and delivery.",
+      "fullDescription": "Heavy-duty shipping boxes engineered for maximum protection during transit. Our corrugated boxes feature reinforced corners and edges to prevent damage while maintaining cost-effectiveness. Available in various strengths and sizes to accommodate different shipping needs.",
+      "features": [
+        "Various sizes",
+        "Double-wall strength",
+        "Easy assembly",
+        "Crush-resistant",
+        "Stackable design"
+      ],
+      "specifications": {
+        "Material": "Single or double-wall corrugated",
+        "Strength": "32 ECT to 275 lb test",
+        "Print": "Flexographic printing",
+        "Closure": "Regular slotted container (RSC)",
+        "Sizes": "Standard and custom dimensions"
+      },
+      "popular": false,
+      "bestseller": false,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "5",
+      "name": "Labels & Stickers",
+      "price": "Starting at $0.15",
+      "category": "Branding & Marketing",
+      "moq": "MOQ: 250 units",
+      "description": "Custom labels and stickers for branding, product information, and promotional use.",
+      "fullDescription": "High-quality labels and stickers that make your products stand out. Our labels are designed to adhere perfectly to various surfaces while maintaining vibrant colors and sharp text. Perfect for product labeling, promotional campaigns, and brand identification.",
+      "features": [
+        "Waterproof options",
+        "Die-cut shapes",
+        "Specialty adhesives",
+        "Scratch-resistant",
+        "UV-resistant inks"
+      ],
+      "specifications": {
+        "Material": "Vinyl, paper, or polyester",
+        "Adhesive": "Permanent, removable, or repositionable",
+        "Print": "Digital or flexographic printing",
+        "Finish": "Matte, gloss, or clear overlaminate",
+        "Shapes": "Round, square, oval, or custom die-cut"
+      },
+      "popular": false,
+      "bestseller": false,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    }
+  ],
+  "industryProducts": [
+    {
+      "id": "6",
+      "name": "Coffee Packaging",
+      "price": "From $0.75",
+      "category": "Food & Beverage",
+      "moq": "MOQ: 100 units",
+      "description": "Premium coffee bags with degassing valves and resealable closures for freshness.",
+      "fullDescription": "Our coffee packaging solutions are specifically designed to preserve the freshness and aroma of your coffee beans. Featuring one-way degassing valves, resealable zippers, and barrier films that protect against moisture, oxygen, and light. Perfect for roasters and coffee brands looking to maintain quality from roastery to cup.",
+      "features": [
+        "One-way degassing valve",
+        "Resealable zipper",
+        "Barrier protection",
+        "Custom printing",
+        "Multiple sizes available"
+      ],
+      "specifications": {
+        "Material": "Laminated barrier film",
+        "Valve": "One-way degassing valve included",
+        "Closure": "Resealable zipper or heat seal",
+        "Print": "Full-color rotogravure printing",
+        "Sizes": "8oz, 12oz, 16oz, 2lb, 5lb options"
+      },
+      "popular": false,
+      "bestseller": false,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "7",
+      "name": "Food Containers",
+      "price": "From $0.45",
+      "category": "Food & Beverage",
+      "moq": "MOQ: 200 units",
+      "description": "Sustainable takeout containers, meal prep boxes, and food storage solutions.",
+      "fullDescription": "Eco-friendly food containers designed for restaurants, meal prep services, and food delivery. Made from sustainable materials with leak-proof designs and excellent insulation properties. Available in various sizes and configurations to meet your specific food service needs.",
+      "features": [
+        "Leak-proof design",
+        "Microwave safe",
+        "Eco-friendly materials",
+        "Custom branding",
+        "Stack-friendly"
+      ],
+      "specifications": {
+        "Material": "Biodegradable fiber or recycled plastic",
+        "Temperature": "Microwave and freezer safe",
+        "Capacity": "8oz to 64oz options",
+        "Closure": "Secure snap-fit lid",
+        "Certification": "FDA approved, compostable options"
+      },
+      "popular": false,
+      "bestseller": true,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "8",
+      "name": "Cosmetic Boxes",
+      "price": "From $1.85",
+      "category": "Beauty & Personal Care",
+      "moq": "MOQ: 50 units",
+      "description": "Luxury packaging for skincare, makeup, and beauty products with premium finishes.",
+      "fullDescription": "Elegant cosmetic packaging that enhances your beauty brand's premium image. Our boxes feature luxury finishes, magnetic closures, and custom inserts to showcase your products beautifully. Perfect for skincare sets, makeup collections, and premium beauty products.",
+      "features": [
+        "Magnetic closure",
+        "Custom inserts",
+        "Luxury finishes",
+        "Soft-touch coating",
+        "Foil stamping"
+      ],
+      "specifications": {
+        "Material": "Premium paperboard with luxury finishes",
+        "Thickness": "18pt to 24pt options",
+        "Closure": "Magnetic or ribbon closure",
+        "Finish": "Soft-touch, UV coating, foil stamping",
+        "Insert": "Custom foam or cardboard inserts"
+      },
+      "popular": false,
+      "bestseller": false,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "9",
+      "name": "Supplement Pouches",
+      "price": "From $0.95",
+      "category": "Health & Wellness",
+      "moq": "MOQ: 100 units",
+      "description": "Child-resistant pouches and bottles for vitamins, supplements, and health products.",
+      "fullDescription": "Specialized packaging for dietary supplements and health products. Our pouches and bottles meet FDA requirements with child-resistant features and tamper-evident seals. Designed to protect product integrity while ensuring consumer safety.",
+      "features": [
+        "Child-resistant closure",
+        "Tamper-evident seal",
+        "Moisture barrier",
+        "FDA compliant",
+        "Custom labeling"
+      ],
+      "specifications": {
+        "Material": "Pharmaceutical-grade materials",
+        "Closure": "Child-resistant cap or zipper",
+        "Barrier": "Moisture and oxygen protection",
+        "Compliance": "FDA, cGMP certified",
+        "Capacity": "30ct to 500ct options"
+      },
+      "popular": false,
+      "bestseller": false,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "10",
+      "name": "Apparel Mailers",
+      "price": "From $0.55",
+      "category": "Fashion & Apparel",
+      "moq": "MOQ: 150 units",
+      "description": "Branded mailers and poly bags for clothing, accessories, and fashion items.",
+      "fullDescription": "Stylish shipping solutions for fashion and apparel brands. Our mailers combine protection with brand presentation, featuring custom printing and eco-friendly materials. Perfect for online fashion retailers and subscription box services.",
+      "features": [
+        "Custom branding",
+        "Tear-resistant",
+        "Eco-friendly options",
+        "Self-sealing",
+        "Multiple sizes"
+      ],
+      "specifications": {
+        "Material": "Poly mailer or kraft paper",
+        "Thickness": "2.5mil to 3.5mil options",
+        "Closure": "Self-sealing adhesive strip",
+        "Print": "Full-color flexographic printing",
+        "Eco-option": "Biodegradable and recyclable materials"
+      },
+      "popular": false,
+      "bestseller": false,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "11",
+      "name": "Electronics Packaging",
+      "price": "From $1.25",
+      "category": "Electronics",
+      "moq": "MOQ: 75 units",
+      "description": "Anti-static boxes and protective packaging for phones, gadgets, and tech products.",
+      "fullDescription": "Specialized packaging for electronic devices and components. Our anti-static materials protect sensitive electronics while custom inserts ensure secure fit and professional presentation. Ideal for consumer electronics, components, and tech accessories.",
+      "features": [
+        "Anti-static protection",
+        "Custom foam inserts",
+        "Shock absorption",
+        "Clean room compatible",
+        "ESD safe"
+      ],
+      "specifications": {
+        "Material": "Anti-static corrugated or foam",
+        "ESD": "Static dissipative materials",
+        "Insert": "Custom-cut protective foam",
+        "Certification": "ESD safe, clean room approved",
+        "Testing": "Drop test and compression tested"
+      },
+      "popular": false,
+      "bestseller": false,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "12",
+      "name": "Jewelry Boxes",
+      "price": "From $2.45",
+      "category": "Luxury Goods",
+      "moq": "MOQ: 25 units",
+      "description": "Elegant presentation boxes for rings, necklaces, and luxury jewelry items.",
+      "fullDescription": "Exquisite jewelry packaging that reflects the value and beauty of your pieces. Our boxes feature premium materials, velvet inserts, and elegant designs that create memorable unboxing experiences for luxury jewelry brands.",
+      "features": [
+        "Velvet inserts",
+        "Premium materials",
+        "Elegant design",
+        "Secure closure",
+        "Custom branding"
+      ],
+      "specifications": {
+        "Material": "Premium paperboard with luxury finishes",
+        "Insert": "Velvet or silk-lined inserts",
+        "Closure": "Magnetic or hinged lid",
+        "Finish": "Embossed, foil stamped, or leather texture",
+        "Sizes": "Ring, earring, necklace, and set boxes"
+      },
+      "popular": false,
+      "bestseller": false,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "13",
+      "name": "Book Mailers",
+      "price": "From $0.85",
+      "category": "Publishing & Media",
+      "moq": "MOQ: 100 units",
+      "description": "Protective mailers and rigid boxes for books, magazines, and printed materials.",
+      "fullDescription": "Reliable shipping solutions for publishers and book retailers. Our mailers provide excellent protection against bending and damage while maintaining cost-effectiveness for high-volume shipping. Available in various sizes for different book formats.",
+      "features": [
+        "Bend-resistant",
+        "Self-sealing",
+        "Lightweight",
+        "Custom sizes",
+        "Eco-friendly"
+      ],
+      "specifications": {
+        "Material": "Rigid cardboard or corrugated",
+        "Protection": "Bend and crush resistant",
+        "Closure": "Self-sealing or tape closure",
+        "Sizes": "Paperback, hardcover, and oversized options",
+        "Eco-option": "Recycled materials available"
+      },
+      "popular": false,
+      "bestseller": false,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "14",
+      "name": "Gift Boxes",
+      "price": "From $1.35",
+      "category": "Gifts & Occasions",
+      "moq": "MOQ: 50 units",
+      "description": "Festive packaging for holidays, corporate gifts, and special occasions.",
+      "fullDescription": "Beautiful gift boxes that make every occasion special. Our seasonal and custom gift boxes feature premium finishes, ribbon details, and elegant designs perfect for corporate gifting, holidays, and special celebrations.",
+      "features": [
+        "Premium finishes",
+        "Ribbon details",
+        "Seasonal designs",
+        "Custom branding",
+        "Various sizes"
+      ],
+      "specifications": {
+        "Material": "Premium paperboard with decorative finishes",
+        "Closure": "Ribbon tie, magnetic, or lift-off lid",
+        "Finish": "Foil stamping, embossing, or specialty coatings",
+        "Customization": "Full-color printing and custom inserts",
+        "Occasions": "Holiday, corporate, wedding, and event themes"
+      },
+      "popular": false,
+      "bestseller": false,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    }
+  ]
+}
