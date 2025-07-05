@@ -19,12 +19,20 @@ export default function AdminLogin() {
   }, [router])
 
   const checkAuthStatus = async () => {
-    const { success, session } = await AuthService.getSession()
-    if (success && session) {
-      const isAdmin = await AuthService.isAdmin(session.user)
-      if (isAdmin) {
-        router.push('/admin/dashboard')
+    try {
+      const { success, session } = await AuthService.getSession()
+      console.log('Current session check:', { success, session })
+      
+      if (success && session) {
+        const isAdmin = await AuthService.isAdmin(session.user)
+        console.log('Is admin check:', isAdmin)
+        
+        if (isAdmin) {
+          router.push('/admin/dashboard')
+        }
       }
+    } catch (error) {
+      console.error('Auth status check error:', error)
     }
   }
 
@@ -33,22 +41,32 @@ export default function AdminLogin() {
     setLoading(true)
     setError('')
 
+    console.log('Login attempt with:', credentials.email)
+
     try {
       const result = await AuthService.signIn(credentials.email, credentials.password)
+      console.log('Login result:', result)
       
       if (result.success) {
+        console.log('Login successful, checking admin status...')
+        
         // Check if user is admin
         const isAdmin = await AuthService.isAdmin(result.user)
+        console.log('Admin check result:', isAdmin)
+        
         if (isAdmin) {
+          console.log('Admin confirmed, redirecting to dashboard...')
           router.push('/admin/dashboard')
         } else {
           setError('Access denied. Admin privileges required.')
           await AuthService.signOut()
         }
       } else {
+        console.error('Login failed:', result.error)
         setError(result.error || 'Invalid credentials')
       }
     } catch (error) {
+      console.error('Login exception:', error)
       setError('Login failed. Please try again.')
     } finally {
       setLoading(false)
@@ -120,6 +138,9 @@ export default function AdminLogin() {
 
         <div className="mt-8 text-center text-sm text-gray-500">
           <p>Admin access required</p>
+          <p className="mt-2 text-xs">
+            Use: hi@cubitpackaging.com
+          </p>
         </div>
       </div>
     </div>
