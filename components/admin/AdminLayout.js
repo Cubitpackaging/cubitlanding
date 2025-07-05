@@ -3,15 +3,21 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { AuthService } from '../../lib/auth'
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const router = useRouter()
 
-  const handleLogout = () => {
-    localStorage.removeItem('admin_logged_in')
-    localStorage.removeItem('admin_token')
-    router.push('/admin')
+  const handleLogout = async () => {
+    try {
+      await AuthService.signOut()
+      router.push('/admin')
+    } catch (error) {
+      console.error('Logout failed:', error)
+      // Force logout even if there's an error
+      router.push('/admin')
+    }
   }
 
   const navigation = [

@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { AuthService } from '../../lib/auth'
 
 export default function AdminLogin() {
   const [credentials, setCredentials] = useState({
-    username: '',
+    email: '',
     password: ''
   })
   const [error, setError] = useState('')
@@ -14,11 +15,18 @@ export default function AdminLogin() {
 
   useEffect(() => {
     // Check if already logged in
-    const isLoggedIn = localStorage.getItem('admin_logged_in')
-    if (isLoggedIn === 'true') {
-      router.push('/admin/dashboard')
-    }
+    checkAuthStatus()
   }, [router])
+
+  const checkAuthStatus = async () => {
+    const { success, session } = await AuthService.getSession()
+    if (success && session) {
+      const isAdmin = await AuthService.isAdmin(session.user)
+      if (isAdmin) {
+        router.push('/admin/dashboard')
+      }
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -26,22 +34,19 @@ export default function AdminLogin() {
     setError('')
 
     try {
-      const response = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        localStorage.setItem('admin_logged_in', 'true')
-        localStorage.setItem('admin_token', data.token)
-        router.push('/admin/dashboard')
+      const result = await AuthService.signIn(credentials.email, credentials.password)
+      
+      if (result.success) {
+        // Check if user is admin
+        const isAdmin = await AuthService.isAdmin(result.user)
+        if (isAdmin) {
+          router.push('/admin/dashboard')
+        } else {
+          setError('Access denied. Admin privileges required.')
+          await AuthService.signOut()
+        }
       } else {
-        setError(data.error || 'Invalid credentials')
+        setError(result.error || 'Invalid credentials')
       }
     } catch (error) {
       setError('Login failed. Please try again.')
@@ -75,14 +80,14 @@ export default function AdminLogin() {
           )}
 
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
-              Username
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              Email
             </label>
             <input
-              type="text"
-              id="username"
-              name="username"
-              value={credentials.username}
+              type="email"
+              id="email"
+              name="email"
+              value={credentials.email}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
               required
@@ -114,8 +119,7 @@ export default function AdminLogin() {
         </form>
 
         <div className="mt-8 text-center text-sm text-gray-500">
-          <p>Default credentials:</p>
-          <p>Username: admin | Password: admin123</p>
+          <p>Admin access required</p>
         </div>
       </div>
     </div>

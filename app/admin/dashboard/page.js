@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import AdminLayout from '../../../components/admin/AdminLayout'
+import { AuthService } from '../../../lib/auth'
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -11,19 +12,36 @@ export default function AdminDashboard() {
     totalQuotes: 0
   })
   const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
   const router = useRouter()
 
   useEffect(() => {
     // Check authentication
-    const isLoggedIn = localStorage.getItem('admin_logged_in')
-    if (isLoggedIn !== 'true') {
-      router.push('/admin')
-      return
-    }
-
-    // Load dashboard stats
-    loadStats()
+    checkAuth()
   }, [router])
+
+  const checkAuth = async () => {
+    try {
+      const { success, session } = await AuthService.getSession()
+      if (!success || !session) {
+        router.push('/admin')
+        return
+      }
+
+      const isAdmin = await AuthService.isAdmin(session.user)
+      if (!isAdmin) {
+        router.push('/admin')
+        return
+      }
+
+      setUser(session.user)
+      // Load dashboard stats
+      loadStats()
+    } catch (error) {
+      console.error('Auth check failed:', error)
+      router.push('/admin')
+    }
+  }
 
   const loadStats = async () => {
     try {
