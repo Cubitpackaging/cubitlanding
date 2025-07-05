@@ -195,34 +195,35 @@ const RushOrderModal = ({ isOpen, onClose }) => {
   const generateWhatsAppMessage = () => {
     const urgencyLabel = urgencyLevels.find(u => u.value === formData.urgencyLevel)?.label || ''
     
-    const message = `🚀 RUSH ORDER REQUEST 🚀
+    const message = `RUSH ORDER REQUEST
 
-👤 CONTACT DETAILS:
-• Name: ${formData.name}
-• Email: ${formData.email}
-• Phone: ${formData.phone}
-• Company: ${formData.company || 'Not specified'}
+📋 CONTACT INFORMATION
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Company: ${formData.company || 'Not specified'}
 
-📦 PACKAGING DETAILS:
-• Type: ${formData.packagingType}
-• Quantity: ${formData.quantity}
-• Dimensions: ${formData.dimensions || 'Not specified'}
-• Material: ${formData.material || 'Not specified'}
-• Colors: ${formData.colors || 'Not specified'}
-• Finish: ${formData.finishOptions || 'Not specified'}
+📦 PACKAGING SPECIFICATIONS
+Type: ${formData.packagingType}
+Quantity: ${formData.quantity}
+Dimensions: ${formData.dimensions || 'Not specified'}
+Colors: ${formData.colors || 'Not specified'}
+Material: ${formData.material || 'Not specified'}
+Finish: ${formData.finishOptions || 'Not specified'}
 
-⏰ URGENCY:
-• Timeline: ${urgencyLabel}
-• Deadline: ${formData.deadline}
+⏰ TIMELINE & URGENCY
+Deadline: ${formData.deadline}
+Urgency Level: ${formData.urgencyLevel}
 
-📝 PROJECT DESCRIPTION:
-${formData.projectDescription}
+📝 PROJECT DESCRIPTION
+${formData.projectDescription || 'No additional details provided'}
 
-${formData.specialRequirements ? `🔧 SPECIAL REQUIREMENTS:\n${formData.specialRequirements}` : ''}
+📎 ATTACHMENTS
+${formData.uploadedFiles.length > 0 ? `${formData.uploadedFiles.length} file(s) attached` : 'No files attached'}
 
-${formData.uploadedFiles.length > 0 ? `📎 FILES ATTACHED: ${formData.uploadedFiles.length} file(s)` : ''}
-
-Please provide a quote for this rush order. Thank you!`
+---
+This is a rush order request. Please prioritize and respond ASAP.
+Thank you!`
 
     return encodeURIComponent(message)
   }
@@ -261,7 +262,6 @@ Please provide a quote for this rush order. Thank you!`
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                <span className="text-2xl">🚀</span>
                 Rush Order Request
               </h2>
               <p className="text-gray-600 mt-1">Get your custom packaging fast-tracked</p>
@@ -566,7 +566,7 @@ Please provide a quote for this rush order. Thank you!`
                               <span className={`text-sm font-semibold ${level.color}`}>
                                 {level.value === 'same-day' && '🔥'}
                                 {level.value === 'urgent' && '⚡'}
-                                {level.value === 'rush' && '🚀'}
+                                {level.value === 'rush' && ''}
                                 {level.value === 'standard' && '✅'}
                               </span>
                             </div>

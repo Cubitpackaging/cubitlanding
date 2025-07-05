@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import RushOrderModal from './RushOrderModal'
-import { RainbowButton } from './ui/rainbow-button'
+import { CrystalButton } from './ui/crystal-button'
 
 const Hero = () => {
   const [activePackage, setActivePackage] = useState(0)
@@ -154,12 +154,11 @@ const Hero = () => {
                 <span className="relative z-10">Request a Quote</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
-              <RainbowButton
+              <CrystalButton
                 onClick={() => setRushOrderModalOpen(true)}
-                className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold"
               >
                 Rush Order
-              </RainbowButton>
+              </CrystalButton>
             </div>
 
             {/* Trust Indicators */}
