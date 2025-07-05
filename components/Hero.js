@@ -98,7 +98,7 @@ const Hero = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-12 sm:pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center min-h-[500px] sm:min-h-[600px] lg:min-h-[700px]">
           {/* Left Content */}
-          <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0 flex flex-col justify-center order-2 lg:order-1">
+          <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0 flex flex-col justify-center order-1 lg:order-1">
             {/* Premium Badge */}
             <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-gray-900 to-gray-700 text-white rounded-full text-xs font-medium mb-4 sm:mb-6 w-fit mx-auto lg:mx-0">
               <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
@@ -194,7 +194,7 @@ const Hero = () => {
           </div>
 
           {/* Right Visual - Premium Packaging Showcase */}
-          <div className="relative flex items-center justify-center h-full order-1 lg:order-2">
+          <div className="relative flex items-center justify-center h-full order-2 lg:order-2">
             {/* Main Showcase Container */}
             <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-2xl h-[300px] sm:h-[400px] lg:h-[550px] flex items-center justify-center">
               {/* Rotating Package Display */}
