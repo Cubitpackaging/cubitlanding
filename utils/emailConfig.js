@@ -3,14 +3,13 @@
 
 export const EMAIL_CONFIG = {
   // EmailJS Service Configuration
-  // TODO: Replace with your actual EmailJS credentials after following EMAIL_SETUP_GUIDE.md
-  serviceId: 'service_cubit_pkg',           // Replace with your Service ID from EmailJS
-  publicKey: 'YOUR_PUBLIC_KEY_HERE',        // Replace with your Public Key from EmailJS
+  serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_2w7p7qj',
+  publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'user_PUT_YOUR_PUBLIC_KEY_HERE',
   
   // Email Templates
   templates: {
-    quoteForm: 'template_quote_req',        // Template ID for quote requests
-    rushOrder: 'template_rush_order'        // Template ID for rush orders
+    quoteForm: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_5eqkkqf',
+    rushOrder: process.env.NEXT_PUBLIC_EMAILJS_RUSH_TEMPLATE_ID || 'template_rush_order'
   },
   
   // Recipient Email

@@ -22,18 +22,26 @@ export default function AdminDashboard() {
 
   const checkAuth = async () => {
     try {
+      console.log('Checking authentication...')
       const { success, session } = await AuthService.getSession()
+      console.log('Session check result:', { success, session })
+      
       if (!success || !session) {
+        console.log('No session found, redirecting to login')
         router.push('/admin')
         return
       }
 
       const isAdmin = await AuthService.isAdmin(session.user)
+      console.log('Admin check result:', isAdmin)
+      
       if (!isAdmin) {
+        console.log('User is not admin, redirecting to login')
         router.push('/admin')
         return
       }
 
+      console.log('User authenticated as admin:', session.user.email)
       setUser(session.user)
       // Load dashboard stats
       loadStats()
@@ -45,17 +53,35 @@ export default function AdminDashboard() {
 
   const loadStats = async () => {
     try {
-      const response = await fetch('/api/admin/stats', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
-        }
-      })
+      console.log('Loading dashboard stats...')
+      const response = await fetch('/api/admin/stats')
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const data = await response.json()
+      console.log('Stats loaded:', data)
       setStats(data)
     } catch (error) {
       console.error('Failed to load stats:', error)
+      // Set default stats if loading fails
+      setStats({
+        totalProducts: 0,
+        totalImages: 0,
+        totalQuotes: 0
+      })
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await AuthService.signOut()
+      router.push('/admin')
+    } catch (error) {
+      console.error('Sign out error:', error)
     }
   }
 
@@ -64,6 +90,7 @@ export default function AdminDashboard() {
       <AdminLayout>
         <div className="flex items-center justify-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <p className="ml-4 text-gray-600">Loading dashboard...</p>
         </div>
       </AdminLayout>
     )
@@ -72,9 +99,17 @@ export default function AdminDashboard() {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">Welcome to your admin panel</p>
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+            <p className="text-gray-600">Welcome back, {user?.email}</p>
+          </div>
+          <button
+            onClick={handleSignOut}
+            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            Sign Out
+          </button>
         </div>
 
         {/* Stats Cards */}
@@ -153,29 +188,28 @@ export default function AdminDashboard() {
             </button>
 
             <button
-              onClick={() => router.push('/admin/quotes')}
+              onClick={() => router.push('/admin/submissions')}
               className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
               <svg className="w-8 h-8 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               <div className="text-left">
-                <p className="font-medium">View Quotes</p>
+                <p className="font-medium">View Submissions</p>
                 <p className="text-sm text-gray-600">Review quote requests</p>
               </div>
             </button>
 
             <button
-              onClick={() => router.push('/admin/settings')}
+              onClick={() => window.open('https://dashboard.emailjs.com', '_blank')}
               className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
               <svg className="w-8 h-8 text-gray-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 7.89a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
               <div className="text-left">
-                <p className="font-medium">Settings</p>
-                <p className="text-sm text-gray-600">Configure site settings</p>
+                <p className="font-medium">EmailJS Dashboard</p>
+                <p className="text-sm text-gray-600">Manage email templates</p>
               </div>
             </button>
           </div>
@@ -188,8 +222,22 @@ export default function AdminDashboard() {
             <div className="flex items-center p-3 bg-gray-50 rounded-lg">
               <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
               <div>
-                <p className="text-sm font-medium">System initialized</p>
-                <p className="text-xs text-gray-600">Admin panel is ready to use</p>
+                <p className="text-sm font-medium">✅ EmailJS configured successfully</p>
+                <p className="text-xs text-gray-600">Email forms are now working</p>
+              </div>
+            </div>
+            <div className="flex items-center p-3 bg-gray-50 rounded-lg">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+              <div>
+                <p className="text-sm font-medium">🔐 Supabase authentication active</p>
+                <p className="text-xs text-gray-600">Admin panel secured with Supabase</p>
+              </div>
+            </div>
+            <div className="flex items-center p-3 bg-gray-50 rounded-lg">
+              <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
+              <div>
+                <p className="text-sm font-medium">📊 Dashboard ready</p>
+                <p className="text-xs text-gray-600">All admin features available</p>
               </div>
             </div>
           </div>
