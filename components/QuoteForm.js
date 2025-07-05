@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { sendQuoteFormEmail } from '../utils/emailService'
+import { submitQuoteForm, getSubmissionErrorMessage, getSubmissionSuccessMessage } from '../utils/submissionService'
 
 const QuoteForm = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +15,8 @@ const QuoteForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState({})
-  const [emailError, setEmailError] = useState('')
+  const [submissionError, setSubmissionError] = useState('')
+  const [submissionResults, setSubmissionResults] = useState(null)
 
   const packagingTypes = [
     'Mailer Boxes',
@@ -76,20 +77,24 @@ const QuoteForm = () => {
     
     if (Object.keys(newErrors).length === 0) {
       setIsLoading(true)
-      setEmailError('')
+      setSubmissionError('')
+      setSubmissionResults(null)
       
       try {
-        // Send email using EmailJS
-        console.log('Sending quote form email:', formData)
-        const emailResult = await sendQuoteFormEmail(formData)
+        // Submit to both email and admin panel
+        console.log('Submitting quote form:', formData)
+        const results = await submitQuoteForm(formData)
         
-        if (emailResult.success) {
-          console.log('Email sent successfully!')
+        setSubmissionResults(results)
+        
+        if (results.overall.success) {
+          console.log('Quote submitted successfully to both systems!')
           setIsSubmitted(true)
           
           // Reset form after 5 seconds
           setTimeout(() => {
             setIsSubmitted(false)
+            setSubmissionResults(null)
             setFormData({
               name: '',
               email: '',
@@ -100,12 +105,13 @@ const QuoteForm = () => {
             })
           }, 5000)
         } else {
-          console.error('Email sending failed:', emailResult.error)
-          setEmailError('Failed to send email. Please try again or contact us directly.')
+          const errorMessage = getSubmissionErrorMessage(results)
+          setSubmissionError(errorMessage)
+          console.error('Quote submission failed:', results.overall.errors)
         }
       } catch (error) {
-        console.error('Error submitting form:', error)
-        setEmailError('An error occurred while submitting your request. Please try again.')
+        console.error('Error submitting quote form:', error)
+        setSubmissionError('An unexpected error occurred. Please try again or contact us directly.')
       } finally {
         setIsLoading(false)
       }
@@ -272,14 +278,30 @@ const QuoteForm = () => {
               />
             </div>
 
-            {/* Email Error Display */}
-            {emailError && (
+            {/* Submission Error Display */}
+            {submissionError && (
               <div className="md:col-span-2">
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center space-x-3">
                   <svg className="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p className="text-red-700 text-sm">{emailError}</p>
+                  <p className="text-red-700 text-sm">{submissionError}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Partial Success Display */}
+            {submissionResults && !submissionResults.overall.success && (submissionResults.email.success || submissionResults.admin.success) && (
+              <div className="md:col-span-2">
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex items-center space-x-3">
+                  <svg className="w-5 h-5 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                  </svg>
+                  <div className="text-yellow-700 text-sm">
+                    <p className="font-medium">Partial Success:</p>
+                    <p>✅ Email: {submissionResults.email.success ? 'Sent' : 'Failed'}</p>
+                    <p>✅ Admin Panel: {submissionResults.admin.success ? 'Saved' : 'Failed'}</p>
+                  </div>
                 </div>
               </div>
             )}

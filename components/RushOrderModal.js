@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { sendRushOrderEmail } from '../utils/emailService'
+import { submitRushOrder, getSubmissionErrorMessage, getSubmissionSuccessMessage } from '../utils/submissionService'
 
 const RushOrderModal = ({ isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState(1)
@@ -32,7 +32,8 @@ const RushOrderModal = ({ isOpen, onClose }) => {
   
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [emailError, setEmailError] = useState('')
+  const [submissionError, setSubmissionError] = useState('')
+  const [submissionResults, setSubmissionResults] = useState(null)
 
   const packagingTypes = [
     'Custom Mailer Boxes',
@@ -165,23 +166,27 @@ const RushOrderModal = ({ isOpen, onClose }) => {
     if (!validateStep(3)) return
     
     setIsSubmitting(true)
-    setEmailError('')
+    setSubmissionError('')
+    setSubmissionResults(null)
     
     try {
-      // Send email using EmailJS
-      console.log('Sending rush order email:', formData)
-      const emailResult = await sendRushOrderEmail(formData)
+      // Submit to both email and admin panel
+      console.log('Submitting rush order:', formData)
+      const results = await submitRushOrder(formData)
       
-      if (emailResult.success) {
-        console.log('Rush order email sent successfully!')
+      setSubmissionResults(results)
+      
+      if (results.overall.success) {
+        console.log('Rush order submitted successfully to both systems!')
         setIsSubmitted(true)
       } else {
-        console.error('Rush order email sending failed:', emailResult.error)
-        setEmailError('Failed to send rush order request. Please try again or contact us directly.')
+        const errorMessage = getSubmissionErrorMessage(results)
+        setSubmissionError(errorMessage)
+        console.error('Rush order submission failed:', results.overall.errors)
       }
     } catch (error) {
       console.error('Error submitting rush order:', error)
-      setEmailError('An error occurred while submitting your rush order. Please try again.')
+      setSubmissionError('An unexpected error occurred. Please try again or contact us directly.')
     } finally {
       setIsSubmitting(false)
     }
@@ -664,14 +669,30 @@ Please provide a quote for this rush order. Thank you!`
               </div>
             )}
 
-            {/* Email Error Display */}
-            {emailError && (
+            {/* Submission Error Display */}
+            {submissionError && (
               <div className="mt-6">
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center space-x-3">
                   <svg className="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p className="text-red-700 text-sm">{emailError}</p>
+                  <p className="text-red-700 text-sm">{submissionError}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Partial Success Display */}
+            {submissionResults && !submissionResults.overall.success && (submissionResults.email.success || submissionResults.admin.success) && (
+              <div className="mt-6">
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 flex items-center space-x-3">
+                  <svg className="w-5 h-5 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                  </svg>
+                  <div className="text-yellow-700 text-sm">
+                    <p className="font-medium">Partial Success:</p>
+                    <p>✅ Email: {submissionResults.email.success ? 'Sent' : 'Failed'}</p>
+                    <p>✅ Admin Panel: {submissionResults.admin.success ? 'Saved' : 'Failed'}</p>
+                  </div>
                 </div>
               </div>
             )}
