@@ -310,7 +310,7 @@ const IndustryShowcase = () => {
             className="bg-white text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg"
           >
             Contact Our Experts
-          </button>
+            </button>
         </div>
       </div>
 

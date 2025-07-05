@@ -214,14 +214,14 @@ const Footer = () => {
                   aria-label={social.name}
                 >
                   <div className="w-5 h-5 sm:w-6 sm:h-6">
-                    {social.icon}
+                  {social.icon}
                   </div>
                 </a>
               ))}
             </div>
+            </div>
           </div>
         </div>
-      </div>
 
       {/* Floating WhatsApp Icon */}
       <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50">

@@ -2,6 +2,7 @@ import Header from '../components/Header'
 import Hero from '../components/Hero'
 import WhyChoose from '../components/WhyChoose'
 import ProductShowcase from '../components/ProductShowcase'
+import PrintingCapabilities from '../components/PrintingCapabilities'
 import HowItWorks from '../components/HowItWorks'
 import SmartPackaging from '../components/SmartPackaging'
 import IndustryShowcase from '../components/IndustryShowcase'
@@ -16,6 +17,7 @@ export default function Home() {
       <Hero />
       <WhyChoose />
       <ProductShowcase />
+      <PrintingCapabilities />
       <HowItWorks />
       <SmartPackaging />
       <IndustryShowcase />

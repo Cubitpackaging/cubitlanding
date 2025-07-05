@@ -89,20 +89,20 @@ const QuoteForm = () => {
         
         if (results.overall.success) {
           console.log('Quote submitted successfully to both systems!')
-          setIsSubmitted(true)
-          
+      setIsSubmitted(true)
+      
           // Reset form after 5 seconds
-          setTimeout(() => {
-            setIsSubmitted(false)
+      setTimeout(() => {
+        setIsSubmitted(false)
             setSubmissionResults(null)
-            setFormData({
-              name: '',
-              email: '',
-              company: '',
-              packagingType: '',
-              quantity: '',
-              message: ''
-            })
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          packagingType: '',
+          quantity: '',
+          message: ''
+        })
           }, 5000)
         } else {
           const errorMessage = getSubmissionErrorMessage(results)
@@ -326,10 +326,10 @@ const QuoteForm = () => {
                   </>
                 ) : (
                   <>
-                    <span>Get My Quote</span>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
+                <span>Get My Quote</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
                   </>
                 )}
               </button>
