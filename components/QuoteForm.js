@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { sendQuoteFormEmail } from '../utils/emailService'
 
 const QuoteForm = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,9 @@ const QuoteForm = () => {
     message: ''
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState({})
+  const [emailError, setEmailError] = useState('')
 
   const packagingTypes = [
     'Mailer Boxes',
@@ -67,27 +70,45 @@ const QuoteForm = () => {
     return newErrors
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const newErrors = validateForm()
     
     if (Object.keys(newErrors).length === 0) {
-      // Simulate form submission
-      console.log('Form submitted:', formData)
-      setIsSubmitted(true)
+      setIsLoading(true)
+      setEmailError('')
       
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setIsSubmitted(false)
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          packagingType: '',
-          quantity: '',
-          message: ''
-        })
-      }, 3000)
+      try {
+        // Send email using EmailJS
+        console.log('Sending quote form email:', formData)
+        const emailResult = await sendQuoteFormEmail(formData)
+        
+        if (emailResult.success) {
+          console.log('Email sent successfully!')
+          setIsSubmitted(true)
+          
+          // Reset form after 5 seconds
+          setTimeout(() => {
+            setIsSubmitted(false)
+            setFormData({
+              name: '',
+              email: '',
+              company: '',
+              packagingType: '',
+              quantity: '',
+              message: ''
+            })
+          }, 5000)
+        } else {
+          console.error('Email sending failed:', emailResult.error)
+          setEmailError('Failed to send email. Please try again or contact us directly.')
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error)
+        setEmailError('An error occurred while submitting your request. Please try again.')
+      } finally {
+        setIsLoading(false)
+      }
     } else {
       setErrors(newErrors)
     }
@@ -251,16 +272,44 @@ const QuoteForm = () => {
               />
             </div>
 
+            {/* Email Error Display */}
+            {emailError && (
+              <div className="md:col-span-2">
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center space-x-3">
+                  <svg className="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p className="text-red-700 text-sm">{emailError}</p>
+                </div>
+              </div>
+            )}
+
             {/* Submit Button */}
             <div className="md:col-span-2">
               <button
                 type="submit"
-                className="w-full btn-primary text-lg px-8 py-4 flex items-center justify-center space-x-2"
+                disabled={isLoading}
+                className={`w-full text-lg px-8 py-4 flex items-center justify-center space-x-2 transition-all ${
+                  isLoading 
+                    ? 'bg-gray-400 cursor-not-allowed' 
+                    : 'btn-primary hover:shadow-lg'
+                }`}
               >
-                <span>Get My Quote</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
+                {isLoading ? (
+                  <>
+                    <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Get My Quote</span>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                  </>
+                )}
               </button>
             </div>
           </form>

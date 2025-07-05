@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { sendRushOrderEmail } from '../utils/emailService'
 
 const RushOrderModal = ({ isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState(1)
@@ -31,6 +32,7 @@ const RushOrderModal = ({ isOpen, onClose }) => {
   
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [emailError, setEmailError] = useState('')
 
   const packagingTypes = [
     'Custom Mailer Boxes',
@@ -163,12 +165,26 @@ const RushOrderModal = ({ isOpen, onClose }) => {
     if (!validateStep(3)) return
     
     setIsSubmitting(true)
+    setEmailError('')
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+    try {
+      // Send email using EmailJS
+      console.log('Sending rush order email:', formData)
+      const emailResult = await sendRushOrderEmail(formData)
+      
+      if (emailResult.success) {
+        console.log('Rush order email sent successfully!')
+        setIsSubmitted(true)
+      } else {
+        console.error('Rush order email sending failed:', emailResult.error)
+        setEmailError('Failed to send rush order request. Please try again or contact us directly.')
+      }
+    } catch (error) {
+      console.error('Error submitting rush order:', error)
+      setEmailError('An error occurred while submitting your rush order. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const generateWhatsAppMessage = () => {
@@ -644,6 +660,18 @@ Please provide a quote for this rush order. Thank you!`
                       </div>
                     )}
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* Email Error Display */}
+            {emailError && (
+              <div className="mt-6">
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center space-x-3">
+                  <svg className="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p className="text-red-700 text-sm">{emailError}</p>
                 </div>
               </div>
             )}
