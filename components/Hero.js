@@ -2,9 +2,11 @@
 
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import RushOrderModal from './RushOrderModal'
 
 const Hero = () => {
   const [activePackage, setActivePackage] = useState(0)
+  const [rushOrderModalOpen, setRushOrderModalOpen] = useState(false)
   
   const scrollToQuote = () => {
     const element = document.querySelector('#quote')
@@ -150,6 +152,16 @@ const Hero = () => {
               >
                 <span className="relative z-10">Request a Quote</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </button>
+              <button
+                onClick={() => setRushOrderModalOpen(true)}
+                className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl text-sm sm:text-base animate-pulse"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  <span className="text-lg">🚀</span>
+                  Rush Order
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
             </div>
 
@@ -309,6 +321,8 @@ const Hero = () => {
           animation-delay: 1.5s;
         }
       `}</style>
+
+      <RushOrderModal isOpen={rushOrderModalOpen} onClose={() => setRushOrderModalOpen(false)} />
     </section>
   )
 }
