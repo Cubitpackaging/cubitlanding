@@ -134,26 +134,6 @@ const Sustainability = () => {
             ))}
           </div>
         </div>
-
-        {/* Certifications */}
-        <div className="mt-20">
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-12">
-            Our Certifications
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {['FSC Certified', 'Carbon Neutral', 'Recycled Content', 'Biodegradable'].map((cert, index) => (
-              <div key={index} className="text-center">
-                <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
-                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">{cert}</h4>
-                <p className="text-sm text-gray-600">Verified sustainable practices</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   )

@@ -17,7 +17,7 @@ const ProductShowcase = () => {
       name: "Custom Mailer Boxes",
       description: "Branded shipping boxes that turn unboxing into a marketing experience.",
       fullDescription: "Transform your shipping experience with custom-branded mailer boxes. These durable corrugated boxes feature your logo, colors, and messaging, creating excitement from the moment customers receive their package. Perfect for e-commerce, subscription boxes, and direct-to-consumer brands.",
-
+      price: "Starting at $0.85",
       originalPrice: "$1.20",
       minOrder: "MOQ: 50 units",
       image: "https://via.placeholder.com/400x300/7B6AF7/FFFFFF?text=Mailer+Box",
@@ -38,7 +38,7 @@ const ProductShowcase = () => {
       name: "Pouches & Bags",
       description: "Flexible packaging solutions perfect for food, supplements, and retail products.",
       fullDescription: "Versatile stand-up pouches and flat bags that combine functionality with eye-catching design. Our pouches feature advanced barrier properties to keep contents fresh while offering excellent printability for brand messaging. Ideal for food products, supplements, cosmetics, and retail items.",
-
+      price: "Starting at $0.65",
       originalPrice: "$0.95",
       minOrder: "MOQ: 100 units",
       image: "https://via.placeholder.com/400x300/CDF501/000000?text=Pouches",
@@ -59,7 +59,7 @@ const ProductShowcase = () => {
       name: "Folding Cartons",
       description: "Premium retail packaging that enhances product presentation and brand experience.",
       fullDescription: "Sophisticated folding cartons that elevate your product presentation on retail shelves. These boxes combine structural integrity with premium finishing options to create packaging that customers want to keep. Perfect for cosmetics, electronics, food products, and luxury items.",
-
+      price: "Starting at $1.25",
       originalPrice: "$1.85",
       minOrder: "MOQ: 75 units",
       image: "https://via.placeholder.com/400x300/CDF501/000000?text=Folding+Carton",
@@ -80,7 +80,7 @@ const ProductShowcase = () => {
       name: "Shipping Boxes",
       description: "Durable corrugated boxes designed for safe product transport and delivery.",
       fullDescription: "Heavy-duty shipping boxes engineered for maximum protection during transit. Our corrugated boxes feature reinforced corners and edges to prevent damage while maintaining cost-effectiveness. Available in various strengths and sizes to accommodate different shipping needs.",
-
+      price: "Starting at $1.15",
       originalPrice: "$1.55",
       minOrder: "MOQ: 50 units",
       image: "https://via.placeholder.com/400x300/7B6AF7/FFFFFF?text=Shipping+Box",
@@ -101,7 +101,7 @@ const ProductShowcase = () => {
       name: "Tube Packaging",
       description: "Cylindrical packaging perfect for posters, documents, and specialty products.",
       fullDescription: "Elegant tube packaging that combines protection with premium presentation. Our custom tubes are perfect for artwork, documents, cosmetics, and specialty products that need secure cylindrical packaging. Available in various materials and finishes.",
-
+      price: "Starting at $1.45",
       originalPrice: "$1.95",
       minOrder: "MOQ: 25 units",
       image: "https://via.placeholder.com/400x300/7B6AF7/FFFFFF?text=Tube+Box",
@@ -238,7 +238,7 @@ const ProductShowcase = () => {
                       </span>
                     )}
                     <span className="text-xl font-bold text-gray-900">
-                      Contact for Quote
+                      {product.price}
                     </span>
                   </div>
                   <button className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:from-gray-700 hover:to-gray-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center gap-2">
@@ -318,7 +318,7 @@ const ProductShowcase = () => {
 
                   {/* Price and MOQ */}
                   <div className="mb-6">
-                    <div className="text-2xl font-bold text-black mb-2">Contact for Quote</div>
+                    <div className="text-2xl font-bold text-black mb-2">{selectedProduct.price}</div>
                     <div className="text-gray-600">{selectedProduct.moq || selectedProduct.minOrder}</div>
                   </div>
 

@@ -49,6 +49,7 @@ const Hero = () => {
       features: ['Food Grade Safe', 'Resealable Design', 'Digital Connect'],
       color: 'from-green-500 to-teal-500',
       bgColor: 'from-green-50 to-teal-50',
+      image: '/mylar-bags.png',
       icon: (
         <svg className="w-full h-full" viewBox="0 0 200 200" fill="none">
           <path d="M50 60Q50 40 70 40H130Q150 40 150 60V160Q150 180 130 180H70Q50 180 50 160V60Z" 
@@ -94,47 +95,47 @@ const Hero = () => {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:100px_100px]"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[600px] lg:min-h-[700px]">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-12 sm:pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center min-h-[500px] sm:min-h-[600px] lg:min-h-[700px]">
           {/* Left Content */}
-          <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0 flex flex-col justify-center">
+          <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0 flex flex-col justify-center order-2 lg:order-1">
             {/* Premium Badge */}
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gradient-to-r from-gray-900 to-gray-700 text-white rounded-full text-xs font-medium mb-6 w-fit">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-gray-900 to-gray-700 text-white rounded-full text-xs font-medium mb-4 sm:mb-6 w-fit mx-auto lg:mx-0">
               <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
               </svg>
               Premium Packaging Solutions
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-4 sm:mb-6 tracking-tight leading-tight">
               <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-green-600 bg-clip-text text-transparent">
                 Eco-Smart<br/>
-                <span className="text-4xl md:text-5xl lg:text-6xl">Custom Packaging</span>
+                <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">Custom Packaging</span>
               </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed px-4 sm:px-0">
               Beautifully printed, eco-smart packaging with built-in digital experiences. 
               From sustainable boxes to tech-enabled mylar bags, we power the unboxing moments 
               that turn customers into brand advocates.
             </p>
 
             {/* Feature Pills */}
-            <div className="flex flex-wrap gap-3 mb-10 justify-center lg:justify-start">
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 shadow-sm">
-                <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-10 justify-center lg:justify-start px-4 sm:px-0">
+              <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white border border-gray-200 rounded-full text-xs sm:text-sm text-gray-700 shadow-sm">
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                 </svg>
                 Sustainable Materials
               </span>
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 shadow-sm">
-                <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+              <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white border border-gray-200 rounded-full text-xs sm:text-sm text-gray-700 shadow-sm">
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1H3a1 1 0 01-1-1V4zM8 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1H9a1 1 0 01-1-1V4zM15 3a1 1 0 00-1 1v12a1 1 0 001 1h2a1 1 0 001-1V4a1 1 0 00-1-1h-2z"/>
                 </svg>
                 Smart Connected
               </span>
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 shadow-sm">
-                <svg className="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+              <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white border border-gray-200 rounded-full text-xs sm:text-sm text-gray-700 shadow-sm">
+                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5 2a2 2 0 00-2 2v14l3.5-2 3.5 2 3.5-2 3.5 2V4a2 2 0 00-2-2H5zm2.5 3a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm6.207.293a1 1 0 00-1.414 0l-6 6a1 1 0 101.414 1.414l6-6a1 1 0 000-1.414zM12.5 10a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clipRule="evenodd"/>
                 </svg>
                 Low Minimums
@@ -142,10 +143,10 @@ const Hero = () => {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start px-4 sm:px-0">
               <button
                 onClick={scrollToQuote}
-                className="group relative px-8 py-4 bg-gradient-to-r from-gray-900 to-gray-700 text-white font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl"
+                className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-gray-900 to-gray-700 text-white font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl text-sm sm:text-base"
               >
                 <span className="relative z-10">Request a Quote</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -153,32 +154,49 @@ const Hero = () => {
             </div>
 
             {/* Trust Indicators */}
-            <div className="mt-10 flex flex-wrap items-center gap-8 justify-center lg:justify-start">
+            <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row flex-wrap items-center gap-4 sm:gap-8 justify-center lg:justify-start">
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
-                  {[...Array(4)].map((_, i) => (
-                    <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 border-2 border-white"></div>
-                  ))}
+                  <img 
+                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
+                    alt="Customer testimonial" 
+                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-white object-cover"
+                  />
+                  <img 
+                    src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
+                    alt="Customer testimonial" 
+                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-white object-cover"
+                  />
+                  <img 
+                    src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
+                    alt="Customer testimonial" 
+                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-white object-cover"
+                  />
+                  <img 
+                    src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
+                    alt="Customer testimonial" 
+                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-white object-cover"
+                  />
                 </div>
-                <span className="text-sm text-gray-600">Trusted by Businesses</span>
+                <span className="text-xs sm:text-sm text-gray-600">Trusted by Businesses</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="flex text-yellow-500">
                   {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <svg key={i} className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                     </svg>
                   ))}
                 </div>
-                <span className="text-sm text-gray-600">Quality Guaranteed</span>
+                <span className="text-xs sm:text-sm text-gray-600">Quality Guaranteed</span>
               </div>
             </div>
           </div>
 
           {/* Right Visual - Premium Packaging Showcase */}
-          <div className="relative flex items-center justify-center h-full">
+          <div className="relative flex items-center justify-center h-full order-1 lg:order-2">
             {/* Main Showcase Container */}
-            <div className="relative w-full max-w-2xl h-[550px] flex items-center justify-center">
+            <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-2xl h-[300px] sm:h-[400px] lg:h-[550px] flex items-center justify-center">
               {/* Rotating Package Display */}
               <div className="relative w-full h-full">
                 {packageShowcase.map((pkg, index) => (
@@ -188,21 +206,31 @@ const Hero = () => {
                       index === activePackage 
                         ? 'opacity-100 scale-100 z-20' 
                         : index === (activePackage + 1) % 3
-                        ? 'opacity-40 scale-90 translate-x-20 z-10'
-                        : 'opacity-40 scale-90 -translate-x-20 z-10'
+                        ? 'opacity-40 scale-90 translate-x-4 sm:translate-x-8 lg:translate-x-20 z-10'
+                        : 'opacity-40 scale-90 -translate-x-4 sm:-translate-x-8 lg:-translate-x-20 z-10'
                     }`}
                   >
-                    <div className={`relative bg-gradient-to-br ${pkg.bgColor} rounded-3xl p-8 shadow-2xl border border-gray-100 w-full max-w-md`}>
+                    <div className={`relative bg-gradient-to-br ${pkg.bgColor} rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl border border-gray-100 w-full max-w-xs sm:max-w-sm lg:max-w-md`}>
                       {/* Package Visual */}
-                      <div className={`h-64 mb-6 text-transparent bg-gradient-to-br ${pkg.color} bg-clip-text`}>
-                        {pkg.icon}
+                      <div className={`h-32 sm:h-48 lg:h-64 mb-3 sm:mb-4 lg:mb-6 text-transparent bg-gradient-to-br ${pkg.color} bg-clip-text`}>
+                        {pkg.image ? (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <img 
+                              src={pkg.image} 
+                              alt={pkg.type}
+                              className="w-full h-full object-contain rounded-xl sm:rounded-2xl"
+                            />
+                          </div>
+                        ) : (
+                          pkg.icon
+                        )}
                       </div>
                       
                       {/* Package Info */}
-                      <h3 className="text-2xl font-bold text-gray-900 mb-3">{pkg.type}</h3>
-                      <div className="flex flex-wrap gap-2">
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">{pkg.type}</h3>
+                      <div className="flex flex-wrap gap-1 sm:gap-2">
                         {pkg.features.map((feature, idx) => (
-                          <span key={idx} className="px-3 py-1 bg-white/80 text-gray-700 rounded-full text-sm">
+                          <span key={idx} className="px-2 sm:px-3 py-1 bg-white/80 text-gray-700 rounded-full text-xs sm:text-sm">
                             {feature}
                           </span>
                         ))}
@@ -213,44 +241,44 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Floating Elements */}
-            <div className="absolute -top-2 -right-2 bg-white rounded-2xl shadow-xl p-4 animate-float">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                  <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+            {/* Floating Elements - Hidden on mobile to reduce clutter */}
+            <div className="hidden sm:block absolute -top-2 -right-2 bg-white rounded-2xl shadow-xl p-3 sm:p-4 animate-float">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                  <svg className="w-4 h-4 sm:w-6 sm:h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                   </svg>
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-gray-900">Eco Certified</div>
+                  <div className="text-xs sm:text-sm font-semibold text-gray-900">Eco Certified</div>
                   <div className="text-xs text-gray-600">Carbon Neutral</div>
                 </div>
               </div>
             </div>
 
-            <div className="absolute -bottom-2 -left-2 bg-white rounded-2xl shadow-xl p-4 animate-float-delayed">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                  <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+            <div className="hidden sm:block absolute -bottom-2 -left-2 bg-white rounded-2xl shadow-xl p-3 sm:p-4 animate-float-delayed">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                  <svg className="w-4 h-4 sm:w-6 sm:h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
                   </svg>
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-gray-900">Fast Delivery</div>
+                  <div className="text-xs sm:text-sm font-semibold text-gray-900">Fast Delivery</div>
                   <div className="text-xs text-gray-600">5-7 Business Days</div>
                 </div>
               </div>
             </div>
 
             {/* Package Type Indicators */}
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-8 flex gap-2">
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-4 sm:translate-y-8 flex gap-2">
               {packageShowcase.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setActivePackage(index)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     index === activePackage 
-                      ? 'w-8 bg-gradient-to-r from-purple-600 to-blue-600' 
+                      ? 'w-6 sm:w-8 bg-gradient-to-r from-purple-600 to-blue-600' 
                       : 'bg-gray-300 hover:bg-gray-400'
                   }`}
                 />

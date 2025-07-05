@@ -17,7 +17,7 @@ const IndustryShowcase = () => {
       name: "Food & Beverage Boxes",
       description: "Food-safe packaging for restaurants, cafes, and food delivery services.",
       fullDescription: "Our food-safe packaging solutions are designed to keep your culinary creations fresh and secure during transport. Made with FDA-approved materials and featuring grease-resistant coatings, these boxes are perfect for takeout orders, meal kits, and food delivery services.",
-
+      price: "From $0.95",
       originalPrice: "$1.35",
       category: "Food & Beverage", 
       image: "https://via.placeholder.com/400x300/7B6AF7/FFFFFF?text=Food+Box",
@@ -38,7 +38,7 @@ const IndustryShowcase = () => {
       name: "Cosmetic Boxes",
       description: "Luxury packaging for skincare, makeup, and beauty products with premium finishes.",
       fullDescription: "Elegant cosmetic packaging that enhances your beauty brand's premium image. Our boxes feature luxury finishes, magnetic closures, and custom inserts to showcase your products beautifully. Perfect for skincare sets, makeup collections, and premium beauty products.",
-
+      price: "From $1.85",
       originalPrice: "$2.45",
       category: "Beauty & Personal Care",
       image: "https://via.placeholder.com/400x300/CDF501/000000?text=Cosmetic+Box",
@@ -59,7 +59,7 @@ const IndustryShowcase = () => {
       name: "Pharmaceutical Packaging",
       description: "Secure and compliant packaging for medicines, supplements, and healthcare products.",
       fullDescription: "Pharmaceutical-grade packaging that meets strict regulatory requirements while maintaining product integrity. Our child-resistant and tamper-evident designs ensure safety and compliance for prescription medications, over-the-counter drugs, and nutritional supplements.",
-
+      price: "From $1.45",
       originalPrice: "$1.95",
       category: "Healthcare",
       image: "https://via.placeholder.com/400x300/7B6AF7/FFFFFF?text=Pharma+Box",
@@ -80,7 +80,7 @@ const IndustryShowcase = () => {
       name: "Electronics Packaging",
       description: "Anti-static boxes and protective packaging for phones, gadgets, and tech products.",
       fullDescription: "Specialized packaging for electronic devices and components. Our anti-static materials protect sensitive electronics while custom inserts ensure secure fit and professional presentation. Ideal for consumer electronics, components, and tech accessories.",
-
+      price: "From $1.25",
       originalPrice: "$1.75",
       category: "Electronics",
       image: "https://via.placeholder.com/400x300/7B6AF7/FFFFFF?text=Electronics",
@@ -101,7 +101,7 @@ const IndustryShowcase = () => {
       name: "Jewelry Boxes",
       description: "Elegant presentation boxes for rings, necklaces, and luxury jewelry items.",
       fullDescription: "Exquisite jewelry packaging that reflects the value and beauty of your pieces. Our boxes feature premium materials, velvet inserts, and elegant designs that create memorable unboxing experiences for luxury jewelry brands.",
-
+      price: "From $2.45",
       originalPrice: "$3.15",
       category: "Luxury Goods",
       image: "https://via.placeholder.com/400x300/CDF501/000000?text=Jewelry+Box",
@@ -122,7 +122,7 @@ const IndustryShowcase = () => {
       name: "Gift Boxes",
       description: "Festive packaging for holidays, corporate gifts, and special occasions.",
       fullDescription: "Beautiful gift boxes that make every occasion special. Our seasonal and custom gift boxes feature premium finishes, ribbon details, and elegant designs perfect for corporate gifting, holidays, and special celebrations.",
-
+      price: "From $1.35",
       originalPrice: "$1.85",
       category: "Gifts & Occasions",
       image: "https://via.placeholder.com/400x300/CDF501/000000?text=Gift+Box",
@@ -260,7 +260,7 @@ const IndustryShowcase = () => {
                       </span>
                     )}
                     <span className="text-xl font-bold text-gray-900">
-                      Contact for Quote
+                      {product.price}
                     </span>
                   </div>
                   <button className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:from-gray-700 hover:to-gray-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center gap-2">
@@ -290,20 +290,6 @@ const IndustryShowcase = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Filter/Category Tabs */}
-        <div className="mt-16 bg-gray-50 rounded-2xl p-8">
-          <h3 className="text-xl font-bold text-gray-900 text-center mb-8">
-            Browse by Industry
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {['All Products', 'Food & Beverage', 'Beauty & Care', 'Electronics', 'Fashion'].map((category, index) => (
-              <button key={index} className={`px-4 py-3 rounded-lg font-medium transition-colors duration-300 text-sm ${index === 0 ? 'bg-secondary text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}>
-                {category}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* CTA Section */}
@@ -365,7 +351,7 @@ const IndustryShowcase = () => {
 
                   {/* Price and Category */}
                   <div className="mb-6">
-                    <div className="text-2xl font-bold text-black mb-2">Contact for Quote</div>
+                    <div className="text-2xl font-bold text-black mb-2">{selectedProduct.price}</div>
                     <div className="text-gray-600">{selectedProduct.category}</div>
                   </div>
 

@@ -4,7 +4,7 @@ const WhyChoose = () => {
   const valueBlocks = [
     {
       icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
         </svg>
       ),
@@ -13,7 +13,7 @@ const WhyChoose = () => {
     },
     {
       icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
         </svg>
       ),
@@ -22,7 +22,7 @@ const WhyChoose = () => {
     },
     {
       icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
         </svg>
       ),
@@ -31,7 +31,7 @@ const WhyChoose = () => {
     },
     {
       icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM7 21h16a2 2 0 002-2v-4a2 2 0 00-2-2h-5L9 14" />
         </svg>
       ),
@@ -40,7 +40,7 @@ const WhyChoose = () => {
     },
     {
       icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
@@ -49,7 +49,7 @@ const WhyChoose = () => {
     },
     {
       icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
         </svg>
       ),
@@ -59,49 +59,56 @@ const WhyChoose = () => {
   ]
 
   return (
-    <section id="about" className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-7xl mx-auto section-padding">
+    <section id="about" className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-gray-50 overflow-hidden">
+      {/* Premium Background Pattern */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_20%,rgba(120,119,198,0.08),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(255,107,107,0.06),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_60%,rgba(34,197,94,0.06),transparent_50%)]"></div>
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:100px_100px]"></div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <h2 className="heading-lg text-gray-900 mb-6">
-            Why Brands Trust <span className="text-gradient">Cubit</span> for Custom Packaging
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 tracking-tight">
+            Why Brands Trust <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-green-600 bg-clip-text text-transparent">Cubit</span> for Custom Packaging
           </h2>
-          <div className="max-w-4xl mx-auto">
-            <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-4">
+          <div className="max-w-4xl mx-auto px-4 sm:px-0">
+            <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed mb-3 sm:mb-4">
               Your packaging isn't just a box, it's your customer's first impression, your silent salesperson, and your most powerful retention tool.
             </p>
-            <p className="text-xl md:text-2xl font-semibold text-gray-900">
+            <p className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900">
               That's why the smartest brands choose Cubit.
             </p>
           </div>
         </div>
 
         {/* Value Blocks Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
           {valueBlocks.map((block, index) => (
-            <div key={index} className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group">
-              <div className="w-16 h-16 mb-6 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
+            <div key={index} className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden relative cursor-pointer transform hover:-translate-y-1 border border-gray-100">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 {block.icon}
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">{block.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{block.description}</p>
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4 group-hover:text-purple-600 transition-colors">{block.title}</h3>
+              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{block.description}</p>
             </div>
           ))}
         </div>
 
-        {/* CTA/Closer Section */}
-        <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg text-center mb-12">
+        {/* CTA Section */}
+        <div className="bg-gradient-to-r from-primary/20 to-secondary/20 backdrop-blur-sm rounded-2xl p-6 sm:p-8 md:p-12 shadow-xl text-center mb-8 sm:mb-12 border border-white/20">
           <div className="max-w-3xl mx-auto">
-            <blockquote className="text-2xl md:text-3xl font-medium text-gray-900 mb-4">
+            <blockquote className="text-xl sm:text-2xl md:text-3xl font-medium mb-3 sm:mb-4 text-gray-900">
               "Our customers don't just comment on the product, they post about the packaging."
             </blockquote>
-            <p className="text-xl text-gray-700 mb-6">
+            <p className="text-base sm:text-lg md:text-xl mb-4 sm:mb-6 text-gray-700">
               That's what you get with Cubit. Let's build yours.
             </p>
           </div>
         </div>
-
-
       </div>
     </section>
   )
