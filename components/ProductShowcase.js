@@ -358,7 +358,18 @@ const ProductShowcase = () => {
 
                   {/* CTA Button */}
                   <div className="mt-8">
-                    <button className="w-full bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-lg font-semibold hover:from-primary hover:to-primary transition-all duration-300 shadow-lg">
+                    <button 
+                      onClick={() => {
+                        closeModal()
+                        setTimeout(() => {
+                          const quoteSection = document.getElementById('quote')
+                          if (quoteSection) {
+                            quoteSection.scrollIntoView({ behavior: 'smooth' })
+                          }
+                        }, 100)
+                      }}
+                      className="w-full bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-lg font-semibold hover:from-primary hover:to-primary transition-all duration-300 shadow-lg"
+                    >
                       Get Custom Quote
                     </button>
                   </div>

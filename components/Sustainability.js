@@ -76,7 +76,15 @@ const Sustainability = () => {
               ))}
             </div>
 
-            <button className="btn-primary text-lg px-8 py-4">
+            <button 
+              onClick={() => {
+                const quoteSection = document.getElementById('quote')
+                if (quoteSection) {
+                  quoteSection.scrollIntoView({ behavior: 'smooth' })
+                }
+              }}
+              className="btn-primary text-lg px-8 py-4"
+            >
               Learn About Eco Options
             </button>
           </div>

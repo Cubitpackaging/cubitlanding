@@ -300,9 +300,17 @@ const IndustryShowcase = () => {
           <p className="text-xl mb-6">
             Our packaging experts work with businesses across all industries to create custom solutions.
           </p>
-          <button className="bg-white text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+          <button 
+            onClick={() => {
+              const quoteSection = document.getElementById('quote')
+              if (quoteSection) {
+                quoteSection.scrollIntoView({ behavior: 'smooth' })
+              }
+            }}
+            className="bg-white text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg"
+          >
             Contact Our Experts
-            </button>
+          </button>
         </div>
       </div>
 
@@ -391,7 +399,18 @@ const IndustryShowcase = () => {
 
                   {/* CTA Button */}
                   <div className="mt-8">
-                    <button className="w-full bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-lg font-semibold hover:from-primary hover:to-primary transition-all duration-300 shadow-lg">
+                    <button 
+                      onClick={() => {
+                        closeModal()
+                        setTimeout(() => {
+                          const quoteSection = document.getElementById('quote')
+                          if (quoteSection) {
+                            quoteSection.scrollIntoView({ behavior: 'smooth' })
+                          }
+                        }, 100)
+                      }}
+                      className="w-full bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-lg font-semibold hover:from-primary hover:to-primary transition-all duration-300 shadow-lg"
+                    >
                       Get Custom Quote
                     </button>
                   </div>

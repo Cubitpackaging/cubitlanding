@@ -69,7 +69,15 @@ const SmartPackaging = () => {
               ))}
             </div>
 
-            <button className="btn-secondary text-lg px-8 py-4">
+            <button 
+              onClick={() => {
+                const quoteSection = document.getElementById('quote')
+                if (quoteSection) {
+                  quoteSection.scrollIntoView({ behavior: 'smooth' })
+                }
+              }}
+              className="btn-secondary text-lg px-8 py-4"
+            >
               Explore Smart Features
             </button>
           </div>
