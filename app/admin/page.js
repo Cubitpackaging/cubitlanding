@@ -14,25 +14,30 @@ export default function AdminLogin() {
   const router = useRouter()
 
   useEffect(() => {
+    console.log('🔵 Login page mounted')
     // Check if already logged in
     checkAuthStatus()
   }, [router])
 
   const checkAuthStatus = async () => {
     try {
+      console.log('🔵 Login: Checking if already authenticated...')
       const { success, session } = await AuthService.getSession()
-      console.log('Current session check:', { success, session })
+      console.log('🔵 Login: Current session check:', { success, session })
       
       if (success && session) {
         const isAdmin = await AuthService.isAdmin(session.user)
-        console.log('Is admin check:', isAdmin)
+        console.log('🔵 Login: Is admin check:', isAdmin)
         
         if (isAdmin) {
+          console.log('✅ Login: User already authenticated, redirecting to dashboard...')
           router.push('/admin/dashboard')
         }
+      } else {
+        console.log('🔵 Login: No existing session, showing login form')
       }
     } catch (error) {
-      console.error('Auth status check error:', error)
+      console.error('🔴 Login: Auth status check error:', error)
     }
   }
 
@@ -41,32 +46,33 @@ export default function AdminLogin() {
     setLoading(true)
     setError('')
 
-    console.log('Login attempt with:', credentials.email)
+    console.log('🔵 Login: Login attempt with:', credentials.email)
 
     try {
       const result = await AuthService.signIn(credentials.email, credentials.password)
-      console.log('Login result:', result)
+      console.log('🔵 Login: Login result:', result)
       
       if (result.success) {
-        console.log('Login successful, checking admin status...')
+        console.log('✅ Login: Login successful, checking admin status...')
         
         // Check if user is admin
         const isAdmin = await AuthService.isAdmin(result.user)
-        console.log('Admin check result:', isAdmin)
+        console.log('🔵 Login: Admin check result:', isAdmin)
         
         if (isAdmin) {
-          console.log('Admin confirmed, redirecting to dashboard...')
-          router.push('/admin/dashboard')
+          console.log('✅ Login: Admin confirmed, redirecting to dashboard...')
+          // Use replace instead of push to avoid back button issues
+          router.replace('/admin/dashboard')
         } else {
           setError('Access denied. Admin privileges required.')
           await AuthService.signOut()
         }
       } else {
-        console.error('Login failed:', result.error)
+        console.error('🔴 Login: Login failed:', result.error)
         setError(result.error || 'Invalid credentials')
       }
     } catch (error) {
-      console.error('Login exception:', error)
+      console.error('🔴 Login: Login exception:', error)
       setError('Login failed. Please try again.')
     } finally {
       setLoading(false)
@@ -79,6 +85,8 @@ export default function AdminLogin() {
       [e.target.name]: e.target.value
     })
   }
+
+  console.log('🔵 Login render: loading =', loading, 'error =', error)
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">

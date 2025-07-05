@@ -16,44 +16,45 @@ export default function AdminDashboard() {
   const router = useRouter()
 
   useEffect(() => {
+    console.log('🔵 Dashboard component mounted')
     // Check authentication
     checkAuth()
   }, [router])
 
   const checkAuth = async () => {
     try {
-      console.log('Checking authentication...')
+      console.log('🔵 Dashboard: Checking authentication...')
       const { success, session } = await AuthService.getSession()
-      console.log('Session check result:', { success, session })
+      console.log('🔵 Dashboard: Session check result:', { success, session })
       
       if (!success || !session) {
-        console.log('No session found, redirecting to login')
+        console.log('🔴 Dashboard: No session found, redirecting to login')
         router.push('/admin')
         return
       }
 
       const isAdmin = await AuthService.isAdmin(session.user)
-      console.log('Admin check result:', isAdmin)
+      console.log('🔵 Dashboard: Admin check result:', isAdmin)
       
       if (!isAdmin) {
-        console.log('User is not admin, redirecting to login')
+        console.log('🔴 Dashboard: User is not admin, redirecting to login')
         router.push('/admin')
         return
       }
 
-      console.log('User authenticated as admin:', session.user.email)
+      console.log('✅ Dashboard: User authenticated as admin:', session.user.email)
       setUser(session.user)
       // Load dashboard stats
       loadStats()
     } catch (error) {
-      console.error('Auth check failed:', error)
+      console.error('🔴 Dashboard: Auth check failed:', error)
       router.push('/admin')
     }
   }
 
   const loadStats = async () => {
     try {
-      console.log('Loading dashboard stats...')
+      console.log('📊 Dashboard: Loading dashboard stats...')
       const response = await fetch('/api/admin/stats')
       
       if (!response.ok) {
@@ -61,10 +62,10 @@ export default function AdminDashboard() {
       }
       
       const data = await response.json()
-      console.log('Stats loaded:', data)
+      console.log('📊 Dashboard: Stats loaded:', data)
       setStats(data)
     } catch (error) {
-      console.error('Failed to load stats:', error)
+      console.error('🔴 Dashboard: Failed to load stats:', error)
       // Set default stats if loading fails
       setStats({
         totalProducts: 0,
@@ -72,6 +73,7 @@ export default function AdminDashboard() {
         totalQuotes: 0
       })
     } finally {
+      console.log('📊 Dashboard: Setting loading to false')
       setLoading(false)
     }
   }
@@ -85,7 +87,10 @@ export default function AdminDashboard() {
     }
   }
 
+  console.log('🔵 Dashboard render: loading =', loading, 'user =', user?.email)
+
   if (loading) {
+    console.log('🔵 Dashboard: Showing loading state')
     return (
       <AdminLayout>
         <div className="flex items-center justify-center h-64">
@@ -96,6 +101,7 @@ export default function AdminDashboard() {
     )
   }
 
+  console.log('🔵 Dashboard: Rendering main dashboard content')
   return (
     <AdminLayout>
       <div className="space-y-6">
