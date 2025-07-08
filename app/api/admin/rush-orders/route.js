@@ -7,12 +7,22 @@ const RUSH_ORDERS_FILE = path.join(process.cwd(), 'data', 'rush-orders.json')
 // Ensure rush orders data file exists
 function ensureRushOrdersFile() {
   const dataDir = path.join(process.cwd(), 'data')
+  console.log('Checking data directory:', dataDir)
+  console.log('Data directory exists:', fs.existsSync(dataDir))
+  
   if (!fs.existsSync(dataDir)) {
+    console.log('Creating data directory...')
     fs.mkdirSync(dataDir, { recursive: true })
+    console.log('Data directory created successfully')
   }
   
+  console.log('Checking rush orders file:', RUSH_ORDERS_FILE)
+  console.log('Rush orders file exists:', fs.existsSync(RUSH_ORDERS_FILE))
+  
   if (!fs.existsSync(RUSH_ORDERS_FILE)) {
+    console.log('Creating rush orders file...')
     fs.writeFileSync(RUSH_ORDERS_FILE, JSON.stringify([]))
+    console.log('Rush orders file created successfully')
   }
 }
 
@@ -39,21 +49,27 @@ export async function GET() {
 // POST - Create new rush order submission
 export async function POST(request) {
   try {
+    console.log('Rush order POST request received')
     const formData = await request.json()
+    console.log('Form data parsed successfully')
     
     // Validate required fields
     if (!formData.name || !formData.email || !formData.phone || !formData.packagingType) {
+      console.log('Validation failed - missing required fields')
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
         { status: 400 }
       )
     }
     
+    console.log('Validation passed, ensuring file exists...')
     ensureRushOrdersFile()
     
     // Read existing rush orders
+    console.log('Reading existing rush orders...')
     const rushOrdersData = fs.readFileSync(RUSH_ORDERS_FILE, 'utf8')
     const rushOrders = JSON.parse(rushOrdersData)
+    console.log('Existing rush orders loaded, count:', rushOrders.length)
     
     // Create new rush order entry
     const newRushOrder = {
@@ -93,11 +109,13 @@ export async function POST(request) {
     }
     
     // Add to rush orders array
+    console.log('Adding rush order to array...')
     rushOrders.push(newRushOrder)
+    console.log('Rush order added, new count:', rushOrders.length)
     
     // Save back to file
+    console.log('Saving rush orders to file...')
     fs.writeFileSync(RUSH_ORDERS_FILE, JSON.stringify(rushOrders, null, 2))
-    
     console.log('Rush order saved to admin panel:', newRushOrder.id)
     
     return NextResponse.json({ 
@@ -108,8 +126,23 @@ export async function POST(request) {
     
   } catch (error) {
     console.error('Error saving rush order:', error)
+    console.error('Error message:', error.message)
+    console.error('Error stack:', error.stack)
+    console.error('Error code:', error.code)
+    console.error('Current working directory:', process.cwd())
+    console.error('Rush orders file path:', RUSH_ORDERS_FILE)
+    
+    // Check if it's a file system permission error
+    if (error.code === 'ENOENT') {
+      console.error('File not found error - data directory may not exist')
+    } else if (error.code === 'EACCES') {
+      console.error('Permission denied error - check file/directory permissions')
+    } else if (error.code === 'EMFILE' || error.code === 'ENFILE') {
+      console.error('Too many open files error')
+    }
+    
     return NextResponse.json(
-      { success: false, error: 'Failed to save rush order' },
+      { success: false, error: `Failed to save rush order: ${error.message}` },
       { status: 500 }
     )
   }
