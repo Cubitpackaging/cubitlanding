@@ -1,41 +1,25 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
-
-const RUSH_ORDERS_FILE = path.join(process.cwd(), 'data', 'rush-orders.json')
-
-// Ensure rush orders data file exists
-function ensureRushOrdersFile() {
-  const dataDir = path.join(process.cwd(), 'data')
-  console.log('Checking data directory:', dataDir)
-  console.log('Data directory exists:', fs.existsSync(dataDir))
-  
-  if (!fs.existsSync(dataDir)) {
-    console.log('Creating data directory...')
-    fs.mkdirSync(dataDir, { recursive: true })
-    console.log('Data directory created successfully')
-  }
-  
-  console.log('Checking rush orders file:', RUSH_ORDERS_FILE)
-  console.log('Rush orders file exists:', fs.existsSync(RUSH_ORDERS_FILE))
-  
-  if (!fs.existsSync(RUSH_ORDERS_FILE)) {
-    console.log('Creating rush orders file...')
-    fs.writeFileSync(RUSH_ORDERS_FILE, JSON.stringify([]))
-    console.log('Rush orders file created successfully')
-  }
-}
+import { supabase } from '../../../lib/supabase'
 
 // GET - Retrieve all rush orders
 export async function GET() {
   try {
-    ensureRushOrdersFile()
-    const rushOrdersData = fs.readFileSync(RUSH_ORDERS_FILE, 'utf8')
-    const rushOrders = JSON.parse(rushOrdersData)
+    const { data: rushOrders, error } = await supabase
+      .from('rush_orders')
+      .select('*')
+      .order('created_at', { ascending: false })
+    
+    if (error) {
+      console.error('Error fetching rush orders:', error)
+      return NextResponse.json(
+        { success: false, error: 'Failed to fetch rush orders' },
+        { status: 500 }
+      )
+    }
     
     return NextResponse.json({ 
       success: true, 
-      rushOrders: rushOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      rushOrders: rushOrders || []
     })
   } catch (error) {
     console.error('Error fetching rush orders:', error)
@@ -49,31 +33,18 @@ export async function GET() {
 // POST - Create new rush order submission
 export async function POST(request) {
   try {
-    console.log('Rush order POST request received')
     const formData = await request.json()
-    console.log('Form data parsed successfully')
     
     // Validate required fields
     if (!formData.name || !formData.email || !formData.phone || !formData.packagingType) {
-      console.log('Validation failed - missing required fields')
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
         { status: 400 }
       )
     }
     
-    console.log('Validation passed, ensuring file exists...')
-    ensureRushOrdersFile()
-    
-    // Read existing rush orders
-    console.log('Reading existing rush orders...')
-    const rushOrdersData = fs.readFileSync(RUSH_ORDERS_FILE, 'utf8')
-    const rushOrders = JSON.parse(rushOrdersData)
-    console.log('Existing rush orders loaded, count:', rushOrders.length)
-    
     // Create new rush order entry
     const newRushOrder = {
-      id: Date.now().toString(),
       type: 'rush-order',
       // Personal Details
       name: formData.name,
@@ -82,67 +53,55 @@ export async function POST(request) {
       company: formData.company || '',
       
       // Project Details
-      packagingType: formData.packagingType,
+      packaging_type: formData.packagingType,
       quantity: formData.quantity || '',
       dimensions: formData.dimensions || '',
       colors: formData.colors || '',
       material: formData.material || '',
-      finishOptions: formData.finishOptions || '',
+      finish_options: formData.finishOptions || '',
       
       // Rush Details
       deadline: formData.deadline || '',
-      urgencyLevel: formData.urgencyLevel || 'standard',
-      projectDescription: formData.projectDescription || '',
-      specialRequirements: formData.specialRequirements || '',
+      urgency_level: formData.urgencyLevel || 'standard',
+      project_description: formData.projectDescription || '',
+      special_requirements: formData.specialRequirements || '',
       
       // Files
-      filesCount: formData.uploadedFiles ? formData.uploadedFiles.length : 0,
+      files_count: formData.uploadedFiles ? formData.uploadedFiles.length : 0,
       
       // Status
       status: 'pending',
       priority: formData.urgencyLevel === 'same-day' ? 'urgent' : 
                 formData.urgencyLevel === 'urgent' ? 'high' : 
-                formData.urgencyLevel === 'rush' ? 'medium' : 'normal',
-      
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+                formData.urgencyLevel === 'rush' ? 'medium' : 'normal'
     }
     
-    // Add to rush orders array
-    console.log('Adding rush order to array...')
-    rushOrders.push(newRushOrder)
-    console.log('Rush order added, new count:', rushOrders.length)
+    // Insert into Supabase
+    const { data, error } = await supabase
+      .from('rush_orders')
+      .insert([newRushOrder])
+      .select()
     
-    // Save back to file
-    console.log('Saving rush orders to file...')
-    fs.writeFileSync(RUSH_ORDERS_FILE, JSON.stringify(rushOrders, null, 2))
-    console.log('Rush order saved to admin panel:', newRushOrder.id)
+    if (error) {
+      console.error('Error saving rush order to database:', error)
+      return NextResponse.json(
+        { success: false, error: 'Failed to save rush order' },
+        { status: 500 }
+      )
+    }
+    
+    console.log('Rush order saved to database:', data[0].id)
     
     return NextResponse.json({ 
       success: true, 
       message: 'Rush order submitted successfully',
-      id: newRushOrder.id
+      id: data[0].id
     })
     
   } catch (error) {
     console.error('Error saving rush order:', error)
-    console.error('Error message:', error.message)
-    console.error('Error stack:', error.stack)
-    console.error('Error code:', error.code)
-    console.error('Current working directory:', process.cwd())
-    console.error('Rush orders file path:', RUSH_ORDERS_FILE)
-    
-    // Check if it's a file system permission error
-    if (error.code === 'ENOENT') {
-      console.error('File not found error - data directory may not exist')
-    } else if (error.code === 'EACCES') {
-      console.error('Permission denied error - check file/directory permissions')
-    } else if (error.code === 'EMFILE' || error.code === 'ENFILE') {
-      console.error('Too many open files error')
-    }
-    
     return NextResponse.json(
-      { success: false, error: `Failed to save rush order: ${error.message}` },
+      { success: false, error: 'Failed to save rush order' },
       { status: 500 }
     )
   }
@@ -153,25 +112,30 @@ export async function PUT(request) {
   try {
     const { id, status, priority } = await request.json()
     
-    ensureRushOrdersFile()
+    const updateData = {}
+    if (status) updateData.status = status
+    if (priority) updateData.priority = priority
     
-    const rushOrdersData = fs.readFileSync(RUSH_ORDERS_FILE, 'utf8')
-    const rushOrders = JSON.parse(rushOrdersData)
+    const { data, error } = await supabase
+      .from('rush_orders')
+      .update(updateData)
+      .eq('id', id)
+      .select()
     
-    const rushOrderIndex = rushOrders.findIndex(r => r.id === id)
-    if (rushOrderIndex === -1) {
+    if (error) {
+      console.error('Error updating rush order:', error)
+      return NextResponse.json(
+        { success: false, error: 'Failed to update rush order' },
+        { status: 500 }
+      )
+    }
+    
+    if (!data || data.length === 0) {
       return NextResponse.json(
         { success: false, error: 'Rush order not found' },
         { status: 404 }
       )
     }
-    
-    // Update rush order
-    if (status) rushOrders[rushOrderIndex].status = status
-    if (priority) rushOrders[rushOrderIndex].priority = priority
-    rushOrders[rushOrderIndex].updatedAt = new Date().toISOString()
-    
-    fs.writeFileSync(RUSH_ORDERS_FILE, JSON.stringify(rushOrders, null, 2))
     
     return NextResponse.json({ 
       success: true, 
@@ -192,21 +156,26 @@ export async function DELETE(request) {
   try {
     const { id } = await request.json()
     
-    ensureRushOrdersFile()
+    const { data, error } = await supabase
+      .from('rush_orders')
+      .delete()
+      .eq('id', id)
+      .select()
     
-    const rushOrdersData = fs.readFileSync(RUSH_ORDERS_FILE, 'utf8')
-    const rushOrders = JSON.parse(rushOrdersData)
+    if (error) {
+      console.error('Error deleting rush order:', error)
+      return NextResponse.json(
+        { success: false, error: 'Failed to delete rush order' },
+        { status: 500 }
+      )
+    }
     
-    const filteredRushOrders = rushOrders.filter(r => r.id !== id)
-    
-    if (filteredRushOrders.length === rushOrders.length) {
+    if (!data || data.length === 0) {
       return NextResponse.json(
         { success: false, error: 'Rush order not found' },
         { status: 404 }
       )
     }
-    
-    fs.writeFileSync(RUSH_ORDERS_FILE, JSON.stringify(filteredRushOrders, null, 2))
     
     return NextResponse.json({ 
       success: true, 
