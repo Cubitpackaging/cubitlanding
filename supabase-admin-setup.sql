@@ -46,13 +46,16 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+-- Drop trigger if it exists and recreate it
+DROP TRIGGER IF EXISTS update_rush_orders_updated_at ON rush_orders;
 CREATE TRIGGER update_rush_orders_updated_at BEFORE UPDATE ON rush_orders
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- 3. Enable Row Level Security (RLS) for rush_orders
 ALTER TABLE rush_orders ENABLE ROW LEVEL SECURITY;
 
--- 4. Create policies for rush_orders
+-- 4. Create policies for rush_orders (drop if exists first)
+DROP POLICY IF EXISTS "Allow all operations for authenticated users" ON rush_orders;
 CREATE POLICY "Allow all operations for authenticated users" ON rush_orders
   FOR ALL USING (true);
 
@@ -77,13 +80,15 @@ CREATE TABLE IF NOT EXISTS quotes (
 );
 
 -- 7. Create updated_at trigger for quotes
+DROP TRIGGER IF EXISTS update_quotes_updated_at ON quotes;
 CREATE TRIGGER update_quotes_updated_at BEFORE UPDATE ON quotes
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- 8. Enable RLS for quotes
 ALTER TABLE quotes ENABLE ROW LEVEL SECURITY;
 
--- 9. Create policies for quotes
+-- 9. Create policies for quotes (drop if exists first)
+DROP POLICY IF EXISTS "Allow all operations for authenticated users" ON quotes;
 CREATE POLICY "Allow all operations for authenticated users" ON quotes
   FOR ALL USING (true);
 
@@ -122,7 +127,10 @@ ON CONFLICT (email) DO UPDATE SET
 -- 15. Enable RLS for admin_users
 ALTER TABLE admin_users ENABLE ROW LEVEL SECURITY;
 
--- 16. Create policies for admin_users
+-- 16. Create policies for admin_users (drop if exists first)
+DROP POLICY IF EXISTS "Allow read for authenticated users" ON admin_users;
+DROP POLICY IF EXISTS "Allow all operations for admins" ON admin_users;
+
 CREATE POLICY "Allow read for authenticated users" ON admin_users
   FOR SELECT USING (true);
 
