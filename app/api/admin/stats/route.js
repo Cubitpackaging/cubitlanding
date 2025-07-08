@@ -1,6 +1,13 @@
 import { NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
 import fs from 'fs'
 import path from 'path'
+
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+)
 
 export async function GET() {
   try {
@@ -18,15 +25,29 @@ export async function GET() {
       ? JSON.parse(fs.readFileSync(imagesPath, 'utf8'))
       : { images: [] }
     
-    // Read quotes (handle both array and object formats)
-    const quotesPath = path.join(dataDir, 'quotes.json')
+    // Get quotes count from Supabase
     let quotesCount = 0
-    if (fs.existsSync(quotesPath)) {
-      const quotesData = JSON.parse(fs.readFileSync(quotesPath, 'utf8'))
-      if (Array.isArray(quotesData)) {
-        quotesCount = quotesData.length
-      } else if (quotesData && Array.isArray(quotesData.quotes)) {
-        quotesCount = quotesData.quotes.length
+    try {
+      const { count, error } = await supabase
+        .from('quotes')
+        .select('*', { count: 'exact', head: true })
+      
+      if (error) {
+        console.error('Error getting quotes count from Supabase:', error)
+      } else {
+        quotesCount = count || 0
+      }
+    } catch (error) {
+      console.error('Supabase connection error:', error)
+      // Fall back to file system if Supabase fails
+      const quotesPath = path.join(dataDir, 'quotes.json')
+      if (fs.existsSync(quotesPath)) {
+        const quotesData = JSON.parse(fs.readFileSync(quotesPath, 'utf8'))
+        if (Array.isArray(quotesData)) {
+          quotesCount = quotesData.length
+        } else if (quotesData && Array.isArray(quotesData.quotes)) {
+          quotesCount = quotesData.quotes.length
+        }
       }
     }
 

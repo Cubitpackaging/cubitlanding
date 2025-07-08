@@ -16,7 +16,24 @@ export const GMAIL_CONFIG = {
 
 // Create reusable transporter object using Gmail SMTP
 export const createGmailTransporter = () => {
-  return nodemailer.createTransporter(GMAIL_CONFIG)
+  try {
+    console.log('Creating nodemailer transporter with config:', {
+      host: GMAIL_CONFIG.host,
+      port: GMAIL_CONFIG.port,
+      secure: GMAIL_CONFIG.secure,
+      user: GMAIL_CONFIG.auth.user,
+      passwordSet: !!GMAIL_CONFIG.auth.pass
+    })
+    
+    if (!nodemailer || typeof nodemailer.createTransporter !== 'function') {
+      throw new Error('Nodemailer is not properly imported or createTransporter is not available')
+    }
+    
+    return nodemailer.createTransporter(GMAIL_CONFIG)
+  } catch (error) {
+    console.error('Error creating Gmail transporter:', error)
+    throw error
+  }
 }
 
 // Email Templates
@@ -115,14 +132,10 @@ export const sendEmail = async (emailData) => {
   try {
     console.log('Creating Gmail transporter...')
     
-    // Log configuration (without sensitive data)
-    console.log('Gmail config:', {
-      host: GMAIL_CONFIG.host,
-      port: GMAIL_CONFIG.port,
-      secure: GMAIL_CONFIG.secure,
-      user: GMAIL_CONFIG.auth.user,
-      passwordSet: !!GMAIL_CONFIG.auth.pass
-    })
+    // Check environment variables
+    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+      throw new Error('Gmail credentials not found in environment variables')
+    }
     
     const transporter = createGmailTransporter()
     
