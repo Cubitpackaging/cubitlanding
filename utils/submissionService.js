@@ -81,6 +81,8 @@ export const submitRushOrder = async (formData) => {
   }
 
   try {
+    console.log('Starting rush order submission...')
+    
     // Submit to email and admin panel in parallel
     const [emailResult, adminResult] = await Promise.allSettled([
       fetch('/api/send-rush-email', {
@@ -89,23 +91,35 @@ export const submitRushOrder = async (formData) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData)
-      }).then(res => res.json()),
+      }).then(async res => {
+        const data = await res.json()
+        console.log('Rush email API response:', { status: res.status, data })
+        return { ...data, status: res.status }
+      }),
       fetch('/api/admin/rush-orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData)
-      }).then(res => res.json())
+      }).then(async res => {
+        const data = await res.json()
+        console.log('Rush admin API response:', { status: res.status, data })
+        return { ...data, status: res.status }
+      })
     ])
+
+    console.log('Rush order promise results:', { emailResult, adminResult })
 
     // Handle email result
     if (emailResult.status === 'fulfilled' && emailResult.value.success) {
       results.email.success = true
       console.log('✅ Rush order email sent successfully')
     } else {
-      results.email.error = emailResult.reason || emailResult.value?.error || 'Email sending failed'
-      console.error('❌ Rush order email failed:', results.email.error)
+      const error = emailResult.reason || emailResult.value?.error || 'Email sending failed'
+      results.email.error = error
+      console.error('❌ Rush order email failed:', error)
+      results.overall.errors.push(`Email: ${error}`)
     }
 
     // Handle admin result
@@ -113,20 +127,16 @@ export const submitRushOrder = async (formData) => {
       results.admin.success = true
       console.log('✅ Rush order saved to admin panel successfully')
     } else {
-      results.admin.error = adminResult.reason || adminResult.value?.error || 'Admin panel save failed'
-      console.error('❌ Rush order admin save failed:', results.admin.error)
+      const error = adminResult.reason || adminResult.value?.error || 'Admin panel save failed'
+      results.admin.error = error
+      console.error('❌ Rush order admin save failed:', error)
+      results.overall.errors.push(`Admin: ${error}`)
     }
 
-    // Determine overall success
-    if (results.email.success && results.admin.success) {
-      results.overall.success = true
-      console.log('✅ Rush order submitted successfully to both email and admin panel')
-    } else {
-      if (!results.email.success) results.overall.errors.push('Email sending failed')
-      if (!results.admin.success) results.overall.errors.push('Admin panel save failed')
-      console.warn('⚠️ Rush order submission partially failed:', results.overall.errors)
-    }
+    // Overall success if at least one method worked
+    results.overall.success = results.email.success || results.admin.success
 
+    console.log('Final rush order submission results:', results)
     return results
 
   } catch (error) {

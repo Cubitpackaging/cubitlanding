@@ -1,1 +1,25 @@
-[] 
+[
+  {
+    "id": "1751987166814",
+    "type": "rush-order",
+    "name": "Test User",
+    "email": "test@example.com",
+    "phone": "+1 (555) 123-4567",
+    "company": "Test Company",
+    "packagingType": "Custom Mailer Boxes",
+    "quantity": "100",
+    "dimensions": "10x8x3 inches",
+    "colors": "2 colors",
+    "material": "Corrugated Cardboard",
+    "finishOptions": "Matte Finish",
+    "deadline": "2024-02-15",
+    "urgencyLevel": "urgent",
+    "projectDescription": "Test rush order for packaging boxes",
+    "specialRequirements": "None",
+    "filesCount": 0,
+    "status": "pending",
+    "priority": "high",
+    "createdAt": "2025-07-08T15:06:06.814Z",
+    "updatedAt": "2025-07-08T15:06:06.817Z"
+  }
+]
