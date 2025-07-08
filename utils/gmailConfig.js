@@ -25,11 +25,11 @@ export const createGmailTransporter = () => {
       passwordSet: !!GMAIL_CONFIG.auth.pass
     })
     
-    if (!nodemailer || typeof nodemailer.createTransporter !== 'function') {
-      throw new Error('Nodemailer is not properly imported or createTransporter is not available')
+    if (!nodemailer || typeof nodemailer.createTransport !== 'function') {
+      throw new Error('Nodemailer is not properly imported or createTransport is not available')
     }
     
-    return nodemailer.createTransporter(GMAIL_CONFIG)
+    return nodemailer.createTransport(GMAIL_CONFIG)
   } catch (error) {
     console.error('Error creating Gmail transporter:', error)
     throw error
