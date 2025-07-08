@@ -10,23 +10,54 @@ function ResetPasswordForm() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [validSession, setValidSession] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
 
   useEffect(() => {
-    // Check if we have the necessary parameters from the reset link
-    const accessToken = searchParams.get('access_token')
-    const refreshToken = searchParams.get('refresh_token')
-    
-    if (!accessToken || !refreshToken) {
-      setError('Invalid reset link. Please request a new password reset.')
+    // Check for hash parameters (Supabase auth uses hash)
+    const checkAuthSession = async () => {
+      try {
+        // Check if we have an active session (user clicked reset link)
+        const { data: { session }, error } = await AuthService.getSession()
+        
+        if (session) {
+          console.log('Valid reset session found')
+          setValidSession(true)
+        } else {
+          // Check for error parameters in URL
+          const error = searchParams.get('error')
+          const errorDescription = searchParams.get('error_description')
+          
+          if (error) {
+            if (error === 'access_denied' && errorDescription?.includes('expired')) {
+              setError('Reset link has expired. Please request a new password reset.')
+            } else {
+              setError('Invalid reset link. Please request a new password reset.')
+            }
+          } else {
+            setError('No valid reset session found. Please request a new password reset.')
+          }
+        }
+      } catch (err) {
+        console.error('Session check error:', err)
+        setError('Unable to verify reset link. Please try again.')
+      }
     }
+
+    checkAuthSession()
   }, [searchParams])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     setError('')
+
+    if (!validSession) {
+      setError('Invalid session. Please request a new password reset.')
+      setLoading(false)
+      return
+    }
 
     // Validate passwords match
     if (password !== confirmPassword) {
@@ -47,6 +78,8 @@ function ResetPasswordForm() {
       
       if (result.success) {
         setSuccess(true)
+        // Sign out after password update to force fresh login
+        await AuthService.signOut()
         setTimeout(() => {
           router.push('/admin')
         }, 3000)
