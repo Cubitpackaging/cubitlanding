@@ -18,16 +18,22 @@ export async function GET() {
       ? JSON.parse(fs.readFileSync(imagesPath, 'utf8'))
       : { images: [] }
     
-    // Read quotes (if exists)
+    // Read quotes (handle both array and object formats)
     const quotesPath = path.join(dataDir, 'quotes.json')
-    const quotesData = fs.existsSync(quotesPath)
-      ? JSON.parse(fs.readFileSync(quotesPath, 'utf8'))
-      : { quotes: [] }
+    let quotesCount = 0
+    if (fs.existsSync(quotesPath)) {
+      const quotesData = JSON.parse(fs.readFileSync(quotesPath, 'utf8'))
+      if (Array.isArray(quotesData)) {
+        quotesCount = quotesData.length
+      } else if (quotesData && Array.isArray(quotesData.quotes)) {
+        quotesCount = quotesData.quotes.length
+      }
+    }
 
     const stats = {
-      totalProducts: productsData.products.length + productsData.industryProducts.length,
-      totalImages: imagesData.images.length,
-      totalQuotes: quotesData.quotes.length
+      totalProducts: (productsData.products?.length || 0) + (productsData.industryProducts?.length || 0),
+      totalImages: imagesData.images?.length || 0,
+      totalQuotes: quotesCount
     }
 
     return NextResponse.json(stats)
