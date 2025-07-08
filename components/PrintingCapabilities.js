@@ -185,7 +185,7 @@ Thank you!`
         <div className="bg-gradient-to-r from-green-600/10 to-emerald-600/10 backdrop-blur-sm rounded-3xl p-8 sm:p-12 shadow-xl mb-12 sm:mb-16 border border-green-200/30">
           <div className="text-center mb-8">
             <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
-              Premium Finishes That Enhance Every Touch
+              Luxurious Finishes That Enhance Every Detail
             </h3>
             <p className="text-base sm:text-lg text-gray-700">
               Transform your packaging from ordinary to extraordinary
