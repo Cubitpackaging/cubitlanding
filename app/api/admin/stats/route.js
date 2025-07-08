@@ -51,17 +51,42 @@ export async function GET() {
       }
     }
 
+    // Get rush orders count from Supabase
+    let rushOrdersCount = 0
+    try {
+      const { count, error } = await supabase
+        .from('rush_orders')
+        .select('*', { count: 'exact', head: true })
+      
+      if (error) {
+        console.error('Error getting rush orders count from Supabase:', error)
+      } else {
+        rushOrdersCount = count || 0
+      }
+    } catch (error) {
+      console.error('Supabase connection error for rush orders:', error)
+      // Fall back to file system if Supabase fails
+      const rushOrdersPath = path.join(dataDir, 'rush-orders.json')
+      if (fs.existsSync(rushOrdersPath)) {
+        const rushOrdersData = JSON.parse(fs.readFileSync(rushOrdersPath, 'utf8'))
+        if (Array.isArray(rushOrdersData)) {
+          rushOrdersCount = rushOrdersData.length
+        }
+      }
+    }
+
     const stats = {
       totalProducts: (productsData.products?.length || 0) + (productsData.industryProducts?.length || 0),
       totalImages: imagesData.images?.length || 0,
-      totalQuotes: quotesCount
+      totalQuotes: quotesCount,
+      totalRushOrders: rushOrdersCount
     }
 
     return NextResponse.json(stats)
   } catch (error) {
     console.error('Error getting stats:', error)
     return NextResponse.json(
-      { totalProducts: 0, totalImages: 0, totalQuotes: 0 },
+      { totalProducts: 0, totalImages: 0, totalQuotes: 0, totalRushOrders: 0 },
       { status: 200 }
     )
   }

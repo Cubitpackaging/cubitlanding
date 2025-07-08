@@ -9,7 +9,8 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState({
     totalProducts: 0,
     totalImages: 0,
-    totalQuotes: 0
+    totalQuotes: 0,
+    totalRushOrders: 0
   })
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
@@ -70,7 +71,8 @@ export default function AdminDashboard() {
       setStats({
         totalProducts: 0,
         totalImages: 0,
-        totalQuotes: 0
+        totalQuotes: 0,
+        totalRushOrders: 0
       })
     } finally {
       console.log('📊 Dashboard: Setting loading to false')
@@ -119,7 +121,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="bg-white rounded-lg shadow-sm p-6">
             <div className="flex items-center">
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -158,6 +160,20 @@ export default function AdminDashboard() {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Quote Requests</p>
                 <p className="text-2xl font-bold text-gray-900">{stats.totalQuotes}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-600">Rush Orders</p>
+                <p className="text-2xl font-bold text-gray-900">{stats.totalRushOrders}</p>
               </div>
             </div>
           </div>
