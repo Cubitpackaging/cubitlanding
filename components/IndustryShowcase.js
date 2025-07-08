@@ -263,7 +263,15 @@ const IndustryShowcase = () => {
                       {product.price}
                     </span>
                   </div>
-                  <button className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:from-gray-700 hover:to-gray-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center gap-2">
+                  <button 
+                    onClick={() => {
+                      const quoteSection = document.getElementById('quote')
+                      if (quoteSection) {
+                        quoteSection.scrollIntoView({ behavior: 'smooth' })
+                      }
+                    }}
+                    className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:from-gray-700 hover:to-gray-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center gap-2"
+                  >
                     <span>Get Quote</span>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4"/>

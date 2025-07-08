@@ -117,6 +117,28 @@ const ProductShowcase = () => {
       rating: 4.5,
       reviews: 67,
       stock: "In Stock"
+    },
+    {
+      name: "Tubes & Jars",
+      description: "Premium squeezable tubes and cosmetic jars for beauty, pharmaceutical, and food products.",
+      fullDescription: "Professional tubes and jars designed for cosmetics, pharmaceuticals, and food applications. Our plastic and aluminum tubes offer excellent barrier properties with 360° printing capabilities, while our jars provide secure storage with custom branding options. Perfect for creams, lotions, ointments, food pastes, and specialty products requiring precise dispensing or storage.",
+      price: "Starting at $0.75",
+      originalPrice: "$1.10",
+      minOrder: "MOQ: 100 units",
+      image: "https://via.placeholder.com/400x300/16A085/FFFFFF?text=Tubes+%26+Jars",
+      features: ["360° printing", "Barrier protection", "Multiple cap options", "Food-safe materials", "Recyclable options"],
+      specifications: {
+        "Materials": "PE, PP, aluminum, or laminated films",
+        "Tube Sizes": "5ml to 300ml capacity",
+        "Jar Sizes": "15ml to 500ml capacity",
+        "Printing": "Offset, screen, flexographic, gravure",
+        "Caps": "Flip-top, screw, pump, or squeeze caps",
+        "Barrier": "Oxygen, moisture, and light protection"
+      },
+      popular: false,
+      rating: 4.7,
+      reviews: 142,
+      stock: "In Stock"
     }
   ]
 
@@ -241,7 +263,15 @@ const ProductShowcase = () => {
                       {product.price}
                     </span>
                   </div>
-                  <button className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:from-gray-700 hover:to-gray-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center gap-2">
+                  <button 
+                    onClick={() => {
+                      const quoteSection = document.getElementById('quote')
+                      if (quoteSection) {
+                        quoteSection.scrollIntoView({ behavior: 'smooth' })
+                      }
+                    }}
+                    className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:from-gray-700 hover:to-gray-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center gap-2"
+                  >
                     <span>Get Quote</span>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4"/>

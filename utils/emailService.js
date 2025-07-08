@@ -4,11 +4,14 @@ import { EMAIL_CONFIG } from './emailConfig'
 // Initialize EmailJS
 export const initEmailJS = () => {
   try {
+    console.log('Initializing EmailJS with public key:', EMAIL_CONFIG.publicKey)
     emailjs.init(EMAIL_CONFIG.publicKey)
     console.log('EmailJS initialized successfully')
     return true
   } catch (error) {
     console.error('Failed to initialize EmailJS:', error)
+    console.error('Public Key:', EMAIL_CONFIG.publicKey)
+    console.error('Service ID:', EMAIL_CONFIG.serviceId)
     return false
   }
 }
@@ -45,7 +48,25 @@ export const sendQuoteFormEmail = async (formData) => {
     return { success: true, response }
   } catch (error) {
     console.error('Error sending quote form email:', error)
-    return { success: false, error: error.message || 'Failed to send email' }
+    console.error('Error status:', error.status)
+    console.error('Error text:', error.text)
+    console.error('Service ID:', EMAIL_CONFIG.serviceId)
+    console.error('Template ID:', EMAIL_CONFIG.templates.quoteForm)
+    
+    let errorMessage = 'Failed to send email'
+    if (error.status === 400) {
+      errorMessage = 'Bad Request - Check template parameters'
+    } else if (error.status === 401) {
+      errorMessage = 'Unauthorized - Check public key'
+    } else if (error.status === 403) {
+      errorMessage = 'Forbidden - Check service permissions'
+    } else if (error.status === 404) {
+      errorMessage = 'Not Found - Check service or template ID'
+    } else if (error.status === 422) {
+      errorMessage = 'Invalid template variables'
+    }
+    
+    return { success: false, error: errorMessage }
   }
 }
 
@@ -97,7 +118,25 @@ export const sendRushOrderEmail = async (formData) => {
     return { success: true, response }
   } catch (error) {
     console.error('Error sending rush order email:', error)
-    return { success: false, error: error.message || 'Failed to send email' }
+    console.error('Error status:', error.status)
+    console.error('Error text:', error.text)
+    console.error('Service ID:', EMAIL_CONFIG.serviceId)
+    console.error('Template ID:', EMAIL_CONFIG.templates.rushOrder)
+    
+    let errorMessage = 'Failed to send email'
+    if (error.status === 400) {
+      errorMessage = 'Bad Request - Check template parameters'
+    } else if (error.status === 401) {
+      errorMessage = 'Unauthorized - Check public key'
+    } else if (error.status === 403) {
+      errorMessage = 'Forbidden - Check service permissions'
+    } else if (error.status === 404) {
+      errorMessage = 'Not Found - Check service or template ID'
+    } else if (error.status === 422) {
+      errorMessage = 'Invalid template variables'
+    }
+    
+    return { success: false, error: errorMessage }
   }
 }
 

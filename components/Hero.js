@@ -37,53 +37,21 @@ const Hero = () => {
       features: ['Full Color Print', 'Smart Tech Ready', 'Eco Materials'],
       color: 'from-purple-500 to-blue-500',
       bgColor: 'from-purple-50 to-blue-50',
-      icon: (
-        <svg className="w-full h-full" viewBox="0 0 200 200" fill="none">
-          <rect x="30" y="70" width="140" height="100" rx="8" fill="currentColor" opacity="0.1" stroke="currentColor" strokeWidth="2"/>
-          <path d="M30 70L100 40L170 70" stroke="currentColor" strokeWidth="2" fill="none"/>
-          <path d="M100 40V70" stroke="currentColor" strokeWidth="2"/>
-          <rect x="150" y="150" width="15" height="15" rx="2" fill="currentColor" opacity="0.3"/>
-          <circle cx="157.5" cy="157.5" r="4" fill="currentColor"/>
-        </svg>
-      )
+      image: '/custom-boxes.png'
     },
     {
       type: 'Mylar Bags',
       features: ['Food Grade Safe', 'Resealable Design', 'Digital Connect'],
       color: 'from-green-500 to-teal-500',
       bgColor: 'from-green-50 to-teal-50',
-      image: '/mylar-bags.png',
-      icon: (
-        <svg className="w-full h-full" viewBox="0 0 200 200" fill="none">
-          <path d="M50 60Q50 40 70 40H130Q150 40 150 60V160Q150 180 130 180H70Q50 180 50 160V60Z" 
-                fill="currentColor" opacity="0.1" stroke="currentColor" strokeWidth="2"/>
-          <rect x="50" y="40" width="100" height="20" rx="10" fill="currentColor" opacity="0.2"/>
-          <path d="M70 70H130M70 90H130M70 110H100" stroke="currentColor" strokeWidth="1.5" opacity="0.4"/>
-          <rect x="120" y="150" width="20" height="20" rx="3" fill="currentColor" opacity="0.3"/>
-          <circle cx="130" cy="160" r="5" fill="currentColor"/>
-        </svg>
-      )
+      image: '/mylar-bags.png'
     },
     {
       type: 'Tech-Integrated',
       features: ['QR Codes', 'NFC Tags', 'Track & Trace'],
       color: 'from-orange-500 to-pink-500',
       bgColor: 'from-orange-50 to-pink-50',
-      icon: (
-        <svg className="w-full h-full" viewBox="0 0 200 200" fill="none">
-          <rect x="40" y="40" width="120" height="120" rx="12" fill="currentColor" opacity="0.1" stroke="currentColor" strokeWidth="2"/>
-          <g opacity="0.3">
-            <rect x="60" y="60" width="30" height="30" fill="currentColor"/>
-            <rect x="110" y="60" width="30" height="30" fill="currentColor"/>
-            <rect x="60" y="110" width="30" height="30" fill="currentColor"/>
-            <rect x="70" y="70" width="10" height="10" fill="white"/>
-            <rect x="120" y="70" width="10" height="10" fill="white"/>
-            <rect x="70" y="120" width="10" height="10" fill="white"/>
-          </g>
-          <circle cx="125" cy="125" r="15" stroke="currentColor" strokeWidth="2" fill="none"/>
-          <circle cx="125" cy="125" r="8" fill="currentColor" opacity="0.5"/>
-        </svg>
-      )
+      image: '/tech-integrated.png'
     }
   ]
 
@@ -220,18 +188,14 @@ const Hero = () => {
                   >
                     <div className={`relative bg-gradient-to-br ${pkg.bgColor} rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl border border-gray-100 w-full max-w-xs sm:max-w-sm lg:max-w-md`}>
                       {/* Package Visual */}
-                      <div className={`h-32 sm:h-48 lg:h-64 mb-3 sm:mb-4 lg:mb-6 text-transparent bg-gradient-to-br ${pkg.color} bg-clip-text`}>
-                        {pkg.image ? (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <img 
-                              src={pkg.image} 
-                              alt={pkg.type}
-                              className="w-full h-full object-contain rounded-xl sm:rounded-2xl"
-                            />
-                          </div>
-                        ) : (
-                          pkg.icon
-                        )}
+                      <div className="h-32 sm:h-48 lg:h-64 mb-3 sm:mb-4 lg:mb-6">
+                        <div className="w-full h-full flex items-center justify-center bg-white/90 rounded-xl sm:rounded-2xl overflow-hidden shadow-inner">
+                          <img 
+                            src={pkg.image} 
+                            alt={pkg.type}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
                       </div>
                       
                       {/* Package Info */}

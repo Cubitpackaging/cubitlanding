@@ -81,37 +81,45 @@ const QuoteForm = () => {
       setSubmissionResults(null)
       
       try {
-        // Submit to both email and admin panel
         console.log('Submitting quote form:', formData)
+        
+        // Submit to both email and admin panel
         const results = await submitQuoteForm(formData)
+        console.log('Submission results:', results)
         
         setSubmissionResults(results)
         
         if (results.overall.success) {
           console.log('Quote submitted successfully to both systems!')
-      setIsSubmitted(true)
-      
+          setIsSubmitted(true)
+          
           // Reset form after 5 seconds
-      setTimeout(() => {
-        setIsSubmitted(false)
+          setTimeout(() => {
+            setIsSubmitted(false)
             setSubmissionResults(null)
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          packagingType: '',
-          quantity: '',
-          message: ''
-        })
+            setFormData({
+              name: '',
+              email: '',
+              company: '',
+              packagingType: '',
+              quantity: '',
+              message: ''
+            })
           }, 5000)
         } else {
-          const errorMessage = getSubmissionErrorMessage(results)
-          setSubmissionError(errorMessage)
-          console.error('Quote submission failed:', results.overall.errors)
+          // Show partial success or complete failure
+          if (results.email.success || results.admin.success) {
+            console.log('Partial success - at least one system worked')
+            // Keep the results visible for user to see what worked
+          } else {
+            console.error('Complete failure - both systems failed')
+            const errorMessage = getSubmissionErrorMessage(results)
+            setSubmissionError(errorMessage)
+          }
         }
       } catch (error) {
         console.error('Error submitting quote form:', error)
-        setSubmissionError('An unexpected error occurred. Please try again or contact us directly.')
+        setSubmissionError('An unexpected error occurred. Please try again or contact us directly at cubitpackaging@gmail.com or call (510) 203-8855.')
       } finally {
         setIsLoading(false)
       }

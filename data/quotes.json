@@ -1,1 +1,16 @@
-[] 
+[
+  {
+    "id": "1751933566573",
+    "type": "quote",
+    "name": "Hamza Azam",
+    "email": "mrhamzamughal@icloud.com",
+    "company": "Cubit",
+    "packagingType": "Electronics Packaging",
+    "quantity": "5",
+    "message": "",
+    "status": "pending",
+    "priority": "normal",
+    "createdAt": "2025-07-08T00:12:46.574Z",
+    "updatedAt": "2025-07-08T00:12:46.578Z"
+  }
+]

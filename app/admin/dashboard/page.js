@@ -207,15 +207,15 @@ export default function AdminDashboard() {
             </button>
 
             <button
-              onClick={() => window.open('https://dashboard.emailjs.com', '_blank')}
+              onClick={() => router.push('/admin/users')}
               className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <svg className="w-8 h-8 text-gray-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 7.89a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              <svg className="w-8 h-8 text-purple-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
               </svg>
               <div className="text-left">
-                <p className="font-medium">EmailJS Dashboard</p>
-                <p className="text-sm text-gray-600">Manage email templates</p>
+                <p className="font-medium">Manage Users</p>
+                <p className="text-sm text-gray-600">Add and manage admin users</p>
               </div>
             </button>
           </div>

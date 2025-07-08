@@ -3,7 +3,7 @@
 
 export const EMAIL_CONFIG = {
   // EmailJS Service Configuration
-  serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_2w7p7qj',
+  serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_69z6f0a',
   publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'user_PUT_YOUR_PUBLIC_KEY_HERE',
   
   // Email Templates

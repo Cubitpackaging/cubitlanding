@@ -139,6 +139,34 @@
       "imageId": null,
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "6",
+      "name": "Tubes & Jars",
+      "category": "Cosmetic & Pharmaceutical",
+      "moq": "MOQ: 100 units",
+      "description": "Premium squeezable tubes and cosmetic jars for beauty, pharmaceutical, and food products.",
+      "fullDescription": "Professional tubes and jars designed for cosmetics, pharmaceuticals, and food applications. Our plastic and aluminum tubes offer excellent barrier properties with 360° printing capabilities, while our jars provide secure storage with custom branding options. Perfect for creams, lotions, ointments, food pastes, and specialty products requiring precise dispensing or storage.",
+      "features": [
+        "360° printing",
+        "Barrier protection",
+        "Multiple cap options",
+        "Food-safe materials",
+        "Recyclable options"
+      ],
+      "specifications": {
+        "Materials": "PE, PP, aluminum, or laminated films",
+        "Tube Sizes": "5ml to 300ml capacity",
+        "Jar Sizes": "15ml to 500ml capacity",
+        "Printing": "Offset, screen, flexographic, gravure",
+        "Caps": "Flip-top, screw, pump, or squeeze caps",
+        "Barrier": "Oxygen, moisture, and light protection"
+      },
+      "popular": false,
+      "bestseller": false,
+      "imageId": null,
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
     }
   ],
   "industryProducts": [

@@ -1,5 +1,3 @@
-import { sendQuoteFormEmail, sendRushOrderEmail } from './emailService'
-
 // Submit quote form to both email and admin panel
 export const submitQuoteForm = async (formData) => {
   const results = {
@@ -9,25 +7,45 @@ export const submitQuoteForm = async (formData) => {
   }
 
   try {
+    console.log('Starting quote form submission...')
+    
     // Submit to email and admin panel in parallel
     const [emailResult, adminResult] = await Promise.allSettled([
-      sendQuoteFormEmail(formData),
+      fetch('/api/send-quote-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      }).then(async res => {
+        const data = await res.json()
+        console.log('Email API response:', { status: res.status, data })
+        return { ...data, status: res.status }
+      }),
       fetch('/api/admin/quotes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData)
-      }).then(res => res.json())
+      }).then(async res => {
+        const data = await res.json()
+        console.log('Admin API response:', { status: res.status, data })
+        return { ...data, status: res.status }
+      })
     ])
+
+    console.log('Promise results:', { emailResult, adminResult })
 
     // Handle email result
     if (emailResult.status === 'fulfilled' && emailResult.value.success) {
       results.email.success = true
       console.log('✅ Quote email sent successfully')
     } else {
-      results.email.error = emailResult.reason || emailResult.value?.error || 'Email sending failed'
-      console.error('❌ Quote email failed:', results.email.error)
+      const error = emailResult.reason || emailResult.value?.error || 'Email sending failed'
+      results.email.error = error
+      console.error('❌ Quote email failed:', error)
+      results.overall.errors.push(`Email: ${error}`)
     }
 
     // Handle admin result
@@ -35,25 +53,21 @@ export const submitQuoteForm = async (formData) => {
       results.admin.success = true
       console.log('✅ Quote saved to admin panel successfully')
     } else {
-      results.admin.error = adminResult.reason || adminResult.value?.error || 'Admin panel save failed'
-      console.error('❌ Quote admin save failed:', results.admin.error)
+      const error = adminResult.reason || adminResult.value?.error || 'Admin panel save failed'
+      results.admin.error = error
+      console.error('❌ Quote admin save failed:', error)
+      results.overall.errors.push(`Admin: ${error}`)
     }
 
-    // Determine overall success
-    if (results.email.success && results.admin.success) {
-      results.overall.success = true
-      console.log('✅ Quote submitted successfully to both email and admin panel')
-    } else {
-      if (!results.email.success) results.overall.errors.push('Email sending failed')
-      if (!results.admin.success) results.overall.errors.push('Admin panel save failed')
-      console.warn('⚠️ Quote submission partially failed:', results.overall.errors)
-    }
+    // Overall success if at least one method worked
+    results.overall.success = results.email.success || results.admin.success
 
+    console.log('Final submission results:', results)
     return results
 
   } catch (error) {
-    console.error('❌ Quote submission error:', error)
-    results.overall.errors.push('Unexpected error occurred')
+    console.error('Submission service error:', error)
+    results.overall.errors.push(`System error: ${error.message}`)
     return results
   }
 }
@@ -69,7 +83,13 @@ export const submitRushOrder = async (formData) => {
   try {
     // Submit to email and admin panel in parallel
     const [emailResult, adminResult] = await Promise.allSettled([
-      sendRushOrderEmail(formData),
+      fetch('/api/send-rush-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      }).then(res => res.json()),
       fetch('/api/admin/rush-orders', {
         method: 'POST',
         headers: {
