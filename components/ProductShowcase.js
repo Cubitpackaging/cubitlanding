@@ -243,8 +243,8 @@ const ProductShowcase = () => {
                 </p>
 
                 {/* Features */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {product.features?.slice(0, 3).map((feature, idx) => (
+                <div className="flex flex-wrap gap-2 mb-4 min-h-[60px]">
+                  {product.features?.map((feature, idx) => (
                     <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-lg font-medium">
                       {feature}
                     </span>
@@ -413,4 +413,4 @@ const ProductShowcase = () => {
   )
 }
 
-export default ProductShowcase 
+export default ProductShowcase

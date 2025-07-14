@@ -1,3 +1,124 @@
 {
-  "images": []
+  "images": [
+    {
+      "id": "coffee-packaging-001",
+      "filename": "coffee pouch.jpg",
+      "originalName": "coffee pouch.jpg",
+      "mimeType": "image/jpeg",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "food-containers-001",
+      "filename": "Food Containers.jpg",
+      "originalName": "Food Containers.jpg",
+      "mimeType": "image/jpeg",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "cosmetic-boxes-001",
+      "filename": "Cosmetic Boxes.jpg",
+      "originalName": "Cosmetic Boxes.jpg",
+      "mimeType": "image/jpeg",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "supplement-pouches-001",
+      "filename": "Supplement Pouches.jpg",
+      "originalName": "Supplement Pouches.jpg",
+      "mimeType": "image/jpeg",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "apparel-mailers-001",
+      "filename": "Apparel Mailers.jpg",
+      "originalName": "Apparel Mailers.jpg",
+      "mimeType": "image/jpeg",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "electronics-packaging-001",
+      "filename": "Electronics Packaging.jpg",
+      "originalName": "Electronics Packaging.jpg",
+      "mimeType": "image/jpeg",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "jewelry-boxes-001",
+      "filename": "Jewelry Boxes.jpg",
+      "originalName": "Jewelry Boxes.jpg",
+      "mimeType": "image/jpeg",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "book-mailers-001",
+      "filename": "Book Mailers_.jpg",
+      "originalName": "Book Mailers_.jpg",
+      "mimeType": "image/jpeg",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "gift-boxes-001",
+      "filename": "Gift Boxes.jpg",
+      "originalName": "Gift Boxes.jpg",
+      "mimeType": "image/jpeg",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "pouches-bags-001",
+      "filename": "Pouches & Bags.png",
+      "originalName": "Pouches & Bags.png",
+      "mimeType": "image/png",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "folding-cartons-001",
+      "filename": "Folding Cartons.png",
+      "originalName": "Folding Cartons.png",
+      "mimeType": "image/png",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "shipping-boxes-001",
+      "filename": "Shipping Boxes.png",
+      "originalName": "Shipping Boxes.png",
+      "mimeType": "image/png",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "labels-stickers-001",
+      "filename": "Labels & Stickers.png",
+      "originalName": "Labels & Stickers.png",
+      "mimeType": "image/png",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "tubes-jars-001",
+      "filename": "Tubes & Jars.jpg",
+      "originalName": "Tubes & Jars.jpg",
+      "mimeType": "image/jpeg",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "1751588371734",
+      "filename": "Mailer Boxes.png",
+      "originalName": "Mailer Boxes.png",
+      "mimeType": "image/png",
+      "size": 0,
+      "uploadedAt": "2024-01-15T10:00:00Z"
+    }
+  ]
 }

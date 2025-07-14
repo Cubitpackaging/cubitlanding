@@ -15,8 +15,8 @@ export default function Home() {
     <main className="overflow-x-hidden">
       <Header />
       <Hero />
-      <WhyChoose />
       <ProductShowcase />
+      <WhyChoose />
       <PrintingCapabilities />
       <HowItWorks />
       <SmartPackaging />
@@ -26,4 +26,4 @@ export default function Home() {
       <Footer />
     </main>
   )
-} 
+}

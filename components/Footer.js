@@ -2,11 +2,13 @@
 
 import { useState } from 'react'
 import PolicyModal from './PolicyModal'
+import RushOrderModal from './RushOrderModal'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
   const [modalOpen, setModalOpen] = useState(false)
   const [modalType, setModalType] = useState('privacy')
+  const [rushOrderModalOpen, setRushOrderModalOpen] = useState(false)
 
   const openModal = (type) => {
     setModalType(type)
@@ -137,7 +139,14 @@ const Footer = () => {
               <li><span className="text-xs sm:text-sm text-gray-300">Smart Technology</span></li>
               <li><span className="text-xs sm:text-sm text-gray-300">Eco-Friendly Solutions</span></li>
               <li><span className="text-xs sm:text-sm text-gray-300">Design Services</span></li>
-              <li><span className="text-xs sm:text-sm text-gray-300">Rush Orders</span></li>
+              <li>
+                <button
+                  onClick={() => setRushOrderModalOpen(true)}
+                  className="text-xs sm:text-sm text-gray-300 hover:text-green-400 transition-colors duration-300 text-left"
+                >
+                  Rush Orders
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -247,8 +256,14 @@ const Footer = () => {
         onClose={closeModal} 
         type={modalType} 
       />
+      
+      {/* Rush Order Modal */}
+      <RushOrderModal 
+        isOpen={rushOrderModalOpen} 
+        onClose={() => setRushOrderModalOpen(false)} 
+      />
     </footer>
   )
 }
 
-export default Footer 
+export default Footer

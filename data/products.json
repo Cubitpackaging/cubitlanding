@@ -52,7 +52,7 @@
       },
       "popular": false,
       "bestseller": false,
-      "imageId": null,
+      "imageId": "pouches-bags-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     },
@@ -80,7 +80,7 @@
       },
       "popular": false,
       "bestseller": true,
-      "imageId": null,
+      "imageId": "folding-cartons-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     },
@@ -108,7 +108,7 @@
       },
       "popular": false,
       "bestseller": false,
-      "imageId": null,
+      "imageId": "shipping-boxes-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     },
@@ -136,7 +136,7 @@
       },
       "popular": false,
       "bestseller": false,
-      "imageId": null,
+      "imageId": "labels-stickers-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     },
@@ -164,7 +164,7 @@
       },
       "popular": false,
       "bestseller": false,
-      "imageId": null,
+      "imageId": "tubes-jars-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     }
@@ -194,7 +194,7 @@
       },
       "popular": false,
       "bestseller": false,
-      "imageId": null,
+      "imageId": "coffee-packaging-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     },
@@ -222,7 +222,7 @@
       },
       "popular": false,
       "bestseller": true,
-      "imageId": null,
+      "imageId": "food-containers-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     },
@@ -250,7 +250,7 @@
       },
       "popular": false,
       "bestseller": false,
-      "imageId": null,
+      "imageId": "cosmetic-boxes-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     },
@@ -278,7 +278,7 @@
       },
       "popular": false,
       "bestseller": false,
-      "imageId": null,
+      "imageId": "supplement-pouches-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     },
@@ -306,7 +306,7 @@
       },
       "popular": false,
       "bestseller": false,
-      "imageId": null,
+      "imageId": "apparel-mailers-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     },
@@ -334,7 +334,7 @@
       },
       "popular": false,
       "bestseller": false,
-      "imageId": null,
+      "imageId": "electronics-packaging-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     },
@@ -350,8 +350,7 @@
         "Velvet inserts",
         "Premium materials",
         "Elegant design",
-        "Secure closure",
-        "Custom branding"
+        "Magnetic closure"
       ],
       "specifications": {
         "Material": "Premium paperboard with luxury finishes",
@@ -362,7 +361,7 @@
       },
       "popular": false,
       "bestseller": false,
-      "imageId": null,
+      "imageId": "jewelry-boxes-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     },
@@ -390,7 +389,7 @@
       },
       "popular": false,
       "bestseller": false,
-      "imageId": null,
+      "imageId": "book-mailers-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     },
@@ -418,7 +417,7 @@
       },
       "popular": false,
       "bestseller": false,
-      "imageId": null,
+      "imageId": "gift-boxes-001",
       "createdAt": "2024-01-15T10:00:00Z",
       "updatedAt": "2024-01-15T10:00:00Z"
     }
