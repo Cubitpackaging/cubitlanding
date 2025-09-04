@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
 import { X, Send } from 'lucide-react'
+import visitorTracker from '../utils/visitorTracking'
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -141,10 +142,15 @@ const ChatWidget = () => {
           filter: `conversation_id=eq.${conversationId}`
         },
         (payload) => {
-          // Only add message if it's not from this visitor (to avoid duplicates)
-          if (payload.new.role === 'agent') {
-            setMessages(prev => [...prev, payload.new])
-          }
+          // Add all new messages to the chat
+          setMessages(prev => {
+            // Check if message already exists to avoid duplicates
+            const messageExists = prev.some(msg => msg.id === payload.new.id)
+            if (!messageExists) {
+              return [...prev, payload.new]
+            }
+            return prev
+          })
         }
       )
       .subscribe()
@@ -304,7 +310,13 @@ const ChatWidget = () => {
 
       {/* Chat Toggle Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen)
+          // Mark visitor as chat user when they open the chat
+          if (!isOpen) {
+            visitorTracker.markAsChatUser()
+          }
+        }}
         className="w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center relative hover:scale-105"
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../../lib/supabase'
 import { AuthService } from '../../../lib/auth'
-import { createNotificationSound, playSimpleBeep } from '../../../public/notification-sound.js'
+import { createNotificationSound, playSimpleBeep } from '../../../utils/notificationSound'
 
 const AdminChatPage = () => {
   const [conversations, setConversations] = useState([])
@@ -152,7 +152,7 @@ const AdminChatPage = () => {
           status,
           created_at,
           updated_at,
-          messages!inner(content, created_at)
+          messages(content, created_at)
         `)
         .order('updated_at', { ascending: false })
 
@@ -160,13 +160,15 @@ const AdminChatPage = () => {
 
       // Process conversations to get latest message preview
       const processedConversations = data.map(conv => {
-        const latestMessage = conv.messages
-          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0]
+        const messages = conv.messages || []
+        const latestMessage = messages.length > 0 
+          ? messages.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0]
+          : null
         
         return {
           ...conv,
-          latestMessage: latestMessage?.content || 'No messages',
-          messageCount: conv.messages.length
+          latestMessage: latestMessage?.content || 'No messages yet',
+          messageCount: messages.length
         }
       })
 
@@ -219,7 +221,14 @@ const AdminChatPage = () => {
           filter: `conversation_id=eq.${conversationId}`
         },
         (payload) => {
-          setMessages(prev => [...prev, payload.new])
+          setMessages(prev => {
+            // Check if message already exists to avoid duplicates
+            const messageExists = prev.some(msg => msg.id === payload.new.id)
+            if (!messageExists) {
+              return [...prev, payload.new]
+            }
+            return prev
+          })
           // Refresh conversations list to update latest message
           loadConversations()
         }

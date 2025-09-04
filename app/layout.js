@@ -1,5 +1,6 @@
 import './globals.css'
 import ChatWidget from '../components/ChatWidget'
+import VisitorTracker from '../components/VisitorTracker'
 
 export const metadata = {
   title: 'Cubit Packaging - Eco-Smart Custom Packaging Solutions',
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="font-sans">
+        <VisitorTracker />
         {children}
         <ChatWidget />
       </body>
