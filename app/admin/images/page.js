@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import AdminLayout from '../../../components/admin/AdminLayout'
+import { AuthService } from '../../../lib/auth'
 
 export default function ImagesManagement() {
   const [images, setImages] = useState([])
@@ -13,15 +14,37 @@ export default function ImagesManagement() {
   const router = useRouter()
 
   useEffect(() => {
-    // Check authentication
-    const isLoggedIn = localStorage.getItem('admin_logged_in')
-    if (isLoggedIn !== 'true') {
-      router.push('/admin')
-      return
-    }
-
-    loadImages()
+    checkAuth()
   }, [router])
+
+  const checkAuth = async () => {
+    try {
+      console.log('Images: Checking auth status...')
+      const { success, session } = await AuthService.getSession()
+      console.log('Images: Session check result:', { success, hasSession: !!session })
+      
+      if (!success || !session) {
+        console.log('Images: No valid session, redirecting to login')
+        router.push('/admin')
+        return
+      }
+
+      const isAdmin = await AuthService.isAdmin(session.user)
+      console.log('Images: Is admin check result:', isAdmin)
+      
+      if (!isAdmin) {
+        console.log('Images: User is not admin, redirecting to login')
+        router.push('/admin')
+        return
+      }
+
+      console.log('Images: Auth successful, loading images')
+      loadImages()
+    } catch (error) {
+      console.error('Images: Auth check error:', error)
+      router.push('/admin')
+    }
+  }
 
   const loadImages = async () => {
     try {
@@ -262,4 +285,4 @@ export default function ImagesManagement() {
       )}
     </AdminLayout>
   )
-} 
+}

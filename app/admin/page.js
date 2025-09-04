@@ -18,30 +18,27 @@ export default function AdminLogin() {
   const router = useRouter()
 
   useEffect(() => {
-    console.log('🔵 Login page mounted')
-    // Check if already logged in
     checkAuthStatus()
   }, [router])
 
   const checkAuthStatus = async () => {
     try {
-      console.log('🔵 Login: Checking if already authenticated...')
+      console.log('Checking auth status...')
       const { success, session } = await AuthService.getSession()
-      console.log('🔵 Login: Current session check:', { success, session })
+      console.log('Session check result:', { success, hasSession: !!session })
       
       if (success && session) {
         const isAdmin = await AuthService.isAdmin(session.user)
-        console.log('🔵 Login: Is admin check:', isAdmin)
+        console.log('Auth check - is admin:', isAdmin)
         
         if (isAdmin) {
-          console.log('✅ Login: User already authenticated, redirecting to dashboard...')
-          router.push('/admin/dashboard')
+          console.log('Auth check - user already logged in as admin, redirecting...')
+          router.replace('/admin/dashboard')
         }
-      } else {
-        console.log('🔵 Login: No existing session, showing login form')
       }
     } catch (error) {
-      console.error('🔴 Login: Auth status check error:', error)
+      // Silent error handling for production
+      console.error('Auth check error:', error)
     }
   }
 
@@ -50,33 +47,33 @@ export default function AdminLogin() {
     setLoading(true)
     setError('')
 
-    console.log('🔵 Login: Login attempt with:', credentials.email)
-
     try {
       const result = await AuthService.signIn(credentials.email, credentials.password)
-      console.log('🔵 Login: Login result:', result)
       
       if (result.success) {
-        console.log('✅ Login: Login successful, checking admin status...')
-        
-        // Check if user is admin
+        console.log('Login successful, checking admin status...')
         const isAdmin = await AuthService.isAdmin(result.user)
-        console.log('🔵 Login: Admin check result:', isAdmin)
+        console.log('Is admin:', isAdmin)
         
         if (isAdmin) {
-          console.log('✅ Login: Admin confirmed, redirecting to dashboard...')
-          // Use replace instead of push to avoid back button issues
+          console.log('Redirecting to dashboard...')
           router.replace('/admin/dashboard')
+          // Fallback redirect in case router.replace fails
+          setTimeout(() => {
+            window.location.href = '/admin/dashboard'
+          }, 100)
+          // Clear any potential browser cache issues
+          window.history.replaceState(null, '', '/admin/dashboard')
         } else {
+          console.log('Access denied - not admin')
           setError('Access denied. Admin privileges required.')
           await AuthService.signOut()
         }
       } else {
-        console.error('🔴 Login: Login failed:', result.error)
+        console.log('Login failed:', result.error)
         setError(result.error || 'Invalid credentials')
       }
     } catch (error) {
-      console.error('🔴 Login: Login exception:', error)
       setError('Login failed. Please try again.')
     } finally {
       setLoading(false)
@@ -119,10 +116,10 @@ export default function AdminLogin() {
     setError('')
   }
 
-  console.log('🔵 Login render: loading =', loading, 'error =', error)
+
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -175,7 +172,7 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-primary text-black font-semibold py-3 px-6 rounded-lg hover:bg-primary-hover transition-colors disabled:opacity-50"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
@@ -184,7 +181,7 @@ export default function AdminLogin() {
               <button
                 type="button"
                 onClick={() => setShowForgotPassword(true)}
-                className="text-sm text-primary hover:text-primary-hover transition-colors"
+                className="text-sm text-blue-600 hover:text-blue-700 transition-colors"
               >
                 Forgot your password?
               </button>
@@ -272,4 +269,4 @@ export default function AdminLogin() {
       </div>
     </div>
   )
-} 
+}

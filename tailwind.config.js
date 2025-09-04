@@ -14,20 +14,10 @@ module.exports = {
         'secondary-hover': '#6B5AE7',
       },
       fontFamily: {
-        'inter': ['Inter', 'sans-serif'],
-        'poppins': ['Poppins', 'sans-serif'],
         'sans': ['Inter', 'sans-serif'],
         'heading': ['Poppins', 'sans-serif'],
-      },
-      height: {
-        'screen-mobile': '100vh',
-        'screen-desktop': '100vh',
-      },
-      minHeight: {
-        'screen-mobile': '100vh',
-        'screen-desktop': '100vh',
       },
     },
   },
   plugins: [],
-} 
+}

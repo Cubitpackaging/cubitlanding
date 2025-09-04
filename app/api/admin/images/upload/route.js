@@ -1,40 +1,26 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { v4 as uuidv4 } from 'uuid'
+import { createClient } from '@supabase/supabase-js'
 
-const dataPath = path.join(process.cwd(), 'data', 'images.json')
 const uploadsDir = path.join(process.cwd(), 'public', 'uploads')
 
-function ensureDirectories() {
-  // Ensure data directory exists
-  const dataDir = path.dirname(dataPath)
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true })
-  }
-  if (!fs.existsSync(dataPath)) {
-    fs.writeFileSync(dataPath, JSON.stringify({ images: [] }, null, 2))
-  }
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+)
 
-  // Ensure uploads directory exists
+function ensureUploadsDir() {
   if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true })
   }
 }
 
-function readImages() {
-  ensureDirectories()
-  const data = fs.readFileSync(dataPath, 'utf8')
-  return JSON.parse(data)
-}
-
-function writeImages(data) {
-  ensureDirectories()
-  fs.writeFileSync(dataPath, JSON.stringify(data, null, 2))
-}
-
 export async function POST(request) {
   try {
-    ensureDirectories()
+    ensureUploadsDir()
     
     const formData = await request.formData()
     const file = formData.get('file')
@@ -48,9 +34,9 @@ export async function POST(request) {
     }
 
     // Generate unique filename
-    const timestamp = Date.now()
+    const id = uuidv4()
     const extension = path.extname(file.name)
-    const filename = `${timestamp}${extension}`
+    const filename = `${id}${extension}`
     const filepath = path.join(uploadsDir, filename)
 
     // Save file
@@ -60,23 +46,35 @@ export async function POST(request) {
 
     // Create image record
     const imageRecord = {
-      id: timestamp.toString(),
+      id: id,
       name: name,
       filename: filename,
       url: `/uploads/${filename}`,
       size: file.size,
       type: file.type,
-      createdAt: new Date().toISOString()
+      created_at: new Date().toISOString()
     }
 
-    // Save to images.json
-    const images = readImages()
-    images.images.push(imageRecord)
-    writeImages(images)
+    // Save to Supabase
+    const { data, error } = await supabase
+      .from('images')
+      .insert([imageRecord])
+      .select()
+      .single()
+
+    if (error) {
+      console.error('Error saving to Supabase:', error)
+      // Clean up uploaded file
+      fs.unlinkSync(filepath)
+      return NextResponse.json(
+        { error: 'Failed to save image metadata' },
+        { status: 500 }
+      )
+    }
 
     return NextResponse.json({ 
       success: true, 
-      image: imageRecord 
+      image: data 
     })
   } catch (error) {
     console.error('Error uploading image:', error)
@@ -85,4 +83,4 @@ export async function POST(request) {
       { status: 500 }
     )
   }
-} 
+}

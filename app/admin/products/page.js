@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import AdminLayout from '../../../components/admin/AdminLayout'
+import { AuthService } from '../../../lib/auth'
 import ImageSelector from '../../../components/admin/ImageSelector'
 
 function ProductCard({ product, onEdit, onDelete }) {
@@ -94,15 +95,37 @@ export default function ProductsManagement() {
   const router = useRouter()
 
   useEffect(() => {
-    // Check authentication
-    const isLoggedIn = localStorage.getItem('admin_logged_in')
-    if (isLoggedIn !== 'true') {
-      router.push('/admin')
-      return
-    }
-
-    loadProducts()
+    checkAuth()
   }, [router])
+
+  const checkAuth = async () => {
+    try {
+      console.log('Products: Checking auth status...')
+      const { success, session } = await AuthService.getSession()
+      console.log('Products: Session check result:', { success, hasSession: !!session })
+      
+      if (!success || !session) {
+        console.log('Products: No valid session, redirecting to login')
+        router.push('/admin')
+        return
+      }
+
+      const isAdmin = await AuthService.isAdmin(session.user)
+      console.log('Products: Is admin check result:', isAdmin)
+      
+      if (!isAdmin) {
+        console.log('Products: User is not admin, redirecting to login')
+        router.push('/admin')
+        return
+      }
+
+      console.log('Products: Auth successful, loading products')
+      loadProducts()
+    } catch (error) {
+      console.error('Products: Auth check error:', error)
+      router.push('/admin')
+    }
+  }
 
   const loadProducts = async () => {
     try {
@@ -587,4 +610,4 @@ export default function ProductsManagement() {
       )}
     </AdminLayout>
   )
-} 
+}

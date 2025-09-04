@@ -1,0 +1,37 @@
+<!-- Modern Chat Icon Collection -->
+<!-- Icon 1: Modern Chat Bubble -->
+<svg id="modern-chat-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22C10.298 22 8.695 21.61 7.29 20.914L3 22L4.086 17.71C3.39 16.305 3 14.702 3 13C3 7.477 7.477 3 13 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="8" cy="12" r="1" fill="currentColor"/>
+  <circle cx="12" cy="12" r="1" fill="currentColor"/>
+  <circle cx="16" cy="12" r="1" fill="currentColor"/>
+</svg>
+
+<!-- Icon 2: Rounded Chat Bubble -->
+<svg id="modern-chat-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 12H8.01M12 12H12.01M16 12H16.01M21 12C21 16.418 16.97 20 12 20C10.89 20 9.84 19.81 8.87 19.46L3 21L4.54 15.13C4.19 14.16 4 13.11 4 12C4 7.582 8.03 4 12 4C16.97 4 21 7.582 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
+
+<!-- Icon 3: Minimalist Chat -->
+<svg id="modern-chat-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0035 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.6056 8.7 3.90003C9.87812 3.30496 11.1801 2.99659 12.5 3.00003H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
+
+<!-- Icon 4: Filled Modern Chat -->
+<svg id="modern-chat-4" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 2C6.477 2 2 6.477 2 12C2 13.89 2.525 15.66 3.438 17.168L2.546 20.2C2.49 20.414 2.51 20.64 2.606 20.838C2.702 21.036 2.87 21.19 3.078 21.27C3.286 21.35 3.518 21.35 3.726 21.27L6.832 20.378C8.34 21.291 10.11 21.816 12 21.816C17.523 21.816 22 17.339 22 11.816C22 6.293 17.523 1.816 12 1.816V2ZM8 12C7.448 12 7 11.552 7 11C7 10.448 7.448 10 8 10C8.552 10 9 10.448 9 11C9 11.552 8.552 12 8 12ZM12 12C11.448 12 11 11.552 11 11C11 10.448 11.448 10 12 10C12.552 10 13 10.448 13 11C13 11.552 12.552 12 12 12ZM16 12C15.448 12 15 11.552 15 11C15 10.448 15.448 10 16 10C16.552 10 17 10.448 17 11C17 11.552 16.552 12 16 12Z"/>
+</svg>
+
+<!-- Icon 5: Gradient Chat Bubble -->
+<svg id="modern-chat-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="chatGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <path d="M12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22C10.298 22 8.695 21.61 7.29 20.914L3 22L4.086 17.71C3.39 16.305 3 14.702 3 13C3 7.477 7.477 3 13 3Z" fill="url(#chatGradient)"/>
+  <circle cx="8" cy="12" r="1.5" fill="white"/>
+  <circle cx="12" cy="12" r="1.5" fill="white"/>
+  <circle cx="16" cy="12" r="1.5" fill="white"/>
+</svg>

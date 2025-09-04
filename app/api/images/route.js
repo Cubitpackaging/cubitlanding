@@ -5,23 +5,22 @@ import path from 'path'
 // GET /api/images - Fetch all images for public website
 export async function GET() {
   try {
-    const dataPath = path.join(process.cwd(), 'data', 'images.json')
+    const dataDir = path.join(process.cwd(), 'data')
+    const imagesPath = path.join(dataDir, 'images.json')
     
-    // Create data directory and file if they don't exist
-    if (!fs.existsSync(path.dirname(dataPath))) {
-      fs.mkdirSync(path.dirname(dataPath), { recursive: true })
-    }
+    // Read images from JSON file
+    const imagesData = JSON.parse(fs.readFileSync(imagesPath, 'utf8'))
     
-    if (!fs.existsSync(dataPath)) {
-      const initialData = { images: [] }
-      fs.writeFileSync(dataPath, JSON.stringify(initialData, null, 2))
-    }
-    
-    const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
+    // Transform data to include url field for frontend compatibility
+    const transformedImages = (imagesData.images || []).map(image => ({
+      ...image,
+      url: `/uploads/${image.filename}`,
+      name: image.originalName || image.filename
+    }))
     
     return NextResponse.json({
       success: true,
-      images: data.images || []
+      images: transformedImages
     })
   } catch (error) {
     console.error('Error fetching images:', error)
@@ -30,4 +29,4 @@ export async function GET() {
       { status: 500 }
     )
   }
-} 
+}

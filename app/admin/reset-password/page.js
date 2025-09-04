@@ -22,7 +22,6 @@ function ResetPasswordForm() {
         const { data: { session }, error } = await AuthService.getSession()
         
         if (session) {
-          console.log('Valid reset session found')
           setValidSession(true)
         } else {
           // Check for error parameters in URL
@@ -40,7 +39,6 @@ function ResetPasswordForm() {
           }
         }
       } catch (err) {
-        console.error('Session check error:', err)
         setError('Unable to verify reset link. Please try again.')
       }
     }
@@ -87,7 +85,6 @@ function ResetPasswordForm() {
         setError(result.error || 'Failed to update password')
       }
     } catch (error) {
-      console.error('Password update error:', error)
       setError('Failed to update password. Please try again.')
     } finally {
       setLoading(false)

@@ -1,43 +1,59 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
+import { createClient } from '@supabase/supabase-js'
 
-const dataPath = path.join(process.cwd(), 'data', 'products.json')
-
-function readProducts() {
-  const data = fs.readFileSync(dataPath, 'utf8')
-  return JSON.parse(data)
-}
-
-function writeProducts(data) {
-  fs.writeFileSync(dataPath, JSON.stringify(data, null, 2))
-}
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+)
 
 export async function PUT(request, { params }) {
   try {
     const { id } = params
     const updatedProduct = await request.json()
-    const products = readProducts()
     
-    updatedProduct.id = id
-    updatedProduct.updatedAt = new Date().toISOString()
-    
-    // Find and update in appropriate array
-    if (updatedProduct.type === 'industryProducts') {
-      const index = products.industryProducts.findIndex(p => p.id === id)
-      if (index !== -1) {
-        products.industryProducts[index] = updatedProduct
-      }
-    } else {
-      const index = products.products.findIndex(p => p.id === id)
-      if (index !== -1) {
-        products.products[index] = updatedProduct
-      }
+    // Prepare product data
+    const productData = {
+      name: updatedProduct.name,
+      description: updatedProduct.description,
+      full_description: updatedProduct.fullDescription,
+      category: updatedProduct.category,
+      moq: updatedProduct.moq || updatedProduct.minOrder,
+      features: updatedProduct.features,
+      specifications: updatedProduct.specifications,
+      popular: updatedProduct.popular || false,
+      bestseller: updatedProduct.bestseller || false,
+      image_id: updatedProduct.imageId,
+      type: updatedProduct.type,
+      updated_at: new Date().toISOString()
     }
     
-    writeProducts(products)
+    let result
     
-    return NextResponse.json({ success: true, product: updatedProduct })
+    // Update in appropriate table
+    if (updatedProduct.type === 'industryProducts') {
+      const { data, error } = await supabase
+        .from('industry_products')
+        .update(productData)
+        .eq('id', id)
+        .select()
+        .single()
+      
+      if (error) throw error
+      result = data
+    } else {
+      const { data, error } = await supabase
+        .from('products')
+        .update(productData)
+        .eq('id', id)
+        .select()
+        .single()
+      
+      if (error) throw error
+      result = data
+    }
+    
+    return NextResponse.json({ success: true, product: result })
   } catch (error) {
     console.error('Error updating product:', error)
     return NextResponse.json(
@@ -53,16 +69,22 @@ export async function DELETE(request, { params }) {
     const url = new URL(request.url)
     const type = url.searchParams.get('type') || 'products'
     
-    const products = readProducts()
-    
-    // Remove from appropriate array
+    // Delete from appropriate table
     if (type === 'industryProducts') {
-      products.industryProducts = products.industryProducts.filter((_, index) => index.toString() !== id)
+      const { error } = await supabase
+        .from('industry_products')
+        .delete()
+        .eq('id', id)
+      
+      if (error) throw error
     } else {
-      products.products = products.products.filter((_, index) => index.toString() !== id)
+      const { error } = await supabase
+        .from('products')
+        .delete()
+        .eq('id', id)
+      
+      if (error) throw error
     }
-    
-    writeProducts(products)
     
     return NextResponse.json({ success: true })
   } catch (error) {
@@ -72,4 +94,4 @@ export async function DELETE(request, { params }) {
       { status: 500 }
     )
   }
-} 
+}

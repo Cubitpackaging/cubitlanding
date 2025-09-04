@@ -17,45 +17,41 @@ export default function AdminDashboard() {
   const router = useRouter()
 
   useEffect(() => {
-    console.log('🔵 Dashboard component mounted')
-    // Check authentication
     checkAuth()
   }, [router])
 
   const checkAuth = async () => {
     try {
-      console.log('🔵 Dashboard: Checking authentication...')
+      console.log('Dashboard: Checking auth status...')
       const { success, session } = await AuthService.getSession()
-      console.log('🔵 Dashboard: Session check result:', { success, session })
+      console.log('Dashboard: Session check result:', { success, hasSession: !!session })
       
       if (!success || !session) {
-        console.log('🔴 Dashboard: No session found, redirecting to login')
+        console.log('Dashboard: No valid session, redirecting to login')
         router.push('/admin')
         return
       }
 
       const isAdmin = await AuthService.isAdmin(session.user)
-      console.log('🔵 Dashboard: Admin check result:', isAdmin)
+      console.log('Dashboard: Is admin check result:', isAdmin)
       
       if (!isAdmin) {
-        console.log('🔴 Dashboard: User is not admin, redirecting to login')
+        console.log('Dashboard: User is not admin, redirecting to login')
         router.push('/admin')
         return
       }
 
-      console.log('✅ Dashboard: User authenticated as admin:', session.user.email)
+      console.log('Dashboard: Auth successful, loading dashboard')
       setUser(session.user)
-      // Load dashboard stats
       loadStats()
     } catch (error) {
-      console.error('🔴 Dashboard: Auth check failed:', error)
+      console.error('Dashboard: Auth check error:', error)
       router.push('/admin')
     }
   }
 
   const loadStats = async () => {
     try {
-      console.log('📊 Dashboard: Loading dashboard stats...')
       const response = await fetch('/api/admin/stats')
       
       if (!response.ok) {
@@ -63,11 +59,8 @@ export default function AdminDashboard() {
       }
       
       const data = await response.json()
-      console.log('📊 Dashboard: Stats loaded:', data)
       setStats(data)
     } catch (error) {
-      console.error('🔴 Dashboard: Failed to load stats:', error)
-      // Set default stats if loading fails
       setStats({
         totalProducts: 0,
         totalImages: 0,
@@ -75,7 +68,6 @@ export default function AdminDashboard() {
         totalRushOrders: 0
       })
     } finally {
-      console.log('📊 Dashboard: Setting loading to false')
       setLoading(false)
     }
   }
@@ -89,10 +81,7 @@ export default function AdminDashboard() {
     }
   }
 
-  console.log('🔵 Dashboard render: loading =', loading, 'user =', user?.email)
-
   if (loading) {
-    console.log('🔵 Dashboard: Showing loading state')
     return (
       <AdminLayout>
         <div className="flex items-center justify-center h-64">
@@ -102,8 +91,6 @@ export default function AdminDashboard() {
       </AdminLayout>
     )
   }
-
-  console.log('🔵 Dashboard: Rendering main dashboard content')
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -237,34 +224,8 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Recent Activity */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
-          <div className="space-y-4">
-            <div className="flex items-center p-3 bg-gray-50 rounded-lg">
-              <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
-              <div>
-                <p className="text-sm font-medium">✅ EmailJS configured successfully</p>
-                <p className="text-xs text-gray-600">Email forms are now working</p>
-              </div>
-            </div>
-            <div className="flex items-center p-3 bg-gray-50 rounded-lg">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-              <div>
-                <p className="text-sm font-medium">🔐 Supabase authentication active</p>
-                <p className="text-xs text-gray-600">Admin panel secured with Supabase</p>
-              </div>
-            </div>
-            <div className="flex items-center p-3 bg-gray-50 rounded-lg">
-              <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
-              <div>
-                <p className="text-sm font-medium">📊 Dashboard ready</p>
-                <p className="text-xs text-gray-600">All admin features available</p>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </AdminLayout>
   )
-} 
+}

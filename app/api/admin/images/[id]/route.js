@@ -1,34 +1,33 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { createClient } from '@supabase/supabase-js'
 
-const dataPath = path.join(process.cwd(), 'data', 'images.json')
 const uploadsDir = path.join(process.cwd(), 'public', 'uploads')
 
-function readImages() {
-  const data = fs.readFileSync(dataPath, 'utf8')
-  return JSON.parse(data)
-}
-
-function writeImages(data) {
-  fs.writeFileSync(dataPath, JSON.stringify(data, null, 2))
-}
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+)
 
 export async function DELETE(request, { params }) {
   try {
     const { id } = params
-    const images = readImages()
     
-    // Find image
-    const imageIndex = images.images.findIndex(img => img.id === id)
-    if (imageIndex === -1) {
+    // Get image from Supabase
+    const { data: image, error: fetchError } = await supabase
+      .from('images')
+      .select('*')
+      .eq('id', id)
+      .single()
+    
+    if (fetchError || !image) {
       return NextResponse.json(
         { error: 'Image not found' },
         { status: 404 }
       )
     }
-
-    const image = images.images[imageIndex]
     
     // Delete file from filesystem
     const filepath = path.join(uploadsDir, image.filename)
@@ -36,9 +35,15 @@ export async function DELETE(request, { params }) {
       fs.unlinkSync(filepath)
     }
 
-    // Remove from images array
-    images.images.splice(imageIndex, 1)
-    writeImages(images)
+    // Delete from Supabase
+    const { error: deleteError } = await supabase
+      .from('images')
+      .delete()
+      .eq('id', id)
+    
+    if (deleteError) {
+      throw deleteError
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {
@@ -48,4 +53,4 @@ export async function DELETE(request, { params }) {
       { status: 500 }
     )
   }
-} 
+}

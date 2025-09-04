@@ -1,6 +1,8 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import AdminLayout from '../../../components/admin/AdminLayout'
+import { AuthService } from '../../../lib/auth'
 
 const SubmissionsPage = () => {
   const [quotes, setQuotes] = useState([])
@@ -8,11 +10,41 @@ const SubmissionsPage = () => {
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('quotes')
   const [error, setError] = useState('')
+  const router = useRouter()
 
   // Fetch data on component mount
   useEffect(() => {
-    fetchSubmissions()
+    checkAuth()
   }, [])
+
+  const checkAuth = async () => {
+    try {
+      console.log('Submissions: Checking auth status...')
+      const { success, session } = await AuthService.getSession()
+      console.log('Submissions: Session check result:', { success, hasSession: !!session })
+      
+      if (!success || !session) {
+        console.log('Submissions: No valid session, redirecting to login')
+        router.push('/admin')
+        return
+      }
+
+      const isAdmin = await AuthService.isAdmin(session.user)
+      console.log('Submissions: Is admin check result:', isAdmin)
+      
+      if (!isAdmin) {
+        console.log('Submissions: User is not admin, redirecting to login')
+        router.push('/admin')
+        return
+      }
+
+      console.log('Submissions: Auth successful, loading submissions')
+      fetchSubmissions()
+    } catch (error) {
+      console.error('Submissions: Auth check error:', error)
+      router.push('/admin')
+    }
+  }
 
   const fetchSubmissions = async () => {
     try {
@@ -393,4 +425,4 @@ const SubmissionsPage = () => {
   )
 }
 
-export default SubmissionsPage 
+export default SubmissionsPage

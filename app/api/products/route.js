@@ -5,24 +5,16 @@ import path from 'path'
 // GET /api/products - Fetch all products for public website
 export async function GET() {
   try {
-    const dataPath = path.join(process.cwd(), 'data', 'products.json')
+    const dataDir = path.join(process.cwd(), 'data')
+    const productsPath = path.join(dataDir, 'products.json')
     
-    // Create data directory and file if they don't exist
-    if (!fs.existsSync(path.dirname(dataPath))) {
-      fs.mkdirSync(path.dirname(dataPath), { recursive: true })
-    }
-    
-    if (!fs.existsSync(dataPath)) {
-      const initialData = { products: [], industryProducts: [] }
-      fs.writeFileSync(dataPath, JSON.stringify(initialData, null, 2))
-    }
-    
-    const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
+    // Read products from JSON file
+    const productsData = JSON.parse(fs.readFileSync(productsPath, 'utf8'))
     
     return NextResponse.json({
       success: true,
-      products: data.products || [],
-      industryProducts: data.industryProducts || []
+      products: productsData.products || [],
+      industryProducts: productsData.industryProducts || []
     })
   } catch (error) {
     console.error('Error fetching products:', error)
@@ -31,4 +23,4 @@ export async function GET() {
       { status: 500 }
     )
   }
-} 
+}

@@ -1,13 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { AuthService } from '../../lib/auth'
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const router = useRouter()
+  const pathname = usePathname()
 
   const handleLogout = async () => {
     try {
@@ -49,6 +50,15 @@ export default function AdminLayout({ children }) {
       )
     },
     {
+      name: 'Chat',
+      href: '/admin/chat',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+      )
+    },
+    {
       name: 'Submissions',
       href: '/admin/submissions',
       icon: (
@@ -69,82 +79,129 @@ export default function AdminLayout({ children }) {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Mobile sidebar */}
       <div className={`fixed inset-0 z-50 lg:hidden ${sidebarOpen ? 'block' : 'hidden'}`}>
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setSidebarOpen(false)}></div>
-        <div className="relative flex flex-col w-64 bg-white shadow-xl">
-          <div className="flex items-center justify-between h-16 px-6 bg-primary">
-            <span className="text-xl font-bold text-black">Cubit Admin</span>
-            <button onClick={() => setSidebarOpen(false)} className="text-black">
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onClick={() => setSidebarOpen(false)}></div>
+        <div className="relative flex flex-col w-72 bg-white shadow-2xl border-r border-gray-200">
+          <div className="flex items-center justify-between h-20 px-6 bg-white border-b border-gray-200">
+            <div className="flex items-center space-x-3">
+              <img 
+                 src="/logo.svg" 
+                 alt="Cubit Packaging" 
+                 className="h-12 w-auto"
+               />
+            </div>
+            <button onClick={() => setSidebarOpen(false)} className="text-black hover:text-gray-700 transition-colors">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
-          <nav className="flex-1 px-4 py-6 space-y-2">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
-              >
-                {item.icon}
-                <span className="ml-3">{item.name}</span>
-              </Link>
-            ))}
+          <nav className="flex-1 px-4 py-6 space-y-1">
+            {navigation.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`flex items-center px-4 py-3 rounded-xl font-medium transition-all duration-200 ${
+                    isActive
+                      ? 'bg-gradient-to-r from-[#7B6AF7] to-[#6B5AE7] text-white shadow-lg transform scale-105'
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-[#7B6AF7] hover:scale-105'
+                  }`}
+                >
+                  <div className={`${isActive ? 'text-white' : 'text-gray-500'}`}>
+                    {item.icon}
+                  </div>
+                  <span className="ml-3 font-['Inter']">{item.name}</span>
+                </Link>
+              )
+            })}
           </nav>
+          <div className="p-4 border-t border-gray-200">
+            <div className="bg-gradient-to-r from-[#CDF501]/10 to-[#7B6AF7]/10 rounded-xl p-4">
+              <p className="text-sm text-gray-600 font-medium">Admin Panel</p>
+              <p className="text-xs text-gray-500 mt-1">Manage your Cubit platform</p>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Desktop sidebar */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
-        <div className="flex flex-col flex-1 bg-white shadow-xl">
-          <div className="flex items-center h-16 px-6 bg-primary">
-            <span className="text-xl font-bold text-black">Cubit Admin</span>
+      <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col">
+        <div className="flex flex-col flex-1 bg-white shadow-2xl border-r border-gray-200">
+          <div className="flex items-center h-20 px-6 bg-white border-b border-gray-200">
+            <div className="flex items-center space-x-3">
+              <img 
+                 src="/logo.svg" 
+                 alt="Cubit Packaging" 
+                 className="h-12 w-auto"
+               />
+            </div>
           </div>
-          <nav className="flex-1 px-4 py-6 space-y-2">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
-              >
-                {item.icon}
-                <span className="ml-3">{item.name}</span>
-              </Link>
-            ))}
+          <nav className="flex-1 px-4 py-6 space-y-1">
+            {navigation.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`flex items-center px-4 py-3 rounded-xl font-medium transition-all duration-200 ${
+                    isActive
+                      ? 'bg-gradient-to-r from-[#7B6AF7] to-[#6B5AE7] text-white shadow-lg transform scale-105'
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-[#7B6AF7] hover:scale-105'
+                  }`}
+                >
+                  <div className={`${isActive ? 'text-white' : 'text-gray-500'}`}>
+                    {item.icon}
+                  </div>
+                  <span className="ml-3 font-['Inter']">{item.name}</span>
+                </Link>
+              )
+            })}
           </nav>
+          <div className="p-4 border-t border-gray-200">
+            <div className="bg-gradient-to-r from-[#CDF501]/10 to-[#7B6AF7]/10 rounded-xl p-4">
+              <p className="text-sm text-gray-600 font-medium">Admin Panel</p>
+              <p className="text-xs text-gray-500 mt-1">Manage your Cubit platform</p>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-64">
+      <div className="lg:pl-72">
         {/* Top bar */}
-        <div className="sticky top-0 z-10 bg-white shadow-sm">
+        <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
           <div className="flex items-center justify-between h-16 px-6">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden text-gray-500 hover:text-gray-700"
+              className="lg:hidden text-gray-500 hover:text-[#7B6AF7] transition-colors p-2 rounded-lg hover:bg-gray-100"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
             
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="text-gray-600 hover:text-gray-900 transition-colors">
+            <div className="flex items-center space-x-3">
+              <Link 
+                href="/" 
+                className="flex items-center space-x-2 text-gray-600 hover:text-[#7B6AF7] transition-colors p-2 rounded-lg hover:bg-gray-100"
+              >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
+                <span className="text-sm font-medium hidden sm:block">View Site</span>
               </Link>
               <button
                 onClick={handleLogout}
-                className="text-gray-600 hover:text-gray-900 transition-colors"
+                className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-colors p-2 rounded-lg hover:bg-red-50"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
+                <span className="text-sm font-medium hidden sm:block">Logout</span>
               </button>
             </div>
           </div>
@@ -152,9 +209,11 @@ export default function AdminLayout({ children }) {
 
         {/* Page content */}
         <main className="p-6">
-          {children}
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
         </main>
       </div>
     </div>
   )
-} 
+}

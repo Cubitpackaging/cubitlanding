@@ -1,148 +1,127 @@
-# Cubit Packaging - Modern Next.js Website
+# Cubit Packaging Website
 
-A modern, responsive single-page website for Cubit Packaging, featuring eco-smart custom packaging solutions.
+A modern Next.js website for Cubit Packaging, featuring custom packaging solutions, product showcases, and quote management.
 
-## Features
-
-- 🎨 **Modern Design**: Clean, minimal design with brand colors (#CDF501 lime green, #7B6AF7 purple)
-- 📱 **Fully Responsive**: Mobile-first design that works on all devices
-- ⚡ **Fast Performance**: Built with Next.js 14 and optimized for speed
-- 🎯 **Full-Screen Sections**: Each section takes full screen height for immersive experience
-- 🌱 **Eco-Friendly Focus**: Sustainability messaging throughout
-- 📋 **Interactive Quote Form**: Functional form with validation
-- 🚀 **Smart Packaging**: QR/NFC technology showcase
-- 📊 **Industry-Specific**: Tailored solutions for different industries
-
-## Sections
-
-1. **Header** - Sticky navigation with smooth scrolling
-2. **Hero** - Eye-catching intro with call-to-action
-3. **Why Choose Cubit** - 5 key benefits with statistics
-4. **Product Showcase 1** - 5 main packaging solutions
-5. **How It Works** - 4-step process explanation
-6. **Smart Packaging** - QR/NFC technology features
-7. **Industry Showcase** - 10 industry-specific solutions
-8. **Sustainability** - Eco-friendly features and certifications
-9. **Quote Form** - Interactive form with validation
-10. **Footer** - Company info, links, and contact details
-
-## Tech Stack
-
-- **Framework**: Next.js 14 (App Router)
-- **Styling**: TailwindCSS
-- **Language**: JavaScript/React
-- **Icons**: Heroicons (SVG)
-- **Fonts**: Inter from Google Fonts
-
-## Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-
 - Node.js 18+ 
 - npm or yarn
+- Supabase account
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd cubitlanding
-   ```
+1. Clone the repository
+```bash
+git clone <repository-url>
+cd cubitlanding
+```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+2. Install dependencies
+```bash
+npm install
+```
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+3. Set up environment variables
+```bash
+cp .env.local.example .env.local
+```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+Update `.env.local` with your actual values:
+- `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase anonymous key
+- `NEXT_PUBLIC_EMAILJS_*`: EmailJS configuration for contact forms
+- `GMAIL_*`: Gmail SMTP configuration for email notifications
+- `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`: Google Maps API for address autocomplete
 
-### Build for Production
+4. Run the development server
+```bash
+npm run dev
+```
+
+## 🌐 Deployment
+
+### Vercel (Recommended)
+
+1. Connect your repository to Vercel
+2. Set environment variables in Vercel dashboard
+3. Deploy automatically on push to main branch
+
+### Manual Deployment
 
 ```bash
 npm run build
 npm start
 ```
 
-## Project Structure
+## 📁 Project Structure
 
 ```
-cubitlanding/
-├── app/
-│   ├── globals.css          # Global styles and TailwindCSS
-│   ├── layout.js           # Root layout
-│   └── page.js             # Main page component
-├── components/
-│   ├── Header.js           # Navigation header
-│   ├── Hero.js             # Hero section
-│   ├── WhyChoose.js        # Benefits section
-│   ├── ProductShowcase.js  # Main products
-│   ├── HowItWorks.js       # Process steps
-│   ├── SmartPackaging.js   # Smart features
-│   ├── IndustryShowcase.js # Industry solutions
-│   ├── Sustainability.js   # Eco-friendly info
-│   ├── QuoteForm.js        # Contact form
-│   └── Footer.js           # Footer section
-├── tailwind.config.js      # TailwindCSS configuration
-├── postcss.config.js       # PostCSS configuration
-├── next.config.js          # Next.js configuration
-└── package.json            # Dependencies
+├── app/                 # Next.js 13+ app directory
+│   ├── admin/          # Admin dashboard pages
+│   ├── api/            # API routes
+│   └── globals.css     # Global styles
+├── components/         # React components
+├── hooks/             # Custom React hooks
+├── lib/               # Utility libraries
+├── utils/             # Helper functions
+└── public/            # Static assets
 ```
 
-## Customization
+## 🔧 Features
 
-### Brand Colors
+- **Product Showcase**: Dynamic product displays with filtering
+- **Quote System**: Integrated quote request and management
+- **Admin Dashboard**: Complete admin interface for content management
+- **Email Integration**: Automated email notifications
+- **Chat Widget**: Real-time customer support
+- **Responsive Design**: Mobile-first responsive layout
+- **SEO Optimized**: Meta tags and structured data
 
-The brand colors are defined in `tailwind.config.js`:
-- Primary: #CDF501 (Lime Green)
-- Secondary: #7B6AF7 (Purple)
+## 🛠️ Tech Stack
 
-### Content
+- **Framework**: Next.js 14
+- **Styling**: Tailwind CSS
+- **Database**: Supabase
+- **Authentication**: Supabase Auth
+- **Email**: EmailJS + Gmail SMTP
+- **Deployment**: Vercel
 
-All content can be easily modified by editing the respective component files in the `/components` directory.
+## 📝 Environment Variables
 
-### Styling
+Required environment variables for production:
 
-Custom styles are defined in:
-- `app/globals.css` - Global styles and utility classes
-- Individual components use TailwindCSS classes
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
-## Deployment
+# EmailJS
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=
+NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=
+NEXT_PUBLIC_EMAILJS_RUSH_TEMPLATE_ID=
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
 
-The site can be deployed to:
-- **Vercel** (recommended for Next.js)
-- **Netlify**
-- **AWS Amplify**
-- Any static hosting service
+# Gmail SMTP
+GMAIL_USER=
+GMAIL_APP_PASSWORD=
 
-For Vercel deployment:
-1. Push to GitHub
-2. Connect repository to Vercel
-3. Deploy automatically
+# Google Maps
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=
 
-## Form Handling
+# Site URL
+NEXT_PUBLIC_SITE_URL=
+```
 
-The quote form currently shows a success message on submission. To integrate with a backend:
+## 🚀 Production Checklist
 
-1. Replace the form submission logic in `components/QuoteForm.js`
-2. Add your email service or API endpoint
-3. Update validation as needed
+- ✅ Environment variables configured
+- ✅ Supabase database setup
+- ✅ Email services configured
+- ✅ Build process tested
+- ✅ Security headers configured
+- ✅ Performance optimized
 
-## Performance
+## 📞 Support
 
-- All images use Next.js Image component for optimization
-- Minimal JavaScript bundle
-- CSS is optimized with TailwindCSS purging
-- Semantic HTML for accessibility
-
-## License
-
-This project is proprietary to Cubit Packaging.
-
-## Support
-
-For support and questions, contact: hello@cubitpackaging.com 
+For technical support or questions, contact the development team.

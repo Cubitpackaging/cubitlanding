@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import fs from 'fs'
-import path from 'path'
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -11,19 +9,33 @@ const supabase = createClient(
 
 export async function GET() {
   try {
-    const dataDir = path.join(process.cwd(), 'data')
+    // Get products count from Supabase
+    let productsCount = 0
+    try {
+      const { count, error } = await supabase
+        .from('products')
+        .select('*', { count: 'exact', head: true })
+      
+      if (!error) {
+        productsCount = count || 0
+      }
+    } catch (error) {
+      console.error('Error fetching products count:', error)
+    }
     
-    // Read products
-    const productsPath = path.join(dataDir, 'products.json')
-    const productsData = fs.existsSync(productsPath) 
-      ? JSON.parse(fs.readFileSync(productsPath, 'utf8'))
-      : { products: [], industryProducts: [] }
-    
-    // Read images
-    const imagesPath = path.join(dataDir, 'images.json')
-    const imagesData = fs.existsSync(imagesPath)
-      ? JSON.parse(fs.readFileSync(imagesPath, 'utf8'))
-      : { images: [] }
+    // Get images count from Supabase
+    let imagesCount = 0
+    try {
+      const { count, error } = await supabase
+        .from('images')
+        .select('*', { count: 'exact', head: true })
+      
+      if (!error) {
+        imagesCount = count || 0
+      }
+    } catch (error) {
+      console.error('Error fetching images count:', error)
+    }
     
     // Get quotes count from Supabase
     let quotesCount = 0
@@ -32,13 +44,10 @@ export async function GET() {
         .from('quotes')
         .select('*', { count: 'exact', head: true })
       
-      if (error) {
-        console.error('Error getting quotes count from Supabase:', error)
-      } else {
+      if (!error) {
         quotesCount = count || 0
       }
     } catch (error) {
-      console.error('Supabase connection error:', error)
       // Fall back to file system if Supabase fails
       const quotesPath = path.join(dataDir, 'quotes.json')
       if (fs.existsSync(quotesPath)) {
@@ -58,13 +67,10 @@ export async function GET() {
         .from('rush_orders')
         .select('*', { count: 'exact', head: true })
       
-      if (error) {
-        console.error('Error getting rush orders count from Supabase:', error)
-      } else {
+      if (!error) {
         rushOrdersCount = count || 0
       }
     } catch (error) {
-      console.error('Supabase connection error for rush orders:', error)
       // Fall back to file system if Supabase fails
       const rushOrdersPath = path.join(dataDir, 'rush-orders.json')
       if (fs.existsSync(rushOrdersPath)) {
@@ -76,18 +82,18 @@ export async function GET() {
     }
 
     const stats = {
-      totalProducts: (productsData.products?.length || 0) + (productsData.industryProducts?.length || 0),
-      totalImages: imagesData.images?.length || 0,
+      totalProducts: productsCount,
+      totalImages: imagesCount,
       totalQuotes: quotesCount,
       totalRushOrders: rushOrdersCount
     }
 
     return NextResponse.json(stats)
   } catch (error) {
-    console.error('Error getting stats:', error)
+    console.error('Error fetching stats:', error)
     return NextResponse.json(
       { totalProducts: 0, totalImages: 0, totalQuotes: 0, totalRushOrders: 0 },
       { status: 200 }
     )
   }
-} 
+}

@@ -133,24 +133,32 @@ const Hero = () => {
             <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row flex-wrap items-center gap-4 sm:gap-8 justify-center lg:justify-start">
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
-                  <img 
+                  <Image 
                     src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
                     alt="Customer testimonial" 
+                    width={32}
+                    height={32}
                     className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-white object-cover"
                   />
-                  <img 
+                  <Image 
                     src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
                     alt="Customer testimonial" 
+                    width={32}
+                    height={32}
                     className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-white object-cover"
                   />
-                  <img 
+                  <Image 
                     src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
                     alt="Customer testimonial" 
+                    width={32}
+                    height={32}
                     className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-white object-cover"
                   />
-                  <img 
+                  <Image 
                     src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=32&h=32&fit=crop&crop=face&auto=format&q=80" 
                     alt="Customer testimonial" 
+                    width={32}
+                    height={32}
                     className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-white object-cover"
                   />
                 </div>
@@ -189,11 +197,14 @@ const Hero = () => {
                     <div className={`relative bg-gradient-to-br ${pkg.bgColor} rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl border border-gray-100 w-full max-w-xs sm:max-w-sm lg:max-w-md`}>
                       {/* Package Visual */}
                       <div className="h-32 sm:h-48 lg:h-64 mb-3 sm:mb-4 lg:mb-6">
-                        <div className="w-full h-full flex items-center justify-center bg-white/90 rounded-xl sm:rounded-2xl overflow-hidden shadow-inner">
-                          <img 
+                        <div className="w-full h-full flex items-center justify-center bg-white/90 rounded-xl sm:rounded-2xl overflow-hidden shadow-inner relative">
+                          <Image 
                             src={pkg.image} 
                             alt={pkg.type}
-                            className="w-full h-full object-contain"
+                            fill
+                            className="object-contain"
+                            priority={index === 0}
+                            sizes="(max-width: 640px) 300px, (max-width: 768px) 400px, 500px"
                           />
                         </div>
                       </div>
@@ -287,4 +298,4 @@ const Hero = () => {
   )
 }
 
-export default Hero 
+export default Hero

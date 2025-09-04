@@ -1,35 +1,40 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
+import { createClient } from '@supabase/supabase-js'
 
-const dataPath = path.join(process.cwd(), 'data', 'products.json')
-
-// Ensure data directory exists
-function ensureDataDir() {
-  const dataDir = path.dirname(dataPath)
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true })
-  }
-  if (!fs.existsSync(dataPath)) {
-    fs.writeFileSync(dataPath, JSON.stringify({ products: [], industryProducts: [] }, null, 2))
-  }
-}
-
-function readProducts() {
-  ensureDataDir()
-  const data = fs.readFileSync(dataPath, 'utf8')
-  return JSON.parse(data)
-}
-
-function writeProducts(data) {
-  ensureDataDir()
-  fs.writeFileSync(dataPath, JSON.stringify(data, null, 2))
-}
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+)
 
 export async function GET() {
   try {
-    const products = readProducts()
-    return NextResponse.json(products)
+    // Fetch regular products
+    const { data: products, error: productsError } = await supabase
+      .from('products')
+      .select('*')
+      .order('created_at', { ascending: false })
+    
+    if (productsError) {
+      console.error('Error fetching products:', productsError)
+      throw productsError
+    }
+    
+    // Fetch industry products
+    const { data: industryProducts, error: industryError } = await supabase
+      .from('industry_products')
+      .select('*')
+      .order('created_at', { ascending: false })
+    
+    if (industryError) {
+      console.error('Error fetching industry products:', industryError)
+      throw industryError
+    }
+    
+    return NextResponse.json({
+      products: products || [],
+      industryProducts: industryProducts || []
+    })
   } catch (error) {
     console.error('Error reading products:', error)
     return NextResponse.json({ products: [], industryProducts: [] })
@@ -39,22 +44,46 @@ export async function GET() {
 export async function POST(request) {
   try {
     const newProduct = await request.json()
-    const products = readProducts()
     
-    // Add ID and timestamp
-    newProduct.id = Date.now().toString()
-    newProduct.createdAt = new Date().toISOString()
-    
-    // Add to appropriate array
-    if (newProduct.type === 'industryProducts') {
-      products.industryProducts.push(newProduct)
-    } else {
-      products.products.push(newProduct)
+    // Prepare product data
+    const productData = {
+      name: newProduct.name,
+      description: newProduct.description,
+      full_description: newProduct.fullDescription,
+      category: newProduct.category,
+      moq: newProduct.moq || newProduct.minOrder,
+      features: newProduct.features,
+      specifications: newProduct.specifications,
+      popular: newProduct.popular || false,
+      bestseller: newProduct.bestseller || false,
+      image_id: newProduct.imageId,
+      type: newProduct.type
     }
     
-    writeProducts(products)
+    let result
     
-    return NextResponse.json({ success: true, product: newProduct })
+    // Insert into appropriate table
+    if (newProduct.type === 'industryProducts') {
+      const { data, error } = await supabase
+        .from('industry_products')
+        .insert([productData])
+        .select()
+        .single()
+      
+      if (error) throw error
+      result = data
+    } else {
+      const { data, error } = await supabase
+        .from('products')
+        .insert([productData])
+        .select()
+        .single()
+      
+      if (error) throw error
+      result = data
+    }
+    
+    return NextResponse.json({ success: true, product: result })
   } catch (error) {
     console.error('Error creating product:', error)
     return NextResponse.json(
@@ -62,4 +91,4 @@ export async function POST(request) {
       { status: 500 }
     )
   }
-} 
+}

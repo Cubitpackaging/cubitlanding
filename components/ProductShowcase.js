@@ -1,148 +1,22 @@
 'use client'
 import { useState } from 'react'
+import Image from 'next/image'
 import { useProducts, useImages } from '../hooks/useProducts'
 
 const ProductShowcase = () => {
-  const { products, loading: productsLoading, error } = useProducts()
+  const { products: allProducts, loading: productsLoading, error } = useProducts()
   const { images, loading: imagesLoading } = useImages()
   const [selectedProduct, setSelectedProduct] = useState(null)
+  
+  // Extract regular products from the API response
+  const products = allProducts?.products || []
 
   const getImageUrl = (imageId) => {
     const image = images.find(img => img.id === imageId)
     return image ? `/uploads/${image.filename}` : null
   }
 
-  const fallbackProducts = [
-    {
-      name: "Custom Mailer Boxes",
-      description: "Branded shipping boxes that turn unboxing into a marketing experience.",
-      fullDescription: "Transform your shipping experience with custom-branded mailer boxes. These durable corrugated boxes feature your logo, colors, and messaging, creating excitement from the moment customers receive their package. Perfect for e-commerce, subscription boxes, and direct-to-consumer brands.",
-      price: "Starting at $0.85",
-      originalPrice: "$1.20",
-      minOrder: "MOQ: 50 units",
-      image: "https://via.placeholder.com/400x300/7B6AF7/FFFFFF?text=Mailer+Box",
-      features: ["Custom branding", "Various sizes", "Tear-away strip", "Eco-friendly", "Fast setup"],
-      specifications: {
-        "Material": "Single or double-wall corrugated cardboard",
-        "Thickness": "32 ECT or 44 ECT options",
-        "Print": "Full-color flexographic printing",
-        "Closure": "Self-locking tabs, no tape needed",
-        "Sizes": "From 4x4x2 to 24x18x6 inches"
-      },
-      popular: true,
-      rating: 4.8,
-      reviews: 324,
-      status: "Available"
-    },
-    {
-      name: "Pouches & Bags",
-      description: "Flexible packaging solutions perfect for food, supplements, and retail products.",
-      fullDescription: "Versatile stand-up pouches and flat bags that combine functionality with eye-catching design. Our pouches feature advanced barrier properties to keep contents fresh while offering excellent printability for brand messaging. Ideal for food products, supplements, cosmetics, and retail items.",
-      price: "Starting at $0.65",
-      originalPrice: "$0.95",
-      minOrder: "MOQ: 100 units",
-      image: "https://via.placeholder.com/400x300/CDF501/000000?text=Pouches",
-      features: ["Stand-up pouches", "Resealable zippers", "Barrier protection", "Clear windows available", "Multiple sizes"],
-      specifications: {
-        "Material": "Laminated films (PET/PE/BOPP)",
-        "Barrier": "Oxygen, moisture, light protection",
-        "Print": "Up to 10 colors gravure printing",
-        "Features": "Resealable, tear notch, hang hole",
-        "Sizes": "From 3x5 inches to 12x18 inches"
-      },
-      popular: false,
-      rating: 4.9,
-      reviews: 156,
-      stock: "In Stock"
-    },
-    {
-      name: "Folding Cartons",
-      description: "Premium retail packaging that enhances product presentation and brand experience.",
-      fullDescription: "Sophisticated folding cartons that elevate your product presentation on retail shelves. These boxes combine structural integrity with premium finishing options to create packaging that customers want to keep. Perfect for cosmetics, electronics, food products, and luxury items.",
-      price: "Starting at $1.25",
-      originalPrice: "$1.85",
-      minOrder: "MOQ: 75 units",
-      image: "https://via.placeholder.com/400x300/CDF501/000000?text=Folding+Carton",
-      features: ["Luxury finishes", "Window cutouts", "Magnetic closures", "Embossing/debossing", "Foil stamping"],
-      specifications: {
-        "Material": "SBS, kraft, or recycled paperboard",
-        "Thickness": "12pt to 24pt options",
-        "Print": "Offset printing with spot colors",
-        "Finish": "UV coating, lamination, soft-touch",
-        "Features": "Die-cut windows, magnetic closure, ribbon pulls"
-      },
-      popular: false,
-      rating: 4.7,
-      reviews: 89,
-      stock: "In Stock"
-    },
-    {
-      name: "Shipping Boxes",
-      description: "Durable corrugated boxes designed for safe product transport and delivery.",
-      fullDescription: "Heavy-duty shipping boxes engineered for maximum protection during transit. Our corrugated boxes feature reinforced corners and edges to prevent damage while maintaining cost-effectiveness. Available in various strengths and sizes to accommodate different shipping needs.",
-      price: "Starting at $1.15",
-      originalPrice: "$1.55",
-      minOrder: "MOQ: 50 units",
-      image: "https://via.placeholder.com/400x300/7B6AF7/FFFFFF?text=Shipping+Box",
-      features: ["Various sizes", "Double-wall strength", "Easy assembly", "Crush-resistant", "Stackable design"],
-      specifications: {
-        "Material": "Single or double-wall corrugated",
-        "Strength": "32 ECT to 275 lb test",
-        "Print": "Flexographic printing",
-        "Closure": "Regular slotted container (RSC)",
-        "Sizes": "Standard and custom dimensions"
-      },
-      popular: false,
-      rating: 4.6,
-      reviews: 203,
-      stock: "In Stock"
-    },
-    {
-      name: "Tube Packaging",
-      description: "Cylindrical packaging perfect for posters, documents, and specialty products.",
-      fullDescription: "Elegant tube packaging that combines protection with premium presentation. Our custom tubes are perfect for artwork, documents, cosmetics, and specialty products that need secure cylindrical packaging. Available in various materials and finishes.",
-      price: "Starting at $1.45",
-      originalPrice: "$1.95",
-      minOrder: "MOQ: 25 units",
-      image: "https://via.placeholder.com/400x300/7B6AF7/FFFFFF?text=Tube+Box",
-      features: ["Custom lengths", "Premium materials", "Secure closures", "Branding options", "Protective padding"],
-      specifications: {
-        "Material": "Cardboard or kraft paper",
-        "Diameter": "1 inch to 6 inches",
-        "Length": "Up to 48 inches",
-        "Closure": "Plastic caps or metal ends",
-        "Print": "Full-color or kraft natural"
-      },
-      popular: false,
-      rating: 4.5,
-      reviews: 67,
-      stock: "In Stock"
-    },
-    {
-      name: "Tubes & Jars",
-      description: "Premium squeezable tubes and cosmetic jars for beauty, pharmaceutical, and food products.",
-      fullDescription: "Professional tubes and jars designed for cosmetics, pharmaceuticals, and food applications. Our plastic and aluminum tubes offer excellent barrier properties with 360° printing capabilities, while our jars provide secure storage with custom branding options. Perfect for creams, lotions, ointments, food pastes, and specialty products requiring precise dispensing or storage.",
-      price: "Starting at $0.75",
-      originalPrice: "$1.10",
-      minOrder: "MOQ: 100 units",
-      image: "https://via.placeholder.com/400x300/16A085/FFFFFF?text=Tubes+%26+Jars",
-      features: ["360° printing", "Barrier protection", "Multiple cap options", "Food-safe materials", "Recyclable options"],
-      specifications: {
-        "Materials": "PE, PP, aluminum, or laminated films",
-        "Tube Sizes": "5ml to 300ml capacity",
-        "Jar Sizes": "15ml to 500ml capacity",
-        "Printing": "Offset, screen, flexographic, gravure",
-        "Caps": "Flip-top, screw, pump, or squeeze caps",
-        "Barrier": "Oxygen, moisture, and light protection"
-      },
-      popular: false,
-      rating: 4.7,
-      reviews: 142,
-      stock: "In Stock"
-    }
-  ]
-
-  const displayProducts = products?.length > 0 ? products : fallbackProducts
+  // No fallback products - show empty state if no products loaded
 
   const handleProductClick = (product) => {
     setSelectedProduct(product)
@@ -188,11 +62,12 @@ const ProductShowcase = () => {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayProducts.map((product, index) => (
+        {products?.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product, index) => (
             <div 
               key={product.id || index}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden relative cursor-pointer transform hover:-translate-y-1"
+              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden relative cursor-pointer transform hover:-translate-y-1 flex flex-col h-full"
               onClick={() => handleProductClick(product)}
             >
               {/* Badge */}
@@ -207,10 +82,12 @@ const ProductShowcase = () => {
                 <div className="absolute inset-0 p-6 flex items-center justify-center">
                   <div className="w-full h-full bg-white rounded-lg shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
                     {product.imageId && getImageUrl(product.imageId) ? (
-                      <img 
+                      <Image 
                         src={getImageUrl(product.imageId)} 
                         alt={product.name}
-                        className="w-full h-full object-cover rounded-lg"
+                        fill
+                        className="object-cover rounded-lg"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     ) : (
                       <div className="text-center">
@@ -226,51 +103,54 @@ const ProductShowcase = () => {
               </div>
 
               {/* Product Info */}
-              <div className="p-6">
-                {/* Category */}
-                <div className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">
-                  Custom Packaging
-                </div>
-
-                {/* Product Name */}
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
-                  {product.name}
-                </h3>
-
-                {/* Description */}
-                <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                  {product.description}
-                </p>
-
-                {/* Features */}
-                <div className="flex flex-wrap gap-2 mb-4 min-h-[60px]">
-                  {product.features?.map((feature, idx) => (
-                    <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-lg font-medium">
-                      {feature}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Price and CTA */}
-                <div className="flex justify-between items-center mb-4">
-                  <div className="flex flex-col">
-                    {product.originalPrice && (
-                      <span className="text-sm text-gray-400 line-through">
-                        {product.originalPrice}
-                      </span>
-                    )}
-                    <span className="text-xl font-bold text-gray-900">
-                      {product.price}
-                    </span>
+              <div className="p-4 flex flex-col h-full">
+                <div className="flex-grow">
+                  {/* Category */}
+                  <div className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">
+                    Custom Packaging
                   </div>
-                  <button 
-                    onClick={() => {
-                      const quoteSection = document.getElementById('quote')
-                      if (quoteSection) {
-                        quoteSection.scrollIntoView({ behavior: 'smooth' })
-                      }
-                    }}
-                    className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:from-gray-700 hover:to-gray-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center gap-2"
+
+                  {/* Product Name */}
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
+                    {product.name}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-sm text-gray-600 leading-relaxed mb-3">
+                    {product.description}
+                  </p>
+
+                  {/* Features */}
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {product.features?.map((feature, idx) => (
+                      <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded font-medium">
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Price and CTA - Fixed at bottom */}
+                <div className="mt-auto">
+                  <div className="flex justify-between items-center mb-3">
+                    <div className="flex flex-col">
+                      {product.originalPrice && (
+                        <span className="text-sm text-gray-400 line-through">
+                          {product.originalPrice}
+                        </span>
+                      )}
+                      <span className="text-xl font-bold text-gray-900">
+                        {product.price}
+                      </span>
+                    </div>
+                    <button 
+                      onClick={() => {
+                        const quoteSection = document.getElementById('quote')
+                        if (quoteSection) {
+                          quoteSection.scrollIntoView({ behavior: 'smooth' })
+                        }
+                      }}
+                      className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:from-gray-700 hover:to-gray-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center gap-2"
                   >
                     <span>Get Quote</span>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -295,11 +175,25 @@ const ProductShowcase = () => {
                     Ready to Quote
                   </div>
                 </div>
+                </div>
               </div>
             </div>
           ))}
-        </div>
-
+          </div>
+        ) : (
+          <div className="text-center py-16">
+            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">No Products Available</h3>
+            <p className="text-gray-600 mb-6">We're currently updating our product catalog. Please check back soon or contact us for custom packaging solutions.</p>
+            <button className="bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-lg font-semibold hover:from-primary hover:to-primary transition-all duration-300 shadow-lg">
+              Contact Us
+            </button>
+          </div>
+        )}
 
       </div>
 

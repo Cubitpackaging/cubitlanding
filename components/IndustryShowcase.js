@@ -1,10 +1,14 @@
 'use client'
 import { useState } from 'react'
+import Image from 'next/image'
 import { useProducts, useImages } from '../hooks/useProducts'
 
 const IndustryShowcase = () => {
-  const { industryProducts, loading: productsLoading, error } = useProducts()
+  const { products: allProducts, loading: productsLoading, error } = useProducts()
   const { images, loading: imagesLoading } = useImages()
+  
+  // Extract industry products from the API response
+  const products = allProducts?.industryProducts || []
   const [selectedProduct, setSelectedProduct] = useState(null)
 
   const getImageUrl = (imageId) => {
@@ -12,136 +16,7 @@ const IndustryShowcase = () => {
     return image ? `/uploads/${image.filename}` : null
   }
 
-  const fallbackProducts = [
-    {
-      name: "Food & Beverage Boxes",
-      description: "Food-safe packaging for restaurants, cafes, and food delivery services.",
-      fullDescription: "Our food-safe packaging solutions are designed to keep your culinary creations fresh and secure during transport. Made with FDA-approved materials and featuring grease-resistant coatings, these boxes are perfect for takeout orders, meal kits, and food delivery services.",
-      price: "From $0.95",
-      originalPrice: "$1.35",
-      category: "Food & Beverage", 
-      image: "https://via.placeholder.com/400x300/7B6AF7/FFFFFF?text=Food+Box",
-      features: ["Food-safe materials", "Grease-resistant", "Stackable design", "Custom branding", "Various sizes"],
-      specifications: {
-        "Material": "Food-grade paperboard with PE coating",
-        "Temperature": "Suitable for hot and cold foods",
-        "Coating": "Grease and moisture resistant",
-        "Certification": "FDA approved, BRC compliant",
-        "Sizes": "From 4x4x2 to 12x12x4 inches"
-      },
-      bestseller: true,
-      rating: 4.8,
-      reviews: 287,
-      stock: "In Stock"
-    },
-    {
-      name: "Cosmetic Boxes",
-      description: "Luxury packaging for skincare, makeup, and beauty products with premium finishes.",
-      fullDescription: "Elegant cosmetic packaging that enhances your beauty brand's premium image. Our boxes feature luxury finishes, magnetic closures, and custom inserts to showcase your products beautifully. Perfect for skincare sets, makeup collections, and premium beauty products.",
-      price: "From $1.85",
-      originalPrice: "$2.45",
-      category: "Beauty & Personal Care",
-      image: "https://via.placeholder.com/400x300/CDF501/000000?text=Cosmetic+Box",
-      features: ["Magnetic closure", "Custom inserts", "Luxury finishes", "Soft-touch coating", "Foil stamping"],
-      specifications: {
-        "Material": "Premium paperboard with luxury finishes",
-        "Thickness": "18pt to 24pt options",
-        "Closure": "Magnetic or ribbon closure",
-        "Finish": "Soft-touch, UV coating, foil stamping",
-        "Insert": "Custom foam or cardboard inserts"
-      },
-      bestseller: false,
-      rating: 4.7,
-      reviews: 156,
-      stock: "In Stock"
-    },
-    {
-      name: "Pharmaceutical Packaging",
-      description: "Secure and compliant packaging for medicines, supplements, and healthcare products.",
-      fullDescription: "Pharmaceutical-grade packaging that meets strict regulatory requirements while maintaining product integrity. Our child-resistant and tamper-evident designs ensure safety and compliance for prescription medications, over-the-counter drugs, and nutritional supplements.",
-      price: "From $1.45",
-      originalPrice: "$1.95",
-      category: "Healthcare",
-      image: "https://via.placeholder.com/400x300/7B6AF7/FFFFFF?text=Pharma+Box",
-      features: ["Child-resistant", "Tamper-evident", "Regulatory compliant", "Moisture protection", "Serialization ready"],
-      specifications: {
-        "Material": "Pharmaceutical-grade paperboard",
-        "Compliance": "FDA, USP, cGMP compliant",
-        "Security": "Tamper-evident closures",
-        "Barrier": "Moisture and light protection",
-        "Serialization": "Ready for track and trace"
-      },
-      bestseller: false,
-      rating: 4.9,
-      reviews: 98,
-      stock: "In Stock"
-    },
-    {
-      name: "Electronics Packaging",
-      description: "Anti-static boxes and protective packaging for phones, gadgets, and tech products.",
-      fullDescription: "Specialized packaging for electronic devices and components. Our anti-static materials protect sensitive electronics while custom inserts ensure secure fit and professional presentation. Ideal for consumer electronics, components, and tech accessories.",
-      price: "From $1.25",
-      originalPrice: "$1.75",
-      category: "Electronics",
-      image: "https://via.placeholder.com/400x300/7B6AF7/FFFFFF?text=Electronics",
-      features: ["Anti-static protection", "Custom foam inserts", "Shock absorption", "Clean room compatible", "ESD safe"],
-      specifications: {
-        "Material": "Anti-static corrugated or foam",
-        "ESD": "Static dissipative materials",
-        "Insert": "Custom-cut protective foam",
-        "Certification": "ESD safe, clean room approved",
-        "Testing": "Drop test and compression tested"
-      },
-      bestseller: false,
-      rating: 4.9,
-      reviews: 145,
-      stock: "In Stock"
-    },
-    {
-      name: "Jewelry Boxes",
-      description: "Elegant presentation boxes for rings, necklaces, and luxury jewelry items.",
-      fullDescription: "Exquisite jewelry packaging that reflects the value and beauty of your pieces. Our boxes feature premium materials, velvet inserts, and elegant designs that create memorable unboxing experiences for luxury jewelry brands.",
-      price: "From $2.45",
-      originalPrice: "$3.15",
-      category: "Luxury Goods",
-      image: "https://via.placeholder.com/400x300/CDF501/000000?text=Jewelry+Box",
-      features: ["Velvet inserts", "Premium materials", "Elegant design", "Secure closure", "Custom branding"],
-      specifications: {
-        "Material": "Premium paperboard with luxury finishes",
-        "Insert": "Velvet or silk-lined inserts",
-        "Closure": "Magnetic or hinged lid",
-        "Finish": "Embossed, foil stamped, or leather texture",
-        "Sizes": "Ring, earring, necklace, and set boxes"
-      },
-      bestseller: false,
-      rating: 4.8,
-      reviews: 89,
-      stock: "In Stock"
-    },
-    {
-      name: "Gift Boxes",
-      description: "Festive packaging for holidays, corporate gifts, and special occasions.",
-      fullDescription: "Beautiful gift boxes that make every occasion special. Our seasonal and custom gift boxes feature premium finishes, ribbon details, and elegant designs perfect for corporate gifting, holidays, and special celebrations.",
-      price: "From $1.35",
-      originalPrice: "$1.85",
-      category: "Gifts & Occasions",
-      image: "https://via.placeholder.com/400x300/CDF501/000000?text=Gift+Box",
-      features: ["Premium finishes", "Ribbon details", "Seasonal designs", "Custom branding", "Various sizes"],
-      specifications: {
-        "Material": "Premium paperboard with decorative finishes",
-        "Closure": "Ribbon tie, magnetic, or lift-off lid",
-        "Finish": "Foil stamping, embossing, or specialty coatings",
-        "Customization": "Full-color printing and custom inserts",
-        "Occasions": "Holiday, corporate, wedding, and event themes"
-      },
-      bestseller: false,
-      rating: 4.8,
-      reviews: 123,
-      stock: "In Stock"
-    }
-  ]
-
-  const displayProducts = industryProducts?.length > 0 ? industryProducts : fallbackProducts
+  // No fallback products - show empty state if no products loaded
 
   const handleProductClick = (product) => {
     setSelectedProduct(product)
@@ -180,18 +55,36 @@ const IndustryShowcase = () => {
           <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
             Specialized packaging designed for your industry's unique requirements and regulations.
           </p>
-          {industryProducts?.length > 0 && (
+          {products?.length > 0 && (
             <p className="text-sm text-gray-500 mt-2">
-              Showing {industryProducts.length} industry-specific products
+              Showing {products.length} industry-specific products
             </p>
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayProducts.map((product, index) => (
+        {!productsLoading && !imagesLoading && !error && products?.length === 0 && (
+          <div className="text-center py-16">
+            <div className="max-w-md mx-auto">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No Products Available</h3>
+              <p className="text-gray-600 mb-6">We're currently updating our product catalog. Please check back soon or contact us for custom solutions.</p>
+              <button className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors">
+                Contact Us
+              </button>
+            </div>
+          </div>
+        )}
+
+        {products?.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product, index) => (
             <div 
               key={product.id || index}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden relative cursor-pointer transform hover:-translate-y-1"
+              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden relative cursor-pointer transform hover:-translate-y-1 flex flex-col h-full"
               onClick={() => handleProductClick(product)}
             >
               {/* Badge */}
@@ -206,10 +99,12 @@ const IndustryShowcase = () => {
                 <div className="absolute inset-0 p-6 flex items-center justify-center">
                   <div className="w-full h-full bg-white rounded-lg shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
                     {product.imageId && getImageUrl(product.imageId) ? (
-                      <img 
+                      <Image 
                         src={getImageUrl(product.imageId)} 
                         alt={product.name}
-                        className="w-full h-full object-cover rounded-lg"
+                        fill
+                        className="object-cover rounded-lg"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     ) : (
                       <div className="text-center">
@@ -226,51 +121,54 @@ const IndustryShowcase = () => {
               </div>
 
               {/* Product Info */}
-              <div className="p-6">
-                {/* Category */}
-                <div className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">
-                  {product.category}
-                </div>
+              <div className="p-4 flex flex-col h-full">
+                <div className="flex-grow">
+                  {/* Category */}
+                  <div className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">
+                    {product.category}
+                  </div>
 
-                {/* Product Name */}
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
-                  {product.name}
-                </h3>
+                  {/* Product Name */}
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
+                    {product.name}
+                  </h3>
 
-                {/* Description */}
-                <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                  {product.description}
-                </p>
+                  {/* Description */}
+                  <p className="text-sm text-gray-600 leading-relaxed mb-3">
+                    {product.description}
+                  </p>
 
-                {/* Features */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {product.features?.map((feature, idx) => (
-                    <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-lg font-medium">
-                      {feature}
-                    </span>
-                  ))}
+                  {/* Features */}
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {product.features?.map((feature, idx) => (
+                      <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded font-medium">
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 
-                {/* Price and CTA */}
-                <div className="flex justify-between items-center mb-4">
-                  <div className="flex flex-col">
-                    {product.originalPrice && (
-                      <span className="text-sm text-gray-400 line-through">
-                        {product.originalPrice}
+                {/* Price and CTA - Fixed at bottom */}
+                <div className="mt-auto">
+                  <div className="flex justify-between items-center mb-3">
+                    <div className="flex flex-col">
+                      {product.originalPrice && (
+                        <span className="text-sm text-gray-400 line-through">
+                          {product.originalPrice}
+                        </span>
+                      )}
+                      <span className="text-xl font-bold text-gray-900">
+                        {product.price}
                       </span>
-                    )}
-                    <span className="text-xl font-bold text-gray-900">
-                      {product.price}
-                    </span>
-                  </div>
-                  <button 
-                    onClick={() => {
-                      const quoteSection = document.getElementById('quote')
-                      if (quoteSection) {
-                        quoteSection.scrollIntoView({ behavior: 'smooth' })
-                      }
-                    }}
-                    className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:from-gray-700 hover:to-gray-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center gap-2"
+                    </div>
+                    <button 
+                      onClick={() => {
+                        const quoteSection = document.getElementById('quote')
+                        if (quoteSection) {
+                          quoteSection.scrollIntoView({ behavior: 'smooth' })
+                        }
+                      }}
+                      className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:from-gray-700 hover:to-gray-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center gap-2"
                   >
                     <span>Get Quote</span>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -281,24 +179,26 @@ const IndustryShowcase = () => {
                   </button>
                 </div>
 
-                {/* Rating and Stock */}
-                <div className="flex justify-between items-center pt-4 border-t border-gray-100">
-                  <div className="flex items-center gap-1">
-                    <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                    </svg>
-                    <span className="text-xs text-gray-700 font-medium">
-                      {product.minOrder || "MOQ: 25 units"}
-                    </span>
-                  </div>
-                  <div className="text-xs font-semibold text-green-600">
-                    Ready to Quote
+                  {/* Rating and Stock */}
+                  <div className="flex justify-between items-center pt-4 border-t border-gray-100">
+                    <div className="flex items-center gap-1">
+                      <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                      </svg>
+                      <span className="text-xs text-gray-700 font-medium">
+                        {product.minOrder || "MOQ: 25 units"}
+                      </span>
+                    </div>
+                    <div className="text-xs font-semibold text-green-600">
+                      Ready to Quote
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        )}
 
         {/* CTA Section */}
         <div className="mt-16 bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 md:p-12 text-center text-white">

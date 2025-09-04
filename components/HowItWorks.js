@@ -1,127 +1,196 @@
 'use client'
 
+import React, { useState } from 'react'
+import { MessageSquare, Paintbrush, Globe, Zap, BarChart3, ArrowRight } from 'lucide-react'
+
 const HowItWorks = () => {
+  const [activeStep, setActiveStep] = useState(0)
+
   const steps = [
     {
       number: "01",
       title: "Tell Us What You Need",
-      description: "You don't need to know paper weights or dielines — just tell us what you're building, and we'll guide you to the right packaging type, size, and finish.",
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
-      )
+      description: "You don't need to know paper weights or dielines - just tell us what you're building, and we'll guide you to the right packaging type, size, and finish.",
+      icon: <MessageSquare className="w-6 h-6" />
     },
     {
       number: "02",
       title: "Design, Refined",
-      description: "Upload your own design, or let our creative team step in. We'll align every panel with your brand — and even help place scannable QR/NFC for a smart, connected experience.",
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM7 21h16a2 2 0 002-2v-4a2 2 0 00-2-2h-5L9 14" />
-        </svg>
-      )
+      description: "Upload your own design, or let our creative team step in. We'll align every panel with your brand and even help place scannable QR/NFC for a smart, connected experience.",
+      icon: <Paintbrush className="w-6 h-6" />
     },
     {
       number: "03",
       title: "Smart Meets Sustainable",
-      description: "Choose eco-conscious materials, and we'll help you turn that effort into a story your customers can see, scan, and believe in — right from the box.",
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      )
+      description: "Choose eco-conscious materials, and we'll help you turn that effort into a story your customers can see, scan, and believe in right from the box.",
+      icon: <Globe className="w-6 h-6" />
     },
     {
       number: "04",
-      title: "Production Begins — Fast",
-      description: "Once approved, your packaging goes into production. Our process is streamlined, fast, and consistent — no long waits, no last-minute surprises.",
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-      )
+      title: "Production Begins Fast",
+      description: "Once approved, your packaging goes into production. Our process is streamlined, fast, and consistent with no long waits, no last-minute surprises.",
+      icon: <Zap className="w-6 h-6" />
     },
     {
       number: "05",
       title: "Track, Manage, Scale",
-      description: "Need more? Reordering is easy. You'll soon be able to manage your packaging, microsite links, and tracking — all in one place, under your login.",
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-      )
+      description: "Need more? Reordering is easy. You'll soon be able to manage your packaging, microsite links, and tracking all in one place, under your login.",
+      icon: <BarChart3 className="w-6 h-6" />
     }
   ]
 
+  const handleNextStep = () => {
+    setActiveStep((prev) => (prev === steps.length - 1 ? 0 : prev + 1))
+  }
+
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header Section */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
             How We Make Custom Packaging…<br />
-            <span className="text-gradient">Feel Effortless</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Feel Effortless</span>
           </h2>
-          <p className="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
-            From first idea to unboxing moment, we simplify every step — so you can focus on building your brand, not managing packaging chaos.
+          <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            From first idea to unboxing moment, we simplify every step so you can focus on building your brand, not managing packaging chaos.
           </p>
         </div>
 
-        {/* Steps Section */}
-        <div className="mb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-6">
-            {steps.map((step, index) => (
-              <div key={index} className="relative group">
-                {/* Connecting Line - Desktop Only */}
-                {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-primary/30 to-secondary/30 transform translate-x-3 z-0"></div>
-                )}
-                
-                {/* Step Card */}
-                <div className="relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 text-center border border-gray-100 group-hover:border-primary/20 z-10">
-                  {/* Step Number */}
-                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                    {step.number}
-                  </div>
-
-                  {/* Icon */}
-                  <div className="w-16 h-16 mx-auto mb-6 mt-4 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl flex items-center justify-center text-secondary group-hover:scale-110 transition-transform duration-300">
-                    {step.icon}
-                  </div>
-
+        {/* Interactive Process Display */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
+          {/* Featured Step Card */}
+          <div className="lg:col-span-7 lg:row-span-1">
+            <div className="h-full overflow-hidden border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+              <div className="p-0">
+                <div className="relative h-full">
+                  {/* Decorative gradient background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50" />
+                  
                   {/* Content */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 leading-tight">{step.title}</h3>
-                  <p className="text-gray-600 leading-relaxed text-sm">{step.description}</p>
-                </div>
-
-                {/* Mobile Connecting Line */}
-                {index < steps.length - 1 && (
-                  <div className="lg:hidden flex justify-center my-6">
-                    <div className="w-0.5 h-8 bg-gradient-to-b from-primary to-secondary"></div>
+                  <div className="relative p-8 md:p-10 h-full flex flex-col">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 text-blue-600">
+                        {steps[activeStep].icon}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-4xl font-bold text-blue-600">{steps[activeStep].number}</span>
+                        <ArrowRight className="w-5 h-5 text-blue-400" />
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                      {steps[activeStep].title}
+                    </h3>
+                    
+                    <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                      {steps[activeStep].description}
+                    </p>
+                    
+                    <div className="mt-auto">
+                      <button 
+                        onClick={handleNextStep}
+                        className="group bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2"
+                      >
+                        Next Step
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
                   </div>
-                )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Step Selection Grid */}
+          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+            {steps.map((step, index) => (
+              <div 
+                key={index}
+                onClick={() => setActiveStep(index)}
+                className={`cursor-pointer transition-all duration-300 ${
+                  activeStep === index 
+                    ? 'ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-50' 
+                    : 'hover:bg-gray-100'
+                }`}
+              >
+                <div className={`h-full border border-gray-200 rounded-xl bg-white ${activeStep === index ? 'bg-blue-50' : ''}`}>
+                  <div className="p-4 flex items-center gap-4">
+                    <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                      activeStep === index 
+                        ? 'bg-blue-600 text-white' 
+                        : 'bg-gray-100 text-gray-600'
+                    }`}>
+                      {step.number}
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900">{step.title}</h4>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Closing Section */}
-        <div className="text-center">
-          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg border border-gray-100">
-            <div className="max-w-3xl mx-auto">
-              <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed font-medium">
-                Your product deserves more than a plain brown box. Let's build something that ships your brand — beautifully, smartly, and on your terms.
-              </p>
-              
-
-            </div>
-          </div>
+        {/* Process Overview - Redesigned Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8">
+          {steps.map((step, index) => (
+            <ProcessCard 
+              key={index} 
+              step={step} 
+              index={index} 
+              isLast={index === steps.length - 1} 
+            />
+          ))}
         </div>
+
+        {/* Closing Section */}
+
       </div>
     </section>
   )
 }
 
-export default HowItWorks 
+// Process Card Component - Redesigned with modern styling and animations
+const ProcessCard = ({ step, index, isLast }) => {
+  return (
+    <div className="relative">
+      <div className="group relative h-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-all duration-300">
+        {/* Diagonal lines pattern background */}
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.03)_25%,rgba(0,0,0,0.03)_50%,transparent_50%,transparent_75%,rgba(0,0,0,0.03)_75%)] bg-[length:8px_8px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        
+        {/* Gradient overlay on hover */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        
+        {/* Top accent line */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        
+        <div className="relative p-6 flex flex-col items-center text-center">
+          <div className="flex items-center justify-center w-14 h-14 rounded-full bg-blue-100/80 text-blue-600 mb-4 group-hover:scale-110 transition-transform duration-300">
+            {step.icon}
+          </div>
+          
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-600 text-sm font-semibold mb-3">
+            {step.number}
+          </div>
+          
+          <h3 className="text-lg font-bold text-gray-900 mb-1">{step.title}</h3>
+          
+          {/* Animated underline on hover */}
+          <div className="h-0.5 w-12 bg-blue-500/50 mt-2 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+        </div>
+      </div>
+      
+      {/* Connector line */}
+      {!isLast && (
+        <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gray-200">
+          <div className="absolute right-0 top-1/2 w-1.5 h-1.5 rounded-full bg-blue-500 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default HowItWorks
