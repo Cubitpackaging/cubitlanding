@@ -22,26 +22,20 @@ export default function AdminDashboard() {
 
   const checkAuth = async () => {
     try {
-      console.log('Dashboard: Checking auth status...')
       const { success, session } = await AuthService.getSession()
-      console.log('Dashboard: Session check result:', { success, hasSession: !!session })
       
       if (!success || !session) {
-        console.log('Dashboard: No valid session, redirecting to login')
         router.push('/admin')
         return
       }
 
       const isAdmin = await AuthService.isAdmin(session.user)
-      console.log('Dashboard: Is admin check result:', isAdmin)
       
       if (!isAdmin) {
-        console.log('Dashboard: User is not admin, redirecting to login')
         router.push('/admin')
         return
       }
 
-      console.log('Dashboard: Auth successful, loading dashboard')
       setUser(session.user)
       loadStats()
     } catch (error) {

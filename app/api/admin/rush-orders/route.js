@@ -90,7 +90,7 @@ export async function POST(request) {
       )
     }
     
-    console.log('Rush order saved to database:', data[0].id)
+
     
     return NextResponse.json({ 
       success: true, 
@@ -189,4 +189,4 @@ export async function DELETE(request) {
       { status: 500 }
     )
   }
-} 
+}

@@ -171,21 +171,17 @@ const RushOrderModal = ({ isOpen, onClose }) => {
     
     try {
       // Submit to both email and admin panel
-      console.log('Submitting rush order:', formData)
       const results = await submitRushOrder(formData)
       
       setSubmissionResults(results)
       
       if (results.overall.success) {
-        console.log('Rush order submitted successfully to both systems!')
         setIsSubmitted(true)
       } else {
         const errorMessage = getSubmissionErrorMessage(results)
         setSubmissionError(errorMessage)
-        console.error('Rush order submission failed:', results.overall.errors)
       }
     } catch (error) {
-      console.error('Error submitting rush order:', error)
       setSubmissionError('An unexpected error occurred. Please try again or contact us directly.')
     } finally {
       setIsSubmitting(false)
@@ -747,4 +743,4 @@ Thank you!`
   )
 }
 
-export default RushOrderModal 
+export default RushOrderModal

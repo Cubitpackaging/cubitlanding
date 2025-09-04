@@ -7,8 +7,6 @@ export const submitQuoteForm = async (formData) => {
   }
 
   try {
-    console.log('Starting quote form submission...')
-    
     // Submit to email and admin panel in parallel
     const [emailResult, adminResult] = await Promise.allSettled([
       fetch('/api/send-quote-email', {
@@ -19,7 +17,6 @@ export const submitQuoteForm = async (formData) => {
         body: JSON.stringify(formData)
       }).then(async res => {
         const data = await res.json()
-        console.log('Email API response:', { status: res.status, data })
         return { ...data, status: res.status }
       }),
       fetch('/api/admin/quotes', {
@@ -30,43 +27,34 @@ export const submitQuoteForm = async (formData) => {
         body: JSON.stringify(formData)
       }).then(async res => {
         const data = await res.json()
-        console.log('Admin API response:', { status: res.status, data })
         return { ...data, status: res.status }
       })
     ])
 
-    console.log('Promise results:', { emailResult, adminResult })
-
     // Handle email result
     if (emailResult.status === 'fulfilled' && emailResult.value.success) {
       results.email.success = true
-      console.log('✅ Quote email sent successfully')
     } else {
       const error = emailResult.reason || emailResult.value?.error || 'Email sending failed'
       results.email.error = error
-      console.error('❌ Quote email failed:', error)
       results.overall.errors.push(`Email: ${error}`)
     }
 
     // Handle admin result
     if (adminResult.status === 'fulfilled' && adminResult.value.success) {
       results.admin.success = true
-      console.log('✅ Quote saved to admin panel successfully')
     } else {
       const error = adminResult.reason || adminResult.value?.error || 'Admin panel save failed'
       results.admin.error = error
-      console.error('❌ Quote admin save failed:', error)
       results.overall.errors.push(`Admin: ${error}`)
     }
 
     // Overall success if at least one method worked
     results.overall.success = results.email.success || results.admin.success
 
-    console.log('Final submission results:', results)
     return results
 
   } catch (error) {
-    console.error('Submission service error:', error)
     results.overall.errors.push(`System error: ${error.message}`)
     return results
   }
@@ -81,8 +69,6 @@ export const submitRushOrder = async (formData) => {
   }
 
   try {
-    console.log('Starting rush order submission...')
-    
     // Submit to email and admin panel in parallel
     const [emailResult, adminResult] = await Promise.allSettled([
       fetch('/api/send-rush-email', {
@@ -93,7 +79,6 @@ export const submitRushOrder = async (formData) => {
         body: JSON.stringify(formData)
       }).then(async res => {
         const data = await res.json()
-        console.log('Rush email API response:', { status: res.status, data })
         return { ...data, status: res.status }
       }),
       fetch('/api/admin/rush-orders', {
@@ -104,43 +89,34 @@ export const submitRushOrder = async (formData) => {
         body: JSON.stringify(formData)
       }).then(async res => {
         const data = await res.json()
-        console.log('Rush admin API response:', { status: res.status, data })
         return { ...data, status: res.status }
       })
     ])
 
-    console.log('Rush order promise results:', { emailResult, adminResult })
-
     // Handle email result
     if (emailResult.status === 'fulfilled' && emailResult.value.success) {
       results.email.success = true
-      console.log('✅ Rush order email sent successfully')
     } else {
       const error = emailResult.reason || emailResult.value?.error || 'Email sending failed'
       results.email.error = error
-      console.error('❌ Rush order email failed:', error)
       results.overall.errors.push(`Email: ${error}`)
     }
 
     // Handle admin result
     if (adminResult.status === 'fulfilled' && adminResult.value.success) {
       results.admin.success = true
-      console.log('✅ Rush order saved to admin panel successfully')
     } else {
       const error = adminResult.reason || adminResult.value?.error || 'Admin panel save failed'
       results.admin.error = error
-      console.error('❌ Rush order admin save failed:', error)
       results.overall.errors.push(`Admin: ${error}`)
     }
 
     // Overall success if at least one method worked
     results.overall.success = results.email.success || results.admin.success
 
-    console.log('Final rush order submission results:', results)
     return results
 
   } catch (error) {
-    console.error('❌ Rush order submission error:', error)
     results.overall.errors.push('Unexpected error occurred')
     return results
   }
@@ -171,4 +147,4 @@ export const getSubmissionSuccessMessage = (type) => {
     return 'Your rush order has been submitted successfully! We\'ve received your urgent request and will prioritize it accordingly.'
   }
   return 'Your request has been submitted successfully!'
-} 
+}

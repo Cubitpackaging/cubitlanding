@@ -81,16 +81,12 @@ const QuoteForm = () => {
       setSubmissionResults(null)
       
       try {
-        console.log('Submitting quote form:', formData)
-        
         // Submit to both email and admin panel
         const results = await submitQuoteForm(formData)
-        console.log('Submission results:', results)
         
         setSubmissionResults(results)
         
         if (results.overall.success) {
-          console.log('Quote submitted successfully to both systems!')
           setIsSubmitted(true)
           
           // Reset form after 5 seconds
@@ -109,16 +105,13 @@ const QuoteForm = () => {
         } else {
           // Show partial success or complete failure
           if (results.email.success || results.admin.success) {
-            console.log('Partial success - at least one system worked')
             // Keep the results visible for user to see what worked
           } else {
-            console.error('Complete failure - both systems failed')
             const errorMessage = getSubmissionErrorMessage(results)
             setSubmissionError(errorMessage)
           }
         }
       } catch (error) {
-        console.error('Error submitting quote form:', error)
         setSubmissionError('An unexpected error occurred. Please try again or contact us directly at cubitpackaging@gmail.com or call (510) 203-8855.')
       } finally {
         setIsLoading(false)
@@ -382,4 +375,4 @@ const QuoteForm = () => {
   )
 }
 
-export default QuoteForm 
+export default QuoteForm

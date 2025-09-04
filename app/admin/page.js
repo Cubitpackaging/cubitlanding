@@ -23,16 +23,12 @@ export default function AdminLogin() {
 
   const checkAuthStatus = async () => {
     try {
-      console.log('Checking auth status...')
       const { success, session } = await AuthService.getSession()
-      console.log('Session check result:', { success, hasSession: !!session })
       
       if (success && session) {
         const isAdmin = await AuthService.isAdmin(session.user)
-        console.log('Auth check - is admin:', isAdmin)
         
         if (isAdmin) {
-          console.log('Auth check - user already logged in as admin, redirecting...')
           router.replace('/admin/dashboard')
         }
       }
@@ -51,12 +47,9 @@ export default function AdminLogin() {
       const result = await AuthService.signIn(credentials.email, credentials.password)
       
       if (result.success) {
-        console.log('Login successful, checking admin status...')
         const isAdmin = await AuthService.isAdmin(result.user)
-        console.log('Is admin:', isAdmin)
         
         if (isAdmin) {
-          console.log('Redirecting to dashboard...')
           router.replace('/admin/dashboard')
           // Fallback redirect in case router.replace fails
           setTimeout(() => {
@@ -65,12 +58,10 @@ export default function AdminLogin() {
           // Clear any potential browser cache issues
           window.history.replaceState(null, '', '/admin/dashboard')
         } else {
-          console.log('Access denied - not admin')
           setError('Access denied. Admin privileges required.')
           await AuthService.signOut()
         }
       } else {
-        console.log('Login failed:', result.error)
         setError(result.error || 'Invalid credentials')
       }
     } catch (error) {

@@ -10,8 +10,6 @@ const supabase = createClient(
 // GET - Retrieve all quotes
 export async function GET() {
   try {
-    console.log('Fetching quotes from Supabase...')
-    
     const { data: quotes, error } = await supabase
       .from('quotes')
       .select('*')
@@ -21,8 +19,6 @@ export async function GET() {
       console.error('Supabase error fetching quotes:', error)
       throw error
     }
-    
-    console.log('Successfully fetched quotes:', quotes?.length || 0)
     
     return NextResponse.json({ 
       success: true, 
@@ -40,10 +36,7 @@ export async function GET() {
 // POST - Create new quote submission
 export async function POST(request) {
   try {
-    console.log('Creating new quote in Supabase...')
-    
     const formData = await request.json()
-    console.log('Quote form data:', formData)
     
     // Validate required fields
     if (!formData.name || !formData.email || !formData.packagingType) {
@@ -66,8 +59,6 @@ export async function POST(request) {
       priority: 'normal'
     }
     
-    console.log('Inserting quote into Supabase:', newQuote)
-    
     const { data, error } = await supabase
       .from('quotes')
       .insert([newQuote])
@@ -77,8 +68,6 @@ export async function POST(request) {
       console.error('Supabase error saving quote:', error)
       throw error
     }
-    
-    console.log('Quote saved to Supabase successfully:', data?.[0]?.id)
     
     return NextResponse.json({ 
       success: true, 
@@ -99,8 +88,6 @@ export async function POST(request) {
 export async function PUT(request) {
   try {
     const { id, status, priority } = await request.json()
-    
-    console.log('Updating quote in Supabase:', { id, status, priority })
     
     const updateData = {}
     if (status) updateData.status = status
@@ -125,8 +112,6 @@ export async function PUT(request) {
       )
     }
     
-    console.log('Quote updated successfully in Supabase')
-    
     return NextResponse.json({ 
       success: true, 
       message: 'Quote updated successfully' 
@@ -146,8 +131,6 @@ export async function DELETE(request) {
   try {
     const { id } = await request.json()
     
-    console.log('Deleting quote from Supabase:', id)
-    
     const { data, error } = await supabase
       .from('quotes')
       .delete()
@@ -166,8 +149,6 @@ export async function DELETE(request) {
       )
     }
     
-    console.log('Quote deleted successfully from Supabase')
-    
     return NextResponse.json({ 
       success: true, 
       message: 'Quote deleted successfully' 
@@ -180,4 +161,4 @@ export async function DELETE(request) {
       { status: 500 }
     )
   }
-} 
+}

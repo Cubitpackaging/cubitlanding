@@ -41,8 +41,16 @@ const SmartPackaging = () => {
   ]
 
   return (
-    <section id="smart" className="min-h-screen flex items-center justify-center bg-white">
-      <div className="max-w-7xl mx-auto section-padding">
+    <section id="smart" className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-gray-50 overflow-hidden">
+      {/* Premium Background Pattern */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(168,85,247,0.08),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(59,130,246,0.06),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(16,185,129,0.06),transparent_50%)]"></div>
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:100px_100px]"></div>
+      </div>
+      <div className="relative z-10 max-w-7xl mx-auto section-padding">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
           <div>
@@ -154,4 +162,4 @@ const SmartPackaging = () => {
   )
 }
 
-export default SmartPackaging 
+export default SmartPackaging

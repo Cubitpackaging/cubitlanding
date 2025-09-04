@@ -29,8 +29,14 @@ const IndustryShowcase = () => {
   // Loading state
   if (productsLoading) {
     return (
-      <section className="min-h-screen flex items-center justify-center bg-white">
-        <div className="max-w-7xl mx-auto section-padding">
+      <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-50 to-white relative overflow-hidden">
+        {/* Background patterns */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-purple-100/30 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-blue-100/30 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        </div>
+        <div className="max-w-7xl mx-auto section-padding relative z-10">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
             <p className="text-gray-600">Loading industry products...</p>
@@ -46,8 +52,14 @@ const IndustryShowcase = () => {
   }
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-white">
-      <div className="max-w-7xl mx-auto section-padding">
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-50 to-white relative overflow-hidden">
+      {/* Background patterns */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-purple-100/30 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-blue-100/30 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+      </div>
+      <div className="max-w-7xl mx-auto section-padding relative z-10">
         <div className="text-center mb-16">
           <h2 className="heading-lg text-gray-900 mb-6">
             Industry-Specific <span className="text-gradient">Packaging Solutions</span>
@@ -84,7 +96,7 @@ const IndustryShowcase = () => {
             {products.map((product, index) => (
             <div 
               key={product.id || index}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden relative cursor-pointer transform hover:-translate-y-1 flex flex-col h-full"
+              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden relative cursor-pointer transform hover:-translate-y-1 flex flex-col h-[600px]"
               onClick={() => handleProductClick(product)}
             >
               {/* Badge */}
@@ -121,8 +133,9 @@ const IndustryShowcase = () => {
               </div>
 
               {/* Product Info */}
-              <div className="p-4 flex flex-col h-full">
-                <div className="flex-grow">
+              <div className="p-4 flex flex-col flex-1">
+                {/* Main Content */}
+                <div className="flex-1">
                   {/* Category */}
                   <div className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">
                     {product.category}
@@ -139,9 +152,9 @@ const IndustryShowcase = () => {
                   </p>
 
                   {/* Features */}
-                  <div className="flex flex-wrap gap-1 mb-3">
+                  <div className="flex flex-wrap gap-1 mb-2">
                     {product.features?.map((feature, idx) => (
-                      <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded font-medium">
+                      <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded font-medium">
                         {feature}
                       </span>
                     ))}

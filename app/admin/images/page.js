@@ -19,26 +19,20 @@ export default function ImagesManagement() {
 
   const checkAuth = async () => {
     try {
-      console.log('Images: Checking auth status...')
       const { success, session } = await AuthService.getSession()
-      console.log('Images: Session check result:', { success, hasSession: !!session })
       
       if (!success || !session) {
-        console.log('Images: No valid session, redirecting to login')
         router.push('/admin')
         return
       }
 
       const isAdmin = await AuthService.isAdmin(session.user)
-      console.log('Images: Is admin check result:', isAdmin)
       
       if (!isAdmin) {
-        console.log('Images: User is not admin, redirecting to login')
         router.push('/admin')
         return
       }
 
-      console.log('Images: Auth successful, loading images')
       loadImages()
     } catch (error) {
       console.error('Images: Auth check error:', error)

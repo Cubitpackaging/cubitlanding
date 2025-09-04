@@ -100,29 +100,22 @@ export default function ProductsManagement() {
 
   const checkAuth = async () => {
     try {
-      console.log('Products: Checking auth status...')
       const { success, session } = await AuthService.getSession()
-      console.log('Products: Session check result:', { success, hasSession: !!session })
       
       if (!success || !session) {
-        console.log('Products: No valid session, redirecting to login')
         router.push('/admin')
         return
       }
 
       const isAdmin = await AuthService.isAdmin(session.user)
-      console.log('Products: Is admin check result:', isAdmin)
       
       if (!isAdmin) {
-        console.log('Products: User is not admin, redirecting to login')
         router.push('/admin')
         return
       }
 
-      console.log('Products: Auth successful, loading products')
       loadProducts()
     } catch (error) {
-      console.error('Products: Auth check error:', error)
       router.push('/admin')
     }
   }

@@ -4,14 +4,9 @@ import { EMAIL_CONFIG } from './emailConfig'
 // Initialize EmailJS
 export const initEmailJS = () => {
   try {
-    console.log('Initializing EmailJS with public key:', EMAIL_CONFIG.publicKey)
     emailjs.init(EMAIL_CONFIG.publicKey)
-    console.log('EmailJS initialized successfully')
     return true
   } catch (error) {
-    console.error('Failed to initialize EmailJS:', error)
-    console.error('Public Key:', EMAIL_CONFIG.publicKey)
-    console.error('Service ID:', EMAIL_CONFIG.serviceId)
     return false
   }
 }
@@ -36,23 +31,14 @@ export const sendQuoteFormEmail = async (formData) => {
       reply_to: formData.email
     }
 
-    console.log('Sending quote form email with params:', templateParams)
-
     const response = await emailjs.send(
       EMAIL_CONFIG.serviceId,
       EMAIL_CONFIG.templates.quoteForm,
       templateParams
     )
 
-    console.log('Quote form email sent successfully:', response)
     return { success: true, response }
   } catch (error) {
-    console.error('Error sending quote form email:', error)
-    console.error('Error status:', error.status)
-    console.error('Error text:', error.text)
-    console.error('Service ID:', EMAIL_CONFIG.serviceId)
-    console.error('Template ID:', EMAIL_CONFIG.templates.quoteForm)
-    
     let errorMessage = 'Failed to send email'
     if (error.status === 400) {
       errorMessage = 'Bad Request - Check template parameters'
@@ -106,23 +92,14 @@ export const sendRushOrderEmail = async (formData) => {
       reply_to: formData.email
     }
 
-    console.log('Sending rush order email with params:', templateParams)
-
     const response = await emailjs.send(
       EMAIL_CONFIG.serviceId,
       EMAIL_CONFIG.templates.rushOrder,
       templateParams
     )
 
-    console.log('Rush order email sent successfully:', response)
     return { success: true, response }
   } catch (error) {
-    console.error('Error sending rush order email:', error)
-    console.error('Error status:', error.status)
-    console.error('Error text:', error.text)
-    console.error('Service ID:', EMAIL_CONFIG.serviceId)
-    console.error('Template ID:', EMAIL_CONFIG.templates.rushOrder)
-    
     let errorMessage = 'Failed to send email'
     if (error.status === 400) {
       errorMessage = 'Bad Request - Check template parameters'
@@ -148,7 +125,6 @@ export const sendFormEmail = async (formType, formData) => {
     case 'rush-order':
       return await sendRushOrderEmail(formData)
     default:
-      console.error('Unknown form type:', formType)
       return { success: false, error: 'Unknown form type' }
   }
 }
@@ -164,14 +140,7 @@ export const testEmailService = async () => {
     message: 'This is a test email to verify the email service is working.'
   }
 
-  console.log('Testing email service...')
   const result = await sendQuoteFormEmail(testData)
   
-  if (result.success) {
-    console.log('✅ Email service test passed!')
-  } else {
-    console.log('❌ Email service test failed:', result.error)
-  }
-  
   return result
-} 
+}

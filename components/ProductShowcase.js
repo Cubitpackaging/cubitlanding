@@ -29,8 +29,14 @@ const ProductShowcase = () => {
   // Loading state
   if (productsLoading) {
     return (
-      <section id="packaging" className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="max-w-7xl mx-auto section-padding">
+      <section id="packaging" className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white relative overflow-hidden">
+        {/* Background patterns */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-100/30 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-purple-100/30 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        </div>
+        <div className="max-w-7xl mx-auto section-padding relative z-10">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
             <p className="text-gray-600">Loading products...</p>
@@ -46,8 +52,14 @@ const ProductShowcase = () => {
   }
 
   return (
-    <section id="packaging" className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-7xl mx-auto section-padding">
+    <section id="packaging" className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white relative overflow-hidden">
+      {/* Background patterns */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-100/30 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-purple-100/30 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+      </div>
+      <div className="max-w-7xl mx-auto section-padding relative z-10">
         <div className="text-center mb-16">
           <h2 className="heading-lg text-gray-900 mb-6">
             Our Custom <span className="text-gradient">Packaging Solutions</span>
@@ -67,7 +79,7 @@ const ProductShowcase = () => {
             {products.map((product, index) => (
             <div 
               key={product.id || index}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden relative cursor-pointer transform hover:-translate-y-1 flex flex-col h-full"
+              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden relative cursor-pointer transform hover:-translate-y-1 flex flex-col h-[600px]"
               onClick={() => handleProductClick(product)}
             >
               {/* Badge */}
@@ -78,9 +90,9 @@ const ProductShowcase = () => {
               )}
 
               {/* Product Image */}
-              <div className="relative h-56 bg-gray-50 overflow-hidden">
-                <div className="absolute inset-0 p-6 flex items-center justify-center">
-                  <div className="w-full h-full bg-white rounded-lg shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+              <div className="relative h-72 bg-gray-50 overflow-hidden">
+                <div className="absolute inset-0 p-4 flex items-center justify-center">
+                  <div className="relative w-full h-full bg-white rounded-lg shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
                     {product.imageId && getImageUrl(product.imageId) ? (
                       <Image 
                         src={getImageUrl(product.imageId)} 
@@ -103,27 +115,28 @@ const ProductShowcase = () => {
               </div>
 
               {/* Product Info */}
-              <div className="p-4 flex flex-col h-full">
-                <div className="flex-grow">
+              <div className="p-2.5 flex flex-col flex-1">
+                {/* Main Content */}
+                <div className="flex-1">
                   {/* Category */}
                   <div className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">
                     Custom Packaging
                   </div>
 
                   {/* Product Name */}
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-primary transition-colors">
                     {product.name}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-gray-600 leading-relaxed mb-3">
+                  <p className="text-sm text-gray-600 leading-relaxed mb-2">
                     {product.description}
                   </p>
 
                   {/* Features */}
-                  <div className="flex flex-wrap gap-1 mb-3">
+                  <div className="flex flex-wrap gap-1 mb-1">
                     {product.features?.map((feature, idx) => (
-                      <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded font-medium">
+                      <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded font-medium">
                         {feature}
                       </span>
                     ))}
@@ -132,7 +145,7 @@ const ProductShowcase = () => {
 
                 {/* Price and CTA - Fixed at bottom */}
                 <div className="mt-auto">
-                  <div className="flex justify-between items-center mb-3">
+                  <div className="flex justify-between items-center mb-2">
                     <div className="flex flex-col">
                       {product.originalPrice && (
                         <span className="text-sm text-gray-400 line-through">
@@ -150,7 +163,7 @@ const ProductShowcase = () => {
                           quoteSection.scrollIntoView({ behavior: 'smooth' })
                         }
                       }}
-                      className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:from-gray-700 hover:to-gray-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center gap-2"
+                      className="bg-gradient-to-r from-gray-800 to-gray-700 text-white px-3 py-1.5 rounded-lg font-semibold text-sm hover:from-gray-700 hover:to-gray-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center gap-2"
                   >
                     <span>Get Quote</span>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,7 +175,7 @@ const ProductShowcase = () => {
                 </div>
 
                 {/* Rating and Stock */}
-                <div className="flex justify-between items-center pt-4 border-t border-gray-100">
+                <div className="flex justify-between items-center pt-2 border-t border-gray-100">
                   <div className="flex items-center gap-1">
                     <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
