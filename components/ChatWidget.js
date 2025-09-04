@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
-import { X, Send, Bot } from 'lucide-react'
+import { X, Send } from 'lucide-react'
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -225,8 +225,12 @@ const ChatWidget = () => {
           {/* Header */}
           <div className="bg-primary p-4 rounded-t-lg flex justify-between items-center">
             <div className="flex items-center gap-2">
-               <Bot className="h-5 w-5 text-primary-foreground" />
-               <h3 className="font-medium text-primary-foreground">Chat with Cubit</h3>
+               <svg className="h-5 w-5 text-primary-foreground" viewBox="0 0 164.8 164.8" fill="currentColor">
+                 <polygon points="131.23,74.39 94.81,74.39 120.62,48.57 113.54,41.48 87.41,67.6 87.41,31.09 77.39,31.09 77.39,67.6 51.27,41.48 44.18,48.57 70,74.39 33.62,74.39 33.06,74.39 33.06,84.41 33.62,84.41 81.89,84.41 82.4,84.41 82.92,84.41 131.23,84.41 131.74,84.41 131.74,74.39" fill="#CDF501"/>
+                 <path d="M82.49 112.79l0 20.93c-24.32,0 -44.59,-17.27 -49.26,-40.21l29.97 0c10.65,0 19.28,8.63 19.28,19.28l0 -0.01z" fill="#7B6AF7"/>
+                 <path d="M82.49 112.79l0 20.93c24.32,0 44.59,-17.27 49.26,-40.21l-29.97 0c-10.65,0 -19.28,8.63 -19.28,19.28l0 -0.01z" fill="#7B6AF7"/>
+               </svg>
+               <h3 className="font-medium text-primary-foreground">Cubit</h3>
              </div>
             <button
               onClick={() => setIsOpen(false)}
