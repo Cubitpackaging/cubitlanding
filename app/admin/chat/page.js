@@ -257,8 +257,8 @@ const AdminChatPage = () => {
         .update({ updated_at: new Date().toISOString() })
         .eq('id', selectedConversation.id)
 } catch (error) {
-            // Error sending message
-        }setNewMessage(messageContent) // Restore message on error
+      // Error sending message
+      setNewMessage(messageContent) // Restore message on error
     } finally {
       setIsSending(false)
     }

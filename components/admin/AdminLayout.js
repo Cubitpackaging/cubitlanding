@@ -13,11 +13,12 @@ export default function AdminLayout({ children }) {
   const handleLogout = async () => {
     try {
       await AuthService.signOut()
-      router.push('/admin')} catch (error) {
-            // Logout failed
-        }// Force logout even if there's an error
       router.push('/admin')
+    } catch (error) {
+      // Logout failed
     }
+    // Force logout even if there's an error
+    router.push('/admin')
   }
 
   const navigation = [

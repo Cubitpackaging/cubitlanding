@@ -60,9 +60,9 @@ const SubmissionsPage = () => {
       }
 
  } catch (error) {
-            // Error fetching submissions
-        }setError('Failed to load submissions')
-    } finally {
+    // Error fetching submissions
+    setError('Failed to load submissions')
+  } finally {
       setLoading(false)
     }
   }
