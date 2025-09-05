@@ -42,9 +42,9 @@ class VisitorTracker {
       this.startHeartbeat()
       
       this.isInitialized = true
-      console.log('Visitor tracking initialized:', { visitorId: this.visitorId, sessionId: this.sessionId })
+      // Visitor tracking initialized
     } catch (error) {
-      console.error('Error initializing visitor tracking:', error)
+      // Error initializing visitor tracking
     }
   }
 
@@ -175,7 +175,7 @@ class VisitorTracker {
           })
       }
     } catch (error) {
-      console.error('Error creating/updating visitor:', error)
+      // Error creating/updating visitor
     }
   }
 
@@ -194,7 +194,7 @@ class VisitorTracker {
       if (existingSessions && existingSessions.length > 0) {
         // Reuse existing session
         this.sessionId = existingSessions[0].session_id
-        console.log('Reusing existing session:', this.sessionId)
+        // Reusing existing session
         return
       }
 
@@ -209,7 +209,7 @@ class VisitorTracker {
           is_active: true
         })
     } catch (error) {
-      console.error('Error creating session:', error)
+      // Error creating session
     }
   }
 
@@ -243,7 +243,7 @@ class VisitorTracker {
       await this.incrementVisitorPageViews()
       
     } catch (error) {
-      console.error('Error tracking page view:', error)
+      // Error tracking page view
     }
   }
 
@@ -259,7 +259,7 @@ class VisitorTracker {
         .order('viewed_at', { ascending: false })
         .limit(1)
     } catch (error) {
-      console.error('Error updating page time:', error)
+      // Error updating page time
     }
   }
 
@@ -285,7 +285,7 @@ class VisitorTracker {
             .eq('visitor_id', this.visitorId)
         }
       } catch (fallbackError) {
-        console.error('Error incrementing page views:', fallbackError)
+        // Error incrementing page views
       }
     }
   }
@@ -348,7 +348,7 @@ class VisitorTracker {
         })
         .eq('session_id', this.sessionId)
     } catch (error) {
-      console.error('Error sending heartbeat:', error)
+      // Error sending heartbeat
     }
   }
 
@@ -385,7 +385,7 @@ class VisitorTracker {
       sessionStorage.removeItem('visitor_session_id')
       
     } catch (error) {
-      console.error('Error ending session:', error)
+      // Error ending session
     }
   }
 
@@ -397,7 +397,7 @@ class VisitorTracker {
         .update({ is_chat_user: true })
         .eq('visitor_id', this.visitorId)
     } catch (error) {
-      console.error('Error marking as chat user:', error)
+      // Error marking as chat user
     }
   }
 
@@ -415,17 +415,17 @@ class VisitorTracker {
 // Create singleton instance
 const visitorTracker = new VisitorTracker()
 
-// Auto-initialize when imported (only in browser)
-if (typeof window !== 'undefined') {
-  // Wait for DOM to be ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      visitorTracker.init()
-    })
-  } else {
-    visitorTracker.init()
-  }
-}
+// Auto-initialization disabled - LiveChat is now handling visitor tracking
+// if (typeof window !== 'undefined') {
+//   // Wait for DOM to be ready
+//   if (document.readyState === 'loading') {
+//     document.addEventListener('DOMContentLoaded', () => {
+//       visitorTracker.init()
+//     })
+//   } else {
+//     visitorTracker.init()
+//   }
+// }
 
 export default visitorTracker
 export { VisitorTracker }

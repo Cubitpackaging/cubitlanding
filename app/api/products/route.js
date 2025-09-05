@@ -17,7 +17,6 @@ export async function GET() {
       industryProducts: productsData.industryProducts || []
     })
   } catch (error) {
-    console.error('Error fetching products:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to fetch products' },
       { status: 500 }

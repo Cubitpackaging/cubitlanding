@@ -102,8 +102,8 @@ const ChatWidget = () => {
         setConversationId(convId)
         await loadMessages(convId)
       } catch (error) {
-        console.error('Error loading conversation:', error)
-      } finally {
+            // Error starting conversation
+        } finally {
         setIsLoading(false)
       }
     }
@@ -178,10 +178,9 @@ const ChatWidget = () => {
           role: 'visitor'
         })
 
-      if (error) throw error
-    } catch (error) {
-      console.error('Error sending message:', error)
-      setNewMessage(messageContent) // Restore message on error
+      if (error) throw error} catch (error) {
+            // Error sending message
+        }setNewMessage(messageContent) // Restore message on error
     } finally {
       setIsLoading(false)
     }

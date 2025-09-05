@@ -48,7 +48,7 @@ const ProductShowcase = () => {
 
   // Error state
   if (error) {
-    console.error('ProductShowcase error:', error)
+    // Error loading products
   }
 
   return (

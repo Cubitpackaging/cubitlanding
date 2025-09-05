@@ -19,7 +19,7 @@ function ProductCard({ product, onEdit, onDelete }) {
           setImages(data.images)
         }
       } catch (error) {
-        console.error('Error loading images:', error)
+        // Error loading images
       }
     }
     loadImages()
@@ -126,7 +126,7 @@ export default function ProductsManagement() {
       const data = await response.json()
       setProducts(data)
     } catch (error) {
-      console.error('Failed to load products:', error)
+      // Failed to load products
     } finally {
       setLoading(false)
     }
@@ -162,7 +162,6 @@ export default function ProductsManagement() {
         alert('Failed to save product')
       }
     } catch (error) {
-      console.error('Error saving product:', error)
       alert('Failed to save product')
     }
   }
@@ -203,7 +202,6 @@ export default function ProductsManagement() {
         alert('Failed to delete product')
       }
     } catch (error) {
-      console.error('Error deleting product:', error)
       alert('Failed to delete product')
     }
   }

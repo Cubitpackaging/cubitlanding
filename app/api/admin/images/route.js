@@ -14,7 +14,6 @@ async function readImages() {
     .order('created_at', { ascending: false })
   
   if (error) {
-    console.error('Error reading images from Supabase:', error)
     return { images: [] }
   }
   
@@ -34,7 +33,6 @@ export async function GET() {
     const data = await readImages()
     return NextResponse.json({ success: true, images: data.images })
   } catch (error) {
-    console.error('Error reading images:', error)
     return NextResponse.json({ success: false, images: [] })
   }
 }

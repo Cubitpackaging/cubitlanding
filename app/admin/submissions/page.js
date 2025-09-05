@@ -35,9 +35,8 @@ const SubmissionsPage = () => {
 
       fetchSubmissions()
     } catch (error) {
-      console.error('Submissions: Auth check error:', error)
-      router.push('/admin')
-    }
+            router.push('/admin')
+        }
   }
 
   const fetchSubmissions = async () => {
@@ -60,9 +59,9 @@ const SubmissionsPage = () => {
         setRushOrders(rushOrdersData.rushOrders || [])
       }
 
-    } catch (error) {
-      console.error('Error fetching submissions:', error)
-      setError('Failed to load submissions')
+ } catch (error) {
+            // Error fetching submissions
+        }setError('Failed to load submissions')
     } finally {
       setLoading(false)
     }
@@ -82,8 +81,8 @@ const SubmissionsPage = () => {
         fetchSubmissions() // Refresh data
       }
     } catch (error) {
-      console.error('Error updating quote status:', error)
-    }
+            // Error updating quote status
+        }
   }
 
   const updateRushOrderStatus = async (id, status) => {
@@ -100,8 +99,8 @@ const SubmissionsPage = () => {
         fetchSubmissions() // Refresh data
       }
     } catch (error) {
-      console.error('Error updating rush order status:', error)
-    }
+            // Error updating rush order status
+        }
   }
 
   const deleteSubmission = async (id, type) => {
@@ -121,8 +120,8 @@ const SubmissionsPage = () => {
         fetchSubmissions() // Refresh data
       }
     } catch (error) {
-      console.error('Error deleting submission:', error)
-    }
+            // Error deleting submission
+        }
   }
 
   const getStatusColor = (status) => {

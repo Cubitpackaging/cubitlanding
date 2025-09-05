@@ -16,7 +16,6 @@ export async function GET() {
       .order('created_at', { ascending: false })
     
     if (error) {
-      console.error('Supabase error fetching quotes:', error)
       throw error
     }
     
@@ -25,7 +24,6 @@ export async function GET() {
       quotes: quotes || []
     })
   } catch (error) {
-    console.error('Error fetching quotes:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to fetch quotes' },
       { status: 500 }
@@ -65,7 +63,6 @@ export async function POST(request) {
       .select()
     
     if (error) {
-      console.error('Supabase error saving quote:', error)
       throw error
     }
     
@@ -76,7 +73,6 @@ export async function POST(request) {
     })
     
   } catch (error) {
-    console.error('Error saving quote:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to save quote' },
       { status: 500 }
@@ -101,7 +97,6 @@ export async function PUT(request) {
       .select()
     
     if (error) {
-      console.error('Supabase error updating quote:', error)
       throw error
     }
     
@@ -118,7 +113,6 @@ export async function PUT(request) {
     })
     
   } catch (error) {
-    console.error('Error updating quote:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to update quote' },
       { status: 500 }
@@ -138,7 +132,6 @@ export async function DELETE(request) {
       .select()
     
     if (error) {
-      console.error('Supabase error deleting quote:', error)
       throw error
     }
     
@@ -155,7 +148,6 @@ export async function DELETE(request) {
     })
     
   } catch (error) {
-    console.error('Error deleting quote:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to delete quote' },
       { status: 500 }

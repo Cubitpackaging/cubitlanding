@@ -33,8 +33,7 @@ export default function AdminLogin() {
         }
       }
     } catch (error) {
-      // Silent error handling for production
-      console.error('Auth check error:', error)
+      // Auth check error
     }
   }
 
@@ -93,7 +92,6 @@ export default function AdminLogin() {
         setError(result.error || 'Failed to send reset email')
       }
     } catch (error) {
-      console.error('Password reset error:', error)
       setError('Failed to send reset email. Please try again.')
     } finally {
       setResetLoading(false)

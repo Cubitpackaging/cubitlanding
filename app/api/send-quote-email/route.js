@@ -29,7 +29,6 @@ export async function POST(request) {
         messageId: result.messageId
       })
     } else {
-      console.error('Email sending failed:', result.error)
       return NextResponse.json(
         { success: false, error: result.error },
         { status: 500 }
@@ -37,7 +36,6 @@ export async function POST(request) {
     }
     
   } catch (error) {
-    console.error('Quote email API error:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to send quote request' },
       { status: 500 }

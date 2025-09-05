@@ -16,7 +16,6 @@ export async function GET() {
       .order('created_at', { ascending: false })
     
     if (productsError) {
-      console.error('Error fetching products:', productsError)
       throw productsError
     }
     
@@ -27,7 +26,6 @@ export async function GET() {
       .order('created_at', { ascending: false })
     
     if (industryError) {
-      console.error('Error fetching industry products:', industryError)
       throw industryError
     }
     
@@ -36,7 +34,6 @@ export async function GET() {
       industryProducts: industryProducts || []
     })
   } catch (error) {
-    console.error('Error reading products:', error)
     return NextResponse.json({ products: [], industryProducts: [] })
   }
 }
@@ -85,7 +82,6 @@ export async function POST(request) {
     
     return NextResponse.json({ success: true, product: result })
   } catch (error) {
-    console.error('Error creating product:', error)
     return NextResponse.json(
       { error: 'Failed to create product' },
       { status: 500 }

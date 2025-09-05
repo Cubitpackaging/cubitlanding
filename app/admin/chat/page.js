@@ -36,30 +36,23 @@ const AdminChatPage = () => {
 
   const checkAuth = async () => {
     try {
-      console.log('Chat: Checking auth status...')
       const { success, session } = await AuthService.getSession()
-      console.log('Chat: Session check result:', { success, hasSession: !!session })
       
       if (!success || !session) {
-        console.log('Chat: No valid session, redirecting to login')
         router.push('/admin')
         return
       }
 
       const isAdmin = await AuthService.isAdmin(session.user)
-      console.log('Chat: Is admin check result:', isAdmin)
       
       if (!isAdmin) {
-        console.log('Chat: User is not admin, redirecting to login')
         router.push('/admin')
         return
       }
 
-      console.log('Chat: Auth successful, loading conversations')
       loadConversations()
       setupNotificationSubscription()
     } catch (error) {
-      console.error('Chat: Auth check error:', error)
       router.push('/admin')
     }
   }
@@ -84,8 +77,6 @@ const AdminChatPage = () => {
           filter: 'type=eq.new_visitor'
         },
         (payload) => {
-          console.log('New visitor notification:', payload.new)
-          
           // Add notification to state
           setNotifications(prev => [payload.new, ...prev])
           
@@ -98,7 +89,7 @@ const AdminChatPage = () => {
                 playSimpleBeep()
               }
             } catch (error) {
-              console.warn('Could not play notification sound:', error)
+              // Could not play notification sound
             }
           }
           
@@ -174,8 +165,8 @@ const AdminChatPage = () => {
 
       setConversations(processedConversations)
     } catch (error) {
-      console.error('Error loading conversations:', error)
-    } finally {
+            // Error loading conversations
+        } finally {
       setIsLoading(false)
     }
   }
@@ -192,8 +183,8 @@ const AdminChatPage = () => {
       if (error) throw error
       setMessages(data || [])
     } catch (error) {
-      console.error('Error loading messages:', error)
-    }
+            // Error loading messages
+        }
   }
 
   // Select conversation and load its messages
@@ -265,10 +256,9 @@ const AdminChatPage = () => {
         .from('conversations')
         .update({ updated_at: new Date().toISOString() })
         .eq('id', selectedConversation.id)
-
-    } catch (error) {
-      console.error('Error sending message:', error)
-      setNewMessage(messageContent) // Restore message on error
+} catch (error) {
+            // Error sending message
+        }setNewMessage(messageContent) // Restore message on error
     } finally {
       setIsSending(false)
     }
@@ -321,8 +311,8 @@ const AdminChatPage = () => {
         setMessages([])
       }
     } catch (error) {
-      console.error('Error closing conversation:', error)
-    }
+            // Error closing conversation
+        }
   }
 
   return (

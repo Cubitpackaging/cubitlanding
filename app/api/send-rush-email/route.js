@@ -36,10 +36,9 @@ export async function POST(request) {
     }
     
   } catch (error) {
-    console.error('Rush order email API error:', error)
-    return NextResponse.json(
-      { success: false, error: 'Failed to send rush order request' },
-      { status: 500 }
-    )
-  }
-} 
+        return NextResponse.json(
+            { success: false, error: 'Failed to send rush order email' },
+            { status: 500 }
+        )
+    }
+}

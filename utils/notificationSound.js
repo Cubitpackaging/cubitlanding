@@ -26,7 +26,7 @@ export const createNotificationSound = () => {
       oscillator.stop(audioContext.currentTime + 0.3)
       
     } catch (error) {
-      console.warn('Could not play notification sound:', error)
+      // Could not play notification sound
     }
   }
   

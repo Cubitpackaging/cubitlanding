@@ -35,7 +35,6 @@ export default function ImagesManagement() {
 
       loadImages()
     } catch (error) {
-      console.error('Images: Auth check error:', error)
       router.push('/admin')
     }
   }
@@ -46,7 +45,7 @@ export default function ImagesManagement() {
       const data = await response.json()
       setImages(data.images || [])
     } catch (error) {
-      console.error('Failed to load images:', error)
+      // Failed to load images
     } finally {
       setLoading(false)
     }
@@ -87,7 +86,6 @@ export default function ImagesManagement() {
       setShowUploadModal(false)
       alert('Images uploaded successfully!')
     } catch (error) {
-      console.error('Upload error:', error)
       alert('Failed to upload images: ' + error.message)
     } finally {
       setUploading(false)
@@ -111,7 +109,6 @@ export default function ImagesManagement() {
         alert('Failed to delete image')
       }
     } catch (error) {
-      console.error('Error deleting image:', error)
       alert('Failed to delete image')
     }
   }

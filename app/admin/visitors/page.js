@@ -47,7 +47,6 @@ const AdminVisitorsPage = () => {
       setRefreshInterval(interval)
       
     } catch (error) {
-      console.error('Auth error:', error)
       router.push('/admin')
     }
   }
@@ -90,7 +89,7 @@ const AdminVisitorsPage = () => {
       if (error) throw error
       setVisitors(data || [])
     } catch (error) {
-      console.error('Error loading visitors:', error)
+      // Error loading visitors
     } finally {
       setIsLoading(false)
     }
@@ -107,7 +106,6 @@ const AdminVisitorsPage = () => {
       if (error) throw error
       setVisitorPageViews(data || [])
     } catch (error) {
-      console.error('Error loading page views:', error)
       setVisitorPageViews([])
     } finally {
       setIsLoadingPageViews(false)
@@ -200,7 +198,6 @@ const AdminVisitorsPage = () => {
       alert('Proactive message sent successfully!')
       
     } catch (error) {
-      console.error('Error sending proactive message:', error)
       alert('Failed to send message. Please try again.')
     } finally {
       setIsSendingMessage(false)

@@ -20,7 +20,7 @@ export async function GET() {
         productsCount = count || 0
       }
     } catch (error) {
-      console.error('Error fetching products count:', error)
+      // Error fetching products count
     }
     
     // Get images count from Supabase
@@ -34,7 +34,7 @@ export async function GET() {
         imagesCount = count || 0
       }
     } catch (error) {
-      console.error('Error fetching images count:', error)
+      // Error fetching images count
     }
     
     // Get quotes count from Supabase
@@ -90,7 +90,6 @@ export async function GET() {
 
     return NextResponse.json(stats)
   } catch (error) {
-    console.error('Error fetching stats:', error)
     return NextResponse.json(
       { totalProducts: 0, totalImages: 0, totalQuotes: 0, totalRushOrders: 0 },
       { status: 200 }

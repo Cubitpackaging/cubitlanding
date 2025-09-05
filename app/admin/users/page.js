@@ -49,7 +49,6 @@ export default function UserManagement() {
         }
       ])
     } catch (error) {
-      console.error('Auth check error:', error)
       setError('Failed to load user data')
     } finally {
       setLoading(false)
@@ -88,7 +87,6 @@ export default function UserManagement() {
         setError(result.error || 'Failed to create admin user')
       }
     } catch (error) {
-      console.error('Add user error:', error)
       setError('Failed to create admin user. Please try again.')
     } finally {
       setAddUserLoading(false)
@@ -317,4 +315,4 @@ export default function UserManagement() {
       </div>
     </AdminLayout>
   )
-} 
+}

@@ -10,7 +10,6 @@ export async function GET() {
       .order('created_at', { ascending: false })
     
     if (error) {
-      console.error('Error fetching rush orders:', error)
       return NextResponse.json(
         { success: false, error: 'Failed to fetch rush orders' },
         { status: 500 }
@@ -22,7 +21,6 @@ export async function GET() {
       rushOrders: rushOrders || []
     })
   } catch (error) {
-    console.error('Error fetching rush orders:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to fetch rush orders' },
       { status: 500 }
@@ -83,7 +81,6 @@ export async function POST(request) {
       .select()
     
     if (error) {
-      console.error('Error saving rush order to database:', error)
       return NextResponse.json(
         { success: false, error: 'Failed to save rush order' },
         { status: 500 }
@@ -99,7 +96,6 @@ export async function POST(request) {
     })
     
   } catch (error) {
-    console.error('Error saving rush order:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to save rush order' },
       { status: 500 }
@@ -123,7 +119,6 @@ export async function PUT(request) {
       .select()
     
     if (error) {
-      console.error('Error updating rush order:', error)
       return NextResponse.json(
         { success: false, error: 'Failed to update rush order' },
         { status: 500 }
@@ -143,7 +138,6 @@ export async function PUT(request) {
     })
     
   } catch (error) {
-    console.error('Error updating rush order:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to update rush order' },
       { status: 500 }
@@ -163,7 +157,6 @@ export async function DELETE(request) {
       .select()
     
     if (error) {
-      console.error('Error deleting rush order:', error)
       return NextResponse.json(
         { success: false, error: 'Failed to delete rush order' },
         { status: 500 }
@@ -183,7 +176,6 @@ export async function DELETE(request) {
     })
     
   } catch (error) {
-    console.error('Error deleting rush order:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to delete rush order' },
       { status: 500 }

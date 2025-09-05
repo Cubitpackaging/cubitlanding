@@ -48,7 +48,7 @@ const IndustryShowcase = () => {
 
   // Error state
   if (error) {
-    console.error('IndustryShowcase error:', error)
+    // IndustryShowcase error
   }
 
   return (

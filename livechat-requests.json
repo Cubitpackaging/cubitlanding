@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-09-05T11:55:28.372Z",
+  "totalRequests": 5,
+  "requests": [
+    {
+      "timestamp": "2025-09-05T11:54:01.371Z",
+      "type": "SCRIPT",
+      "url": "https://cdn.livechatinc.com/tracking.js",
+      "description": "Dynamic script loading"
+    },
+    {
+      "timestamp": "2025-09-05T11:54:01.439Z",
+      "type": "SCRIPT",
+      "url": "https://api.livechatinc.com/global-mapper/lc_license_id/19290214/region?jsonp=__lc_region",
+      "description": "Dynamic script loading"
+    },
+    {
+      "timestamp": "2025-09-05T11:54:02.046Z",
+      "type": "SCRIPT",
+      "url": "https://api.livechatinc.com/v3.6/customer/action/get_dynamic_configuration?x-region=us-south1&license_id=19290214&client_id=c5e4f61e1a6c3b1521b541bc5c5a2ac5&url=file%3A%2F%2F%2FC%3A%2FCubit%2FWebsite%2Fcubitlanding%2Ftest-livechat-monitoring.html&channel_type=code&jsonp=__2h7386a3yg",
+      "description": "Dynamic script loading"
+    },
+    {
+      "timestamp": "2025-09-05T11:54:02.403Z",
+      "type": "SCRIPT",
+      "url": "https://api.livechatinc.com/v3.5/customer/action/get_configuration?organization_id=bc28a799-86ac-4d98-91c3-6f90c9c0c7a8&version=16.0.1.6.14.10.4.1.1.1.1.7.172&x-region=us-south1&group_id=0&jsonp=__lc_static_config",
+      "description": "Dynamic script loading"
+    },
+    {
+      "timestamp": "2025-09-05T11:54:03.194Z",
+      "type": "SCRIPT",
+      "url": "https://api.livechatinc.com/v3.5/customer/action/get_localization?organization_id=bc28a799-86ac-4d98-91c3-6f90c9c0c7a8&version=4186bf5aaf6bce762f880c4bd3747ac9_6ef4a90038988e1e6d66e257e798f93e&language=en&x-region=us-south1&group_id=0&jsonp=__lc_localization",
+      "description": "Dynamic script loading"
+    }
+  ]
+}

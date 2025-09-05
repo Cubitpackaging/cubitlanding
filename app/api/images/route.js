@@ -23,7 +23,6 @@ export async function GET() {
       images: transformedImages
     })
   } catch (error) {
-    console.error('Error fetching images:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to fetch images' },
       { status: 500 }

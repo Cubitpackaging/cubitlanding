@@ -63,7 +63,6 @@ export async function POST(request) {
       .single()
 
     if (error) {
-      console.error('Error saving to Supabase:', error)
       // Clean up uploaded file
       fs.unlinkSync(filepath)
       return NextResponse.json(
@@ -77,7 +76,6 @@ export async function POST(request) {
       image: data 
     })
   } catch (error) {
-    console.error('Error uploading image:', error)
     return NextResponse.json(
       { error: 'Failed to upload image' },
       { status: 500 }

@@ -39,9 +39,8 @@ export default function AdminDashboard() {
       setUser(session.user)
       loadStats()
     } catch (error) {
-      console.error('Dashboard: Auth check error:', error)
-      router.push('/admin')
-    }
+            router.push('/admin')
+        }
   }
 
   const loadStats = async () => {
@@ -71,8 +70,8 @@ export default function AdminDashboard() {
       await AuthService.signOut()
       router.push('/admin')
     } catch (error) {
-      console.error('Sign out error:', error)
-    }
+            // Sign out error
+        }
   }
 
   if (loading) {

@@ -2,6 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+/* LiveChat Widget Size Customization and Positioning Fix */
+#chat-widget-container,
+.livechat-widget,
+[data-livechat],
+iframe[src*="livechatinc.com"],
+.lc-maximized,
+[id*="livechat"],
+[class*="livechat"],
+[class*="lc-"],
+#livechat-full-view,
+#livechat-compact-view,
+.livechat-container {
+  width: 400px !important;
+  height: 580px !important;
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  left: auto !important; /* Override any left positioning */
+  top: auto !important; /* Override any top positioning */
+  z-index: 9998 !important; /* Lower than custom chat widget */
+  border: none !important;
+  transform: none !important;
+  margin: 0 !important;
+}
+
+/* Ensure LiveChat doesn't appear on left side */
+[style*="left:"] {
+  left: auto !important;
+  right: 20px !important;
+}
+
+/* Custom ChatWidget should be above LiveChat */
+.fixed.right-5.z-50 {
+  z-index: 9999 !important;
+}
+
+/* Hide LiveChat branding and powered by */
+.lc-powered-by,
+.lc-branding,
+[data-testid="powered-by"],
+.livechat-powered-by,
+.lc-footer,
+.lc-brand,
+.lc-logo,
+[class*="powered"],
+[class*="branding"],
+[class*="logo"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Additional selectors to hide branding */
+.lc-1wgs9sf,
+.lc-1h4pb4y,
+[data-automation-id="powered-by"],
+[aria-label*="powered by"],
+[title*="powered by"] {
+  display: none !important;
+}
+
 :root {
   --color-primary: #CDF501;
   --color-secondary: #7B6AF7;
