@@ -29,11 +29,16 @@ export const RESPONSIVE_SIZES = {
  */
 export const getOptimizedImageUrl = (imageId, size = 'card', format = 'webp', images = []) => {
   if (!imageId) {
-    console.warn('getOptimizedImageUrl: No imageId provided')
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('getOptimizedImageUrl: No imageId provided')
+    }
     return null
   }
 
-  console.log(`getOptimizedImageUrl called with:`, { imageId, size, format, imagesCount: images?.length || 0 })
+  // Only log in development mode to reduce console noise in production
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`getOptimizedImageUrl called with:`, { imageId, size, format, imagesCount: images?.length || 0 })
+  }
   
   // For local images in uploads folder - if imageId already contains a file extension
   if (imageId.includes('.')) {
@@ -45,18 +50,26 @@ export const getOptimizedImageUrl = (imageId, size = 'card', format = 'webp', im
   if (Array.isArray(images) && images.length > 0) {
     const imageData = images.find(img => img.id === imageId)
     if (imageData && imageData.filename) {
-      console.log(`✓ Found image data for ${imageId}:`, imageData.filename)
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`✓ Found image data for ${imageId}:`, imageData.filename)
+      }
       return `/uploads/${imageData.filename}`
     } else {
-      console.warn(`✗ Image not found in images array for imageId: ${imageId}`)
-      console.log('Available image IDs:', images.map(img => img.id))
+      if (process.env.NODE_ENV === 'development') {
+        console.warn(`✗ Image not found in images array for imageId: ${imageId}`)
+        console.log('Available image IDs:', images.map(img => img.id))
+      }
     }
   } else {
-    console.warn('getOptimizedImageUrl: Images array is empty or not provided')
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('getOptimizedImageUrl: Images array is empty or not provided, using fallback')
+    }
   }
   
   // Fallback: treat imageId as filename
-  console.log(`Using imageId as filename: ${imageId}`)
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`Using imageId as filename: ${imageId}`)
+  }
   return `/uploads/${imageId}`
 }
 

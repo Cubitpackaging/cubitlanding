@@ -104,9 +104,11 @@ export function getImageUrl(imageId, size = 'card') {
 }
 
 export function useImageUrl() {
-  const { images } = useData()
+  const { images, loading } = useData()
   
   return (imageId, size = 'card') => {
-    return getOptimizedImageUrl(imageId, size, 'webp', images)
+    // Only pass images array if it's loaded and not empty
+    const imagesArray = (!loading && images && images.length > 0) ? images : []
+    return getOptimizedImageUrl(imageId, size, 'webp', imagesArray)
   }
 }
