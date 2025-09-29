@@ -15,6 +15,8 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 31536000, // 1 year
+    // Allow serving images from uploads directory
+    unoptimized: false,
   },
   // Performance optimizations
   experimental: {
@@ -26,8 +28,8 @@ const nextConfig = {
   swcMinify: true,
   // Cache static assets
   generateEtags: false,
-  // Optimize output
-  output: 'standalone',
+  // Optimize output for Vercel deployment
+  // output: 'standalone', // Removed for better static file serving
   // Reduce bundle size
   modularizeImports: {
     'lucide-react': {
