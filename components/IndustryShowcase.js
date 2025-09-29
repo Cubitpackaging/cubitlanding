@@ -1,20 +1,13 @@
 'use client'
 import { useState } from 'react'
 import Image from 'next/image'
-import { useProducts, useImages } from '../hooks/useProducts'
+import { useIndustryProducts, useImageUrl } from '../contexts/DataContext'
+import { getResponsiveSizes, getImageDimensions } from '../utils/imageOptimization'
 
 const IndustryShowcase = () => {
-  const { products: allProducts, loading: productsLoading, error } = useProducts()
-  const { images, loading: imagesLoading } = useImages()
-  
-  // Extract industry products from the API response
-  const products = allProducts?.industryProducts || []
+  const { industryProducts: products, loading, error } = useIndustryProducts()
+  const getProductImageUrl = useImageUrl()
   const [selectedProduct, setSelectedProduct] = useState(null)
-
-  const getImageUrl = (imageId) => {
-    const image = images.find(img => img.id === imageId)
-    return image ? `/uploads/${image.filename}` : null
-  }
 
   // No fallback products - show empty state if no products loaded
 
@@ -27,7 +20,7 @@ const IndustryShowcase = () => {
   }
 
   // Loading state
-  if (productsLoading) {
+  if (loading) {
     return (
       <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-50 to-white relative overflow-hidden">
         {/* Background patterns */}
@@ -74,7 +67,7 @@ const IndustryShowcase = () => {
           )}
         </div>
 
-        {!productsLoading && !imagesLoading && !error && products?.length === 0 && (
+        {!loading && !error && products?.length === 0 && (
           <div className="text-center py-16">
             <div className="max-w-md mx-auto">
               <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
@@ -110,14 +103,15 @@ const IndustryShowcase = () => {
               <div className="relative h-56 bg-gray-50 overflow-hidden">
                 <div className="absolute inset-0 p-6 flex items-center justify-center">
                   <div className="w-full h-full bg-white rounded-lg shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
-                    {product.imageId && getImageUrl(product.imageId) ? (
-                      <Image 
-                        src={getImageUrl(product.imageId)} 
-                        alt={product.name}
-                        fill
-                        className="object-cover rounded-lg"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
+                    {product.imageId && getProductImageUrl(product.imageId, 'showcase') ? (
+                <Image
+                  src={getProductImageUrl(product.imageId, 'showcase')}
+                  alt={product.name}
+                  fill
+                  className="object-cover rounded-lg"
+                  sizes={getResponsiveSizes('showcase')}
+                  priority={index < 4} // Prioritize first 4 images
+                />
                     ) : (
                       <div className="text-center">
                         <div className="w-24 h-24 mx-auto bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center shadow-lg mb-2">
@@ -261,12 +255,14 @@ const IndustryShowcase = () => {
                   <div className="relative h-64 bg-gray-50 rounded-xl mb-6">
                     <div className="absolute inset-0 p-8 flex items-center justify-center">
                       <div className="w-full h-full bg-white rounded-lg shadow-sm flex items-center justify-center">
-                        {selectedProduct.imageId && getImageUrl(selectedProduct.imageId) ? (
-                          <img 
-                            src={getImageUrl(selectedProduct.imageId)} 
-                            alt={selectedProduct.name}
-                            className="w-full h-full object-cover rounded-lg"
-                          />
+                        {selectedProduct.imageId && getProductImageUrl(selectedProduct.imageId, 'modal') ? (
+                <Image
+                  src={getProductImageUrl(selectedProduct.imageId, 'modal')}
+                  alt={selectedProduct.name}
+                  fill
+                  className="object-cover rounded-lg"
+                  sizes={getResponsiveSizes('modal')}
+                />
                         ) : (
                           <div className="w-32 h-32 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center shadow-lg">
                               <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

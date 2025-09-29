@@ -8,14 +8,15 @@ import SmartPackaging from '../components/SmartPackaging'
 import Sustainability from '../components/Sustainability'
 import QuoteForm from '../components/QuoteForm'
 import Footer from '../components/Footer'
+import { DataProvider } from '../contexts/DataContext'
 
-// Lazy load heavy components
+// Lazy load heavy components with optimized loading states
 const ProductShowcase = dynamic(() => import('../components/ProductShowcase'), {
   loading: () => (
-    <section className="min-h-screen flex items-center justify-center bg-gray-50">
+    <section className="min-h-[400px] flex items-center justify-center bg-gray-50">
       <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-        <p className="text-gray-600">Loading products...</p>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+        <p className="text-gray-600 text-sm">Loading products...</p>
       </div>
     </section>
   ),
@@ -24,30 +25,73 @@ const ProductShowcase = dynamic(() => import('../components/ProductShowcase'), {
 
 const IndustryShowcase = dynamic(() => import('../components/IndustryShowcase'), {
   loading: () => (
-    <section className="min-h-screen flex items-center justify-center bg-white">
+    <section className="min-h-[400px] flex items-center justify-center bg-white">
       <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-        <p className="text-gray-600">Loading industry solutions...</p>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+        <p className="text-gray-600 text-sm">Loading industry solutions...</p>
       </div>
     </section>
   ),
   ssr: false
 })
 
-export default function Home() {
+// Server-side data fetching for optimal performance
+async function getServerSideData() {
+  try {
+    // In production, this would fetch from your database
+    // For now, we'll use the API endpoints but cache the results
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+    
+    const [productsResponse, imagesResponse] = await Promise.all([
+      fetch(`${baseUrl}/api/products`, { 
+        next: { revalidate: 3600 } // Cache for 1 hour
+      }),
+      fetch(`${baseUrl}/api/images`, { 
+        next: { revalidate: 3600 } // Cache for 1 hour
+      })
+    ])
+
+    let products = []
+    let industryProducts = []
+    let images = []
+
+    if (productsResponse.ok) {
+      const productsData = await productsResponse.json()
+      products = productsData.products || []
+      industryProducts = productsData.industryProducts || []
+    }
+
+    if (imagesResponse.ok) {
+      const imagesData = await imagesResponse.json()
+      images = imagesData.images || []
+    }
+
+    return { products, industryProducts, images }
+  } catch (error) {
+    console.error('Error fetching server-side data:', error)
+    return { products: [], images: [] }
+  }
+}
+
+export default async function Home() {
+  // Fetch data on the server side for faster initial load
+  const { products, industryProducts, images } = await getServerSideData()
+
   return (
-    <main className="overflow-x-hidden">
-      <Header />
-      <Hero />
-      <ProductShowcase />
-      <WhyChoose />
-      <PrintingCapabilities />
-      <HowItWorks />
-      <SmartPackaging />
-      <IndustryShowcase />
-      <Sustainability />
-      <QuoteForm />
-      <Footer />
-    </main>
+    <DataProvider initialProducts={products} initialIndustryProducts={industryProducts} initialImages={images}>
+      <main className="overflow-x-hidden">
+        <Header />
+        <Hero />
+        <ProductShowcase />
+        <WhyChoose />
+        <PrintingCapabilities />
+        <HowItWorks />
+        <SmartPackaging />
+        <IndustryShowcase />
+        <Sustainability />
+        <QuoteForm />
+        <Footer />
+      </main>
+    </DataProvider>
   )
 }

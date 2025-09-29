@@ -1,9 +1,14 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { supabase } from '../lib/supabase'
 import { X, Send } from 'lucide-react'
 import visitorTracker from '../utils/visitorTracking'
+
+// Constants for memory optimization
+const MAX_MESSAGES_IN_MEMORY = 50
+const MESSAGE_CLEANUP_INTERVAL = 30000 // 30 seconds
+const DEBOUNCE_DELAY = 300
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -15,6 +20,32 @@ const ChatWidget = () => {
   const [isFooterVisible, setIsFooterVisible] = useState(false)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+  const cleanupTimerRef = useRef(null)
+
+  // Memory optimization: Limit messages in memory
+  const optimizedMessages = useMemo(() => {
+    if (messages.length > MAX_MESSAGES_IN_MEMORY) {
+      return messages.slice(-MAX_MESSAGES_IN_MEMORY)
+    }
+    return messages
+  }, [messages])
+
+  // Debounced scroll to bottom
+  const debouncedScrollToBottom = useCallback(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [])
+
+  // Cleanup old messages periodically
+  const cleanupOldMessages = useCallback(() => {
+    setMessages(prev => {
+      if (prev.length > MAX_MESSAGES_IN_MEMORY) {
+        return prev.slice(-MAX_MESSAGES_IN_MEMORY)
+      }
+      return prev
+    })
+  }, [])
 
   // Generate or retrieve visitor ID from localStorage
   useEffect(() => {
@@ -26,14 +57,21 @@ const ChatWidget = () => {
     setVisitorId(storedVisitorId)
   }, [])
 
-  // Auto-scroll to bottom when new messages arrive
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
-
+  // Auto-scroll to bottom when new messages arrive (debounced)
   useEffect(() => {
-    scrollToBottom()
-  }, [messages])
+    const timeoutId = setTimeout(debouncedScrollToBottom, DEBOUNCE_DELAY)
+    return () => clearTimeout(timeoutId)
+  }, [optimizedMessages, debouncedScrollToBottom])
+
+  // Setup cleanup timer for memory optimization
+  useEffect(() => {
+    cleanupTimerRef.current = setInterval(cleanupOldMessages, MESSAGE_CLEANUP_INTERVAL)
+    return () => {
+      if (cleanupTimerRef.current) {
+        clearInterval(cleanupTimerRef.current)
+      }
+    }
+  }, [cleanupOldMessages])
 
   // Load or create conversation when visitor ID is available
   useEffect(() => {
@@ -178,9 +216,10 @@ const ChatWidget = () => {
           role: 'visitor'
         })
 
-      if (error) throw error} catch (error) {
-            // Error sending message
-        }setNewMessage(messageContent) // Restore message on error
+      if (error) throw error;
+    } catch (error) {
+      // Error sending message
+      setNewMessage(messageContent); // Restore message on error
     } finally {
       setIsLoading(false)
     }

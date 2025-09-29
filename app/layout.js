@@ -28,80 +28,21 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        {/* Zoho SalesIQ Live Chat */}
+        <Script id="zoho-salesiq-init" strategy="beforeInteractive">
+          {`window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}`}
+        </Script>
+        <Script 
+          id="zoho-salesiq-widget" 
+          src="https://salesiq.zohopublic.com/widget?wc=siq066497c1b31fdf455e35461344fd564b" 
+          strategy="afterInteractive"
+          defer
+        />
+      </head>
       <body className="font-sans">
 
         {children}
-        
-
-        {/* Preload LiveChat for faster loading */}
-        <link rel="preload" href="https://cdn.livechatinc.com/tracking.js" as="script" />
-        
-        {/* LiveChat Script - Load earlier for faster appearance */}
-        <Script
-          id="livechat-script"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.__lc = window.__lc || {};
-              window.__lc.license = 19290214;
-              window.__lc.integration_name = "manual_onboarding";
-              window.__lc.product_name = "livechat";
-              ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
-            `
-          }}
-        />
-        
-        {/* LiveChat Fast Initialization */}
-        <Script
-          id="livechat-fast-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Force faster LiveChat initialization
-              document.addEventListener('DOMContentLoaded', function() {
-                if (window.LiveChatWidget) {
-                  // Force widget to show immediately
-                  setTimeout(() => {
-                    if (window.LiveChatWidget && window.LiveChatWidget.init) {
-                      window.LiveChatWidget.init();
-                    }
-                  }, 100);
-                }
-              });
-              
-              // Backup initialization for even faster loading
-              if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', function() {
-                  setTimeout(() => {
-                    if (window.LiveChatWidget) {
-                      window.LiveChatWidget.call('maximize');
-                    }
-                  }, 500);
-                });
-              } else {
-                setTimeout(() => {
-                  if (window.LiveChatWidget) {
-                    window.LiveChatWidget.call('maximize');
-                  }
-                }, 500);
-              }
-            `
-          }}
-        />
-        
-        <noscript>
-          <a href="https://www.livechat.com/chat-with/19290214/" rel="nofollow">
-            Chat with us
-          </a>
-          , powered by{' '}
-          <a
-            href="https://www.livechat.com/?welcome"
-            rel="noopener nofollow"
-            target="_blank"
-          >
-            LiveChat
-          </a>
-        </noscript>
       </body>
     </html>
   )

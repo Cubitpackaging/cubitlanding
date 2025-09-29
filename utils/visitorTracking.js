@@ -415,7 +415,7 @@ class VisitorTracker {
 // Create singleton instance
 const visitorTracker = new VisitorTracker()
 
-// Auto-initialization disabled - LiveChat is now handling visitor tracking
+// Auto-initialization can be enabled if needed
 // if (typeof window !== 'undefined') {
 //   // Wait for DOM to be ready
 //   if (document.readyState === 'loading') {

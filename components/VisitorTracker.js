@@ -1,25 +1,52 @@
 'use client'
 
-import { useEffect } from 'react'
-import visitorTracker from '../utils/visitorTracking'
+import { useEffect, useRef } from 'react'
+
+// Lazy load visitor tracker to reduce initial bundle size
+const loadVisitorTracker = () => import('../utils/visitorTracking').then(module => module.default)
 
 const VisitorTracker = () => {
+  const initRef = useRef(false)
+  const trackerRef = useRef(null)
+
   useEffect(() => {
-    // Initialize visitor tracking when component mounts
+    // Prevent multiple initializations
+    if (initRef.current) return
+    initRef.current = true
+
+    // Delay initialization to not block initial render
     const initTracking = async () => {
       try {
-        await visitorTracker.init()
+        // Lazy load the tracker
+        const visitorTracker = await loadVisitorTracker()
+        trackerRef.current = visitorTracker
+        
+        // Initialize with a small delay to improve perceived performance
+        setTimeout(async () => {
+          await visitorTracker.init()
+        }, 1000)
       } catch (error) {
         console.error('Failed to initialize visitor tracking:', error)
       }
     }
 
-    initTracking()
+    // Use requestIdleCallback if available for better performance
+    if (typeof window !== 'undefined' && window.requestIdleCallback) {
+      window.requestIdleCallback(initTracking)
+    } else {
+      setTimeout(initTracking, 100)
+    }
 
-    // Track page navigation for SPA routing
+    // Track page navigation for SPA routing (with debouncing)
+    let navigationTimeout
     const handleRouteChange = () => {
-      const currentPath = window.location.pathname + window.location.search
-      visitorTracker.trackNavigation(currentPath)
+      clearTimeout(navigationTimeout)
+      navigationTimeout = setTimeout(() => {
+        if (trackerRef.current) {
+          const currentPath = window.location.pathname + window.location.search
+          trackerRef.current.trackNavigation(currentPath)
+        }
+      }, 300) // Debounce navigation tracking
     }
 
     // Listen for browser navigation events
@@ -28,6 +55,7 @@ const VisitorTracker = () => {
     // Cleanup
     return () => {
       window.removeEventListener('popstate', handleRouteChange)
+      clearTimeout(navigationTimeout)
     }
   }, [])
 
