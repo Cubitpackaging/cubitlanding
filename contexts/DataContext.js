@@ -50,7 +50,7 @@ export function DataProvider({ children, initialProducts = [], initialIndustryPr
 
       setProducts(productsData.products || [])
       setIndustryProducts(productsData.industryProducts || [])
-      setImages(imagesData)
+      setImages(imagesData.images || [])
     } catch (err) {
       setError(err.message)
       console.error('Error fetching data:', err)
