@@ -1,6 +1,7 @@
 import './globals.css'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from '@vercel/analytics/next'
 
 
 export const metadata = {
@@ -44,6 +45,7 @@ export default function RootLayout({ children }) {
       <body className="font-sans">
         {children}
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   )
