@@ -37,50 +37,41 @@ const IndustryShowcase = dynamic(() => import('../components/IndustryShowcase'),
 
 // Server-side data fetching for optimal performance
 async function getServerSideData() {
-  // During build time, skip API calls and return empty data
-  // The components will handle loading states and fetch data client-side
-  if (process.env.NODE_ENV === 'production' && !process.env.VERCEL_URL) {
-    return { products: [], industryProducts: [], images: [] }
-  }
-
   try {
     // Use Vercel URL in production, localhost in development
     const baseUrl = process.env.VERCEL_URL 
       ? `https://${process.env.VERCEL_URL}` 
       : process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
     
-    // Only fetch if we have a valid base URL and we're not in build mode
-    if (!baseUrl.includes('localhost') || process.env.NODE_ENV === 'development') {
-      const [productsResponse, imagesResponse] = await Promise.all([
-        fetch(`${baseUrl}/api/products`, { 
-          next: { revalidate: 3600 } // Cache for 1 hour
-        }),
-        fetch(`${baseUrl}/api/images`, { 
-          next: { revalidate: 3600 } // Cache for 1 hour
-        })
-      ])
+    // Always try to fetch data in both development and production
+    const [productsResponse, imagesResponse] = await Promise.all([
+      fetch(`${baseUrl}/api/products`, { 
+        next: { revalidate: 3600 } // Cache for 1 hour
+      }),
+      fetch(`${baseUrl}/api/images`, { 
+        next: { revalidate: 3600 } // Cache for 1 hour
+      })
+    ])
 
-      let products = []
-      let industryProducts = []
-      let images = []
+    let products = []
+    let industryProducts = []
+    let images = []
 
-      if (productsResponse.ok) {
-        const productsData = await productsResponse.json()
-        products = productsData.products || []
-        industryProducts = productsData.industryProducts || []
-      }
-
-      if (imagesResponse.ok) {
-        const imagesData = await imagesResponse.json()
-        images = imagesData.images || []
-      }
-
-      return { products, industryProducts, images }
+    if (productsResponse.ok) {
+      const productsData = await productsResponse.json()
+      products = productsData.products || []
+      industryProducts = productsData.industryProducts || []
     }
 
-    return { products: [], industryProducts: [], images: [] }
+    if (imagesResponse.ok) {
+      const imagesData = await imagesResponse.json()
+      images = imagesData.images || []
+    }
+
+    return { products, industryProducts, images }
   } catch (error) {
     console.error('Error fetching server-side data:', error)
+    // Fallback: return empty arrays and let client-side fetch handle it
     return { products: [], industryProducts: [], images: [] }
   }
 }
