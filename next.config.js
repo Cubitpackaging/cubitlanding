@@ -19,7 +19,6 @@ const nextConfig = {
   // Performance optimizations
   experimental: {
     optimizePackageImports: ['@supabase/supabase-js', 'lucide-react'],
-    optimizeCss: true,
   },
   // Enable compression
   compress: true,
