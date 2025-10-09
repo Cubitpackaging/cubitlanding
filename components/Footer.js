@@ -2,31 +2,20 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import PolicyModal from './PolicyModal'
+import Link from 'next/link'
 import RushOrderModal from './RushOrderModal'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
-  const [modalOpen, setModalOpen] = useState(false)
-  const [modalType, setModalType] = useState('privacy')
   const [rushOrderModalOpen, setRushOrderModalOpen] = useState(false)
-
-  const openModal = (type) => {
-    setModalType(type)
-    setModalOpen(true)
-  }
-
-  const closeModal = () => {
-    setModalOpen(false)
-  }
 
   const quickLinks = [
     { name: 'Home', href: '#home' },
     { name: 'Request Quote', href: '#quote' },
     { name: 'Smart Packaging', href: '#smart' },
     { name: 'Sustainability', href: '#sustainability' },
-    { name: 'Terms', href: '#', action: () => openModal('terms') },
-    { name: 'Privacy', href: '#', action: () => openModal('privacy') }
+    { name: 'Terms', href: '/terms-of-service', isPage: true },
+    { name: 'Privacy', href: '/privacy-policy', isPage: true }
   ]
 
   const socialLinks = [
@@ -124,12 +113,21 @@ const Footer = () => {
             <ul className="space-y-1.5 sm:space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <button
-                    onClick={() => handleLinkClick(link)}
-                    className="text-xs sm:text-sm text-gray-300 hover:text-green-400 transition-colors duration-300 text-left"
-                  >
-                    {link.name}
-                  </button>
+                  {link.isPage ? (
+                    <Link
+                      href={link.href}
+                      className="text-xs sm:text-sm text-gray-300 hover:text-green-400 transition-colors duration-300"
+                    >
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => handleLinkClick(link)}
+                      className="text-xs sm:text-sm text-gray-300 hover:text-green-400 transition-colors duration-300 text-left"
+                    >
+                      {link.name}
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>
@@ -254,13 +252,6 @@ const Footer = () => {
 
 
 
-      {/* Policy Modal */}
-      <PolicyModal 
-        isOpen={modalOpen} 
-        onClose={closeModal} 
-        type={modalType} 
-      />
-      
       {/* Rush Order Modal */}
       <RushOrderModal 
         isOpen={rushOrderModalOpen} 
